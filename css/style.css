@@ -253,7 +253,7 @@
   }
   .devis-top-row { display: flex; justify-content: space-between; align-items: flex-start; }
   .devis-num-label { font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-  .devis-ref { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: 0.06em; margin-top: 2px; }
+  .devis-ref { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: 0.06em; margin-top: 2px; }
   .devis-hotel { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
   .devis-dates-col { text-align: right; }
   .devis-date { font-size: 12px; color: var(--text-muted); line-height: 1.7; }
