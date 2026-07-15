@@ -41,7 +41,7 @@ function getChambres(){
 
 function fmt(n){ return n.toLocaleString('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}); }
 
-function updateDevis(){
+function updateDevis(afficher = false){
   const nbCh = parseInt(document.getElementById('nb-chambres').value)||1;
   const formule = getFormule();
   const chambre = getChambres();
@@ -124,10 +124,12 @@ function updateDevis(){
   document.getElementById('d-total').textContent = fmt(total);
   document.getElementById('d-valid-text').textContent = `Offre valable ${validite} jour${validite>1?'s':''} — expire le ${fmtDate(expiry)}`;
 
-  const alreadyVisible = document.getElementById('devis-output').style.display === 'block';
-  document.getElementById('devis-output').style.display = 'block';
-  if(!alreadyVisible){
+  if(afficher){
+    document.getElementById('devis-output').style.display = 'block';
     document.getElementById('devis-output').scrollIntoView({behavior:'smooth', block:'nearest'});
+  } else if(document.getElementById('devis-output').style.display === 'block'){
+    // Mettre à jour si déjà visible sans rescroller
+    // (ne rien faire de plus)
   }
 }
 
@@ -392,7 +394,7 @@ const today = new Date();
 const dep = new Date(today.getTime()+7*86400000);
 document.getElementById('date-arrivee').value = today.toISOString().split('T')[0];
 document.getElementById('date-depart').value = dep.toISOString().split('T')[0];
-updateDevis();
+// Ne pas appeler updateDevis() au chargement pour éviter le scroll automatique
 
 // ===============================
 // Gestion des hôtels
