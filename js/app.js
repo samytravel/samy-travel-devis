@@ -1,5 +1,3 @@
-
-
 let devisCounter = Math.floor(Math.random()*90)+10;
 
 // ── Fonctions hôtels manquantes ──────────────────────────
