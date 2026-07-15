@@ -1,0 +1,26 @@
+{
+  "name": "Samy Travel — Devis Omra",
+  "short_name": "Samy Travel",
+  "description": "Générateur de devis hôteliers pour l'Omra",
+  "start_url": "/samy-travel-devis/",
+  "scope": "/samy-travel-devis/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#2A2A2A",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
