@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Samy Travel — Générateur de Devis</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2A2A2A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Samy Travel">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <img class="logo-img" src="images/logo.png" alt="Samy Travel">
+    <div class="brand-block">
+      <div class="brand-name">Samy Travel</div>
+      <div class="brand-sub">Agence de voyages — Omra & Pèlerinage</div>
+    </div>
+    <div class="header-badge">Devis hôtelier</div>
+  </div>
+</div>
+
+<!-- PAGE -->
+<div class="page">
+
+  <!-- CLIENT -->
+  <div class="card">
+    <div class="section-header">
+      <div class="section-icon"><i class="fas fa-user"></i></div>
+      <div class="section-title">Client</div>
+    </div>
+    <div class="row2">
+      <div>
+        <label>Prénom</label>
+        <input type="text" id="client-prenom" placeholder="Prénom…" oninput="updateDevis()">
+      </div>
+      <div>
+        <label>Nom</label>
+        <input type="text" id="client-nom" placeholder="Nom…" oninput="updateDevis()">
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉDINE -->
+  <div class="card">
+    <div class="section-header">
+      <div class="section-icon"><i class="fas fa-mosque"></i></div>
+      <div class="section-title">Hôtel — Médine</div>
+    </div>
+	
+    <div class="row2" style="margin-bottom:10px">
+      <div>
+        <label>Hôtel (proximité Haram)</label>
+        <select id="hotel-medine" onchange="syncCustomMedine(); updateDevis()">
+          <option value="">— Choisir un hôtel —</option>
+        </select>
+      </div>
+    <div>
+      <label>Ou saisir manuellement</label>
+
+      <div class="hotel-ajout">
+        <input
+          type="text"
+          id="hotel-medine-custom"
+          placeholder="Nom de l'hôtel…">
+
+        <button
+          type="button"
+          class="btn-valider-hotel"
+          onclick="ajouterHotel('medine')">
+          Valider
+        </button>
+      </div>
+    </div>
+</div>
+    <div class="row3">
+      <div>
+        <label>Nuits à Médine</label>
+        <input type="number" id="nuits-medine" min="0" value="4" onchange="updateDevis()">
+      </div>
+      <div>
+        <label>Prix/nuit chambre (€)</label>
+        <input type="number" id="prix-nuit-medine" value="80" min="0" onchange="updateDevis()">
+      </div>
+      <div>
+        <label>Petit-déj. /pers./nuit (€)</label>
+        <input type="number" id="prix-pdj-medine" value="15" min="0" onchange="updateDevis()">
+      </div>
+    </div>
+  </div>
+
+  <!-- MEKKAH -->
+  <!-- MEKKAH -->
+<div class="card">
+  <div class="section-header">
+    <div class="section-icon"><i class="fas fa-star-and-crescent"></i></div>
+    <div class="section-title">Hôtel — Mekkah</div>
+  </div>
+
+  <div class="row2" style="margin-bottom:10px">
+
+    <div>
+      <label>Hôtel (proximité Haram)</label>
+      <select id="hotel-mekkah" onchange="syncCustomMekkah(); updateDevis()">
+        <option value="">— Choisir un hôtel —</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Ou saisir manuellement</label>
+
+      <div class="hotel-ajout">
+        <input
+          type="text"
+          id="hotel-mekkah-custom"
+          placeholder="Nom de l'hôtel…">
+
+        <button
+          type="button"
+          class="btn-valider-hotel"
+          onclick="ajouterHotel('mekkah')">
+          Valider
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row3">
+
+    <div>
+      <label>Nuits à Mekkah</label>
+      <input type="number"
+             id="nuits-mekkah"
+             min="0"
+             value="3"
+             onchange="updateDevis()">
+    </div>
+
+    <div>
+      <label>Prix/nuit chambre (€)</label>
+      <input type="number"
+             id="prix-nuit-mekkah"
+             value="100"
+             min="0"
+             onchange="updateDevis()">
+    </div>
+
+    <div>
+      <label>Petit-déj. /pers./nuit (€)</label>
+      <input type="number"
+             id="prix-pdj-mekkah"
+             value="15"
+             min="0"
+             onchange="updateDevis()">
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- DATES -->
+  <div class="card">
+    <div class="section-header">
+      <div class="section-icon"><i class="fas fa-calendar-alt"></i></div>
+      <div class="section-title">Dates du séjour</div>
+    </div>
+    <div class="row2" style="margin-bottom:8px">
+      <div>
+        <label>Date d'arrivée</label>
+        <input type="date" id="date-arrivee" onchange="updateDevis()">
+      </div>
+      <div>
+        <label>Date de départ</label>
+        <input type="date" id="date-depart" onchange="updateDevis()">
+      </div>
+    </div>
+    <div class="duree-info">Durée totale : <span class="duree-badge" id="duree-calc"><i class="fas fa-moon" style="font-size:9px"></i> 7 nuits</span></div>
+  </div>
+
+  <!-- CHAMBRE & FORMULE -->
+  <div class="card">
+    <div class="section-header">
+      <div class="section-icon"><i class="fas fa-bed"></i></div>
+      <div class="section-title">Chambre & Formule</div>
+    </div>
+    <div class="row2" style="margin-bottom:14px">
+      <div>
+        <label>Type de chambre</label>
+        <select id="chambre-type" onchange="updateDevis()">
+          <option value="single">Single (1 pers.)</option>
+          <option value="double" selected>Double (2 pers.)</option>
+          <option value="triple">Triple (3 pers.)</option>
+          <option value="quad">Quadruple (4 pers.)</option>
+          <option value="quintuple">Quintuple (5 pers.)</option>
+          <option value="junior">Suite Junior</option>
+          <option value="senior">Suite Senior</option>
+        </select>
+      </div>
+      <div>
+        <label>Nombre de chambres</label>
+        <input type="number" id="nb-chambres" min="1" value="1" onchange="updateDevis()">
+      </div>
+    </div>
+    <div style="margin-bottom:14px">
+      <label>Formule</label>
+      <div class="formule-group">
+        <label class="formule-option active" id="fo-ro">
+          <input type="radio" name="formule" value="RO" checked onchange="toggleFormule('RO')">
+          <div class="fo-label"><i class="fas fa-home" style="color:var(--gold)"></i> Room Only</div>
+          <div class="fo-sub">Sans petit-déjeuner</div>
+        </label>
+        <label class="formule-option" id="fo-bb">
+          <input type="radio" name="formule" value="BB" onchange="toggleFormule('BB')">
+          <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed & Breakfast</div>
+          <div class="fo-sub">Petit-déjeuner inclus</div>
+        </label>
+      </div>
+    </div>
+    <div style="margin-top:4px">
+      <label>Validité du devis</label>
+      <select id="validite" onchange="updateDevis()" style="max-width:220px">
+        <option value="1" selected>1 jour</option>
+        <option value="2">2 jours</option>
+        <option value="3">3 jours</option>
+        <option value="7">7 jours</option>
+        <option value="14">14 jours</option>
+        <option value="30">30 jours</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn-generate" onclick="updateDevis(); document.getElementById('devis-output').scrollIntoView({behavior:'smooth', block:'nearest'})">
+    <i class="fas fa-file-invoice"></i>
+    Générer le devis
+  </button>
+
+  <button class="btn-history" onclick="ouvrirHistorique()">
+    <i class="fas fa-folder-open"></i>
+    Mes devis
+</button>
+
+  <!-- OUTPUT -->
+  <div id="devis-output">
+    <div class="devis-card">
+      <div class="devis-top">
+        <div class="devis-top-row">
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="background:#fff;border-radius:12px;padding:6px;border:1px solid #DADADA;flex-shrink:0;">
+              <img class="devis-logo" src="" id="devis-logo-img" alt="Samy Travel">
+            </div>
+            <div>
+              <div class="devis-num-label">Devis N°</div>
+              <div class="devis-ref" id="d-ref">ST-2026-001</div>
+              <div class="devis-hotel" id="d-hotel-name"></div>
+              <div class="devis-hotel" id="d-client-name" style="margin-top:4px;font-weight:600;color:var(--text)"></div>
+            </div>
+          </div>
+          <div class="devis-dates-col">
+            <div class="devis-date" id="d-today"></div>
+            <div class="devis-date" id="d-validity"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="devis-body">
+        <div class="devis-section-label">Détail du séjour</div>
+        <div id="d-lines"></div>
+
+        <div class="total-row">
+          <div class="total-label">Total TTC</div>
+          <div class="total-amount" id="d-total"></div>
+        </div>
+
+        <div class="validity-row">
+          <i class="fas fa-clock" style="font-size:12px"></i>
+          <span id="d-valid-text"></span>
+        </div>
+      </div>
+
+      <div class="devis-footer">
+        <div class="devis-mention">
+          Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer un hébergement équivalent en cas d'indisponibilité.
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:240px;">
+          <input type="tel" id="wa-number" placeholder="Ex : 0033612345678" style="height:34px;font-size:12px;border-color:var(--border-strong)">
+          <button class="btn-whatsapp" id="btn-wa" onclick="envoyerWhatsappPDF()">
+            <i class="fab fa-whatsapp"></i> Envoyer le PDF WhatsApp
+          </button>
+          <div id="wa-status" style="font-size:11px;color:var(--text-muted);text-align:center;display:none;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/samy-travel-devis/sw.js")
+        .then(r => console.log("SW enregistré:", r.scope))
+        .catch(e => console.warn("SW erreur:", e));
+    });
+  }
+</script>
+</body>
+</html>
