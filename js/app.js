@@ -187,9 +187,10 @@ function genererPDF(data){
   doc.setLineWidth(0.5);
   doc.line(0, 56, W, 56);
 
-  const logoEl = document.querySelector('.logo-img');
-  if(logoEl && logoEl.src && logoEl.src.startsWith('data:image')) {
-    try { doc.addImage(logoEl.src, 'PNG', M, 6, 26, 26); } catch(e) { console.warn('logo err', e); }
+  // Logo : utiliser la version base64 si disponible, sinon tenter l'URL directe
+  const logoSrc = LOGO_BASE64 || (document.querySelector('.logo-img') && document.querySelector('.logo-img').src);
+  if(logoSrc) {
+    try { doc.addImage(logoSrc, 'PNG', M, 6, 26, 26); } catch(e) { console.warn('logo PDF err', e); }
   }
 
   doc.setFont('helvetica','bold');
@@ -359,8 +360,35 @@ async function envoyerWhatsappPDF(){
   }
 }
 
-// Copier le logo du header dans le devis
-document.getElementById('devis-logo-img').src = document.querySelector('.logo-img').src;
+// Convertir le logo en base64 pour le PDF et le devis
+let LOGO_BASE64 = null;
+
+function chargerLogoBase64() {
+  const logoEl = document.querySelector('.logo-img');
+  if (!logoEl || !logoEl.src) return;
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = function() {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth || 200;
+    canvas.height = img.naturalHeight || 200;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    try {
+      LOGO_BASE64 = canvas.toDataURL('image/png');
+      document.getElementById('devis-logo-img').src = LOGO_BASE64;
+    } catch(e) {
+      console.warn('Logo cross-origin, utilisation URL directe');
+      document.getElementById('devis-logo-img').src = logoEl.src;
+    }
+  };
+  img.onerror = function() {
+    document.getElementById('devis-logo-img').src = logoEl.src;
+  };
+  img.src = logoEl.src;
+}
+
+chargerLogoBase64();
 
 const today = new Date();
 const dep = new Date(today.getTime()+7*86400000);
