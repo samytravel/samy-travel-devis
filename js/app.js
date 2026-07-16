@@ -39,7 +39,7 @@ function getChambres(){
   return {label:labels[t], pax:pax[t]};
 }
 
-function fmt(n){ return n.toLocaleString('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}); }
+function fmt(n){ return n.toLocaleString('fr-FR',{style:'currency',currency:'SAR',maximumFractionDigits:0}); }
 
 function updateDevis(afficher = false){
   const nbCh = parseInt(document.getElementById('nb-chambres').value)||1;
