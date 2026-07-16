@@ -28,6 +28,8 @@
   --accent2: #2E6A4E;
   --radius: 14px;
   --shadow: 0 2px 14px rgba(0,0,0,0.07);
+  --weekday: #1A3A5C;
+  --weekend: #7A3A00;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,7 +41,6 @@ body {
   min-height: 100vh;
 }
 
-/* HEADER */
 .header {
   background: var(--accent);
   padding: 0;
@@ -71,7 +72,6 @@ body {
   text-transform: uppercase;
 }
 
-/* PAGE */
 .page {
   max-width: 700px;
   margin: 0 auto;
@@ -81,7 +81,6 @@ body {
   gap: 14px;
 }
 
-/* CARD */
 .card {
   background: var(--card);
   border-radius: var(--radius);
@@ -141,12 +140,14 @@ input:focus, select:focus { border-color: var(--gold); }
 
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-@media(max-width:480px){
+.row4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+@media(max-width:540px){
   .row2 { grid-template-columns: 1fr; }
   .row3 { grid-template-columns: 1fr 1fr; }
+  .row4 { grid-template-columns: 1fr 1fr; }
 }
 
-/* TYPE CHAMBRE SELECTOR */
+/* CHAMBRE */
 .chambre-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -175,7 +176,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .chambre-card .cc-pax { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
 .chambre-card.selected .cc-label { color: #8A6010; }
 
-/* NOMBRE DE CHAMBRES */
 .nb-ch-row {
   display: flex;
   align-items: center;
@@ -236,7 +236,90 @@ input:focus, select:focus { border-color: var(--gold); }
 }
 .btn-valider-hotel:hover { background: #0F2840; }
 
-/* FRAIS INTÉGRÉS */
+/* TARIFS SEMAINE/WEEKEND */
+.tarif-block {
+  margin-bottom: 12px;
+}
+.tarif-block-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tarif-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+@media(max-width:480px){ .tarif-row { grid-template-columns: 1fr; } }
+
+.tarif-item {
+  background: #F8F8F4;
+  border-radius: 9px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+}
+.tarif-item.weekday { border-left: 3px solid var(--accent); }
+.tarif-item.weekend { border-left: 3px solid var(--gold); }
+
+.tarif-item label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+.badge-weekday {
+  background: #EEF3F8;
+  color: var(--weekday);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+}
+.badge-weekend {
+  background: #FFF3E0;
+  color: var(--weekend);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+}
+
+/* RÉSUMÉ NUITS */
+.nuits-summary {
+  background: #F0F4F8;
+  border-radius: 9px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.nuits-summary .ns-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ns-dot-weekday { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.ns-dot-weekend { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.ns-total {
+  font-weight: 700;
+  color: var(--accent);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* FRAIS */
 .frais-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -324,7 +407,16 @@ input:focus, select:focus { border-color: var(--gold); }
 .fo-label { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
 .fo-sub { font-size: 11px; color: var(--text-muted); }
 
-/* DATES */
+/* PDJ tarif row */
+.pdj-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+@media(max-width:480px){ .pdj-row { grid-template-columns: 1fr; } }
+
+/* DURÉE */
 .duree-info { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-top: 8px; }
 .duree-badge {
   background: var(--accent);
@@ -335,7 +427,7 @@ input:focus, select:focus { border-color: var(--gold); }
   border-radius: 20px;
 }
 
-/* BOUTON GENERATE */
+/* GENERATE */
 .btn-generate {
   background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%);
   color: #fff;
@@ -402,8 +494,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .line-desc { font-size: 13px; font-weight: 600; }
 .line-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .line-price { font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; padding-top: 1px; }
-.line-sub { font-size: 11px; font-weight: 500; color: var(--text-muted); }
-.line-sub .line-price { font-size: 11px; color: var(--text-muted); }
 
 .line-city-header {
   padding: 10px 0 4px;
@@ -469,7 +559,7 @@ input:focus, select:focus { border-color: var(--gold); }
   gap: 8px;
 }
 
-/* SECTION TOGGLE (pour afficher/masquer les frais) */
+/* FRAIS TOGGLE */
 .frais-section-toggle {
   display: flex;
   align-items: center;
@@ -500,13 +590,12 @@ input:focus, select:focus { border-color: var(--gold); }
     <img class="logo-img" src="images/logo.png" alt="Samy Travel">
     <div class="brand-block">
       <div class="brand-name">Samy Travel</div>
-      <div class="brand-sub">Agence de voyages — Omra & Pèlerinage</div>
+      <div class="brand-sub">Organisateur de voyage</div>
     </div>
     <div class="header-badge">Devis</div>
   </div>
 </div>
 
-<!-- PAGE -->
 <div class="page">
 
   <!-- CLIENT -->
@@ -527,61 +616,58 @@ input:focus, select:focus { border-color: var(--gold); }
     </div>
   </div>
 
-  <!-- CHAMBRE & FORMULE — EN PREMIER -->
+  <!-- CHAMBRE & FORMULE -->
   <div class="card">
     <div class="section-header">
       <div class="section-icon"><i class="fas fa-bed"></i></div>
       <div class="section-title">Type de chambre</div>
     </div>
 
-    <!-- Sélecteur visuel type chambre -->
     <div class="chambre-grid" id="chambre-grid">
       <div class="chambre-card" data-type="single" onclick="selectChambre('single')">
-        <div class="cc-icon">🛏️</div>
+        <div class="cc-icon"></div>
         <div class="cc-label">Single</div>
         <div class="cc-pax">1 pers.</div>
       </div>
       <div class="chambre-card selected" data-type="double" onclick="selectChambre('double')">
-        <div class="cc-icon">🛌</div>
+        <div class="cc-icon"></div>
         <div class="cc-label">Double</div>
         <div class="cc-pax">2 pers.</div>
       </div>
       <div class="chambre-card" data-type="triple" onclick="selectChambre('triple')">
-        <div class="cc-icon">🏨</div>
+        <div class="cc-icon"></div>
         <div class="cc-label">Triple</div>
         <div class="cc-pax">3 pers.</div>
       </div>
       <div class="chambre-card" data-type="quad" onclick="selectChambre('quad')">
-        <div class="cc-icon">🏩</div>
+        <div class="cc-icon"></div>
         <div class="cc-label">Quadruple</div>
         <div class="cc-pax">4 pers.</div>
       </div>
       <div class="chambre-card" data-type="quintuple" onclick="selectChambre('quintuple')">
-        <div class="cc-icon">🏪</div>
+        <div class="cc-icon"></div>
         <div class="cc-label">Quintuple</div>
         <div class="cc-pax">5 pers.</div>
       </div>
       <div class="chambre-card" data-type="junior" onclick="selectChambre('junior')">
-        <div class="cc-icon">⭐</div>
+        <div class="cc-icon"></div>
         <div class="cc-label">Suite Jr</div>
         <div class="cc-pax">2 pers.</div>
       </div>
       <div class="chambre-card" data-type="senior" onclick="selectChambre('senior')">
-        <div class="cc-icon">👑</div>
+        <div class="cc-icon"></div>
         <div class="cc-label">Suite Sr</div>
         <div class="cc-pax">2 pers.</div>
       </div>
     </div>
     <input type="hidden" id="chambre-type" value="double">
 
-    <!-- Nombre de chambres & badge pax -->
     <div class="nb-ch-row">
       <label>Nombre de chambres</label>
       <input type="number" id="nb-chambres" min="1" value="1" style="max-width:70px" onchange="updateDevis()">
       <div class="pax-badge" id="pax-badge">2 personnes</div>
     </div>
 
-    <!-- Formule -->
     <div style="margin-bottom:0">
       <label>Formule</label>
       <div class="formule-group">
@@ -606,11 +692,8 @@ input:focus, select:focus { border-color: var(--gold); }
       <div class="section-title">Médine</div>
     </div>
 
-    <!-- Hôtel Médine -->
     <div class="hotel-section">
-      <div class="hotel-section-title">
-        <i class="fas fa-building"></i> Hôtel
-      </div>
+      <div class="hotel-section-title"><i class="fas fa-building"></i> Hôtel</div>
       <div>
         <label>Sélectionner un hôtel</label>
         <select id="hotel-medine" onchange="syncCustomMedine(); updateDevis()">
@@ -626,33 +709,72 @@ input:focus, select:focus { border-color: var(--gold); }
       </div>
     </div>
 
-    <!-- Nuits + Prix hébergement -->
-    <div class="row3" style="margin-bottom:12px">
+    <!-- DATES MÉDINE -->
+    <div class="row2" style="margin-bottom:10px">
       <div>
-        <label>Nuits à Médine</label>
-        <input type="number" id="nuits-medine" min="0" value="4" onchange="updateDevis()">
+        <label>Arrivée à Médine</label>
+        <input type="date" id="date-arrivee-medine" onchange="updateDevis()">
       </div>
       <div>
-        <label>Prix/nuit chambre (€)</label>
-        <input type="number" id="prix-nuit-medine" value="80" min="0" onchange="updateDevis()">
-      </div>
-      <div id="pdj-medine-wrap">
-        <label>Petit-déj. /pers./nuit (€)</label>
-        <input type="number" id="prix-pdj-medine" value="15" min="0" onchange="updateDevis()">
+        <label>Départ de Médine</label>
+        <input type="date" id="date-depart-medine" onchange="updateDevis()">
       </div>
     </div>
 
-    <!-- FRAIS INTÉGRÉS MÉDINE -->
-    <div class="frais-section-toggle" onclick="toggleFrais('medine')">
-      <div class="ftitle">
-        <i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour
+    <!-- RÉSUMÉ NUITS MÉDINE -->
+    <div class="nuits-summary" id="nuits-summary-medine">
+      <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
+    </div>
+
+    <!-- TARIFS MÉDINE -->
+    <div class="tarif-block">
+      <div class="tarif-block-title" style="color:var(--accent)">
+        <i class="fas fa-tag" style="color:var(--gold)"></i> Prix par chambre / nuit
       </div>
+      <div class="tarif-row">
+        <div class="tarif-item weekday">
+          <label>
+            <span class="badge-weekday">SEMAINE</span>
+            dim → mer
+          </label>
+          <input type="number" id="prix-weekday-medine" value="80" min="0" onchange="updateDevis()">
+        </div>
+        <div class="tarif-item weekend">
+          <label>
+            <span class="badge-weekend">WEEK-END</span>
+            jeu → sam
+          </label>
+          <input type="number" id="prix-weekend-medine" value="100" min="0" onchange="updateDevis()">
+        </div>
+      </div>
+      <!-- PDJ Médine -->
+      <div id="pdj-medine-wrap">
+        <div class="pdj-row">
+          <div class="tarif-item weekday" style="border-left-color:var(--accent)">
+            <label>
+              <span class="badge-weekday">PDJ SEMAINE</span>
+              SAR/pers./nuit
+            </label>
+            <input type="number" id="prix-pdj-weekday-medine" value="15" min="0" onchange="updateDevis()">
+          </div>
+          <div class="tarif-item weekend" style="border-left-color:var(--gold)">
+            <label>
+              <span class="badge-weekend">PDJ WEEK-END</span>
+              SAR/pers./nuit
+            </label>
+            <input type="number" id="prix-pdj-weekend-medine" value="18" min="0" onchange="updateDevis()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRAIS MÉDINE -->
+    <div class="frais-section-toggle" onclick="toggleFrais('medine')">
+      <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
       <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-medine"></i>
     </div>
     <div class="frais-body" id="frais-body-medine" style="display:none">
       <div class="frais-grid">
-
-        <!-- Transfert aéroport -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -663,11 +785,9 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-medine-transfer" value="30" min="0" onchange="updateDevis()">
-            <span class="unit">€/pers.</span>
+            <span class="unit">SAR/pers.</span>
           </div>
         </div>
-
-        <!-- Transport Médine→Mekkah -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -678,11 +798,9 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-medine-transport" value="25" min="0" onchange="updateDevis()">
-            <span class="unit">€/pers.</span>
+            <span class="unit">SAR/pers.</span>
           </div>
         </div>
-
-        <!-- Taxe de séjour -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -693,11 +811,9 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-medine-taxe" value="5" min="0" onchange="updateDevis()">
-            <span class="unit">€/nuit</span>
+            <span class="unit">SAR/nuit</span>
           </div>
         </div>
-
-        <!-- Frais de visa -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -708,10 +824,9 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-medine-visa" value="50" min="0" onchange="updateDevis()">
-            <span class="unit">€/pers.</span>
+            <span class="unit">SAR/pers.</span>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -723,11 +838,8 @@ input:focus, select:focus { border-color: var(--gold); }
       <div class="section-title">Mekkah</div>
     </div>
 
-    <!-- Hôtel Mekkah -->
     <div class="hotel-section">
-      <div class="hotel-section-title">
-        <i class="fas fa-building"></i> Hôtel
-      </div>
+      <div class="hotel-section-title"><i class="fas fa-building"></i> Hôtel</div>
       <div>
         <label>Sélectionner un hôtel</label>
         <select id="hotel-mekkah" onchange="syncCustomMekkah(); updateDevis()">
@@ -743,33 +855,72 @@ input:focus, select:focus { border-color: var(--gold); }
       </div>
     </div>
 
-    <!-- Nuits + Prix hébergement -->
-    <div class="row3" style="margin-bottom:12px">
+    <!-- DATES MEKKAH -->
+    <div class="row2" style="margin-bottom:10px">
       <div>
-        <label>Nuits à Mekkah</label>
-        <input type="number" id="nuits-mekkah" min="0" value="3" onchange="updateDevis()">
+        <label>Arrivée à Mekkah</label>
+        <input type="date" id="date-arrivee-mekkah" onchange="updateDevis()">
       </div>
       <div>
-        <label>Prix/nuit chambre (€)</label>
-        <input type="number" id="prix-nuit-mekkah" value="100" min="0" onchange="updateDevis()">
-      </div>
-      <div id="pdj-mekkah-wrap">
-        <label>Petit-déj. /pers./nuit (€)</label>
-        <input type="number" id="prix-pdj-mekkah" value="15" min="0" onchange="updateDevis()">
+        <label>Départ de Mekkah</label>
+        <input type="date" id="date-depart-mekkah" onchange="updateDevis()">
       </div>
     </div>
 
-    <!-- FRAIS INTÉGRÉS MEKKAH -->
-    <div class="frais-section-toggle" onclick="toggleFrais('mekkah')">
-      <div class="ftitle">
-        <i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour
+    <!-- RÉSUMÉ NUITS MEKKAH -->
+    <div class="nuits-summary" id="nuits-summary-mekkah">
+      <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
+    </div>
+
+    <!-- TARIFS MEKKAH -->
+    <div class="tarif-block">
+      <div class="tarif-block-title" style="color:var(--accent)">
+        <i class="fas fa-tag" style="color:var(--gold)"></i> Prix par chambre / nuit
       </div>
+      <div class="tarif-row">
+        <div class="tarif-item weekday">
+          <label>
+            <span class="badge-weekday">SEMAINE</span>
+            dim → mer
+          </label>
+          <input type="number" id="prix-weekday-mekkah" value="100" min="0" onchange="updateDevis()">
+        </div>
+        <div class="tarif-item weekend">
+          <label>
+            <span class="badge-weekend">WEEK-END</span>
+            jeu → sam
+          </label>
+          <input type="number" id="prix-weekend-mekkah" value="130" min="0" onchange="updateDevis()">
+        </div>
+      </div>
+      <!-- PDJ Mekkah -->
+      <div id="pdj-mekkah-wrap">
+        <div class="pdj-row">
+          <div class="tarif-item weekday">
+            <label>
+              <span class="badge-weekday">PDJ SEMAINE</span>
+              SAR/pers./nuit
+            </label>
+            <input type="number" id="prix-pdj-weekday-mekkah" value="15" min="0" onchange="updateDevis()">
+          </div>
+          <div class="tarif-item weekend">
+            <label>
+              <span class="badge-weekend">PDJ WEEK-END</span>
+              SAR/pers./nuit
+            </label>
+            <input type="number" id="prix-pdj-weekend-mekkah" value="18" min="0" onchange="updateDevis()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRAIS MEKKAH -->
+    <div class="frais-section-toggle" onclick="toggleFrais('mekkah')">
+      <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
       <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-mekkah"></i>
     </div>
     <div class="frais-body" id="frais-body-mekkah" style="display:none">
       <div class="frais-grid">
-
-        <!-- Transfert aéroport Mekkah -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -780,11 +931,9 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-mekkah-transfer" value="30" min="0" onchange="updateDevis()">
-            <span class="unit">€/pers.</span>
+            <span class="unit">SAR/pers.</span>
           </div>
         </div>
-
-        <!-- Guide / accompagnateur -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -795,11 +944,9 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-mekkah-guide" value="40" min="0" onchange="updateDevis()">
-            <span class="unit">€/pers.</span>
+            <span class="unit">SAR/pers.</span>
           </div>
         </div>
-
-        <!-- Taxe de séjour Mekkah -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -810,11 +957,9 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-mekkah-taxe" value="5" min="0" onchange="updateDevis()">
-            <span class="unit">€/nuit</span>
+            <span class="unit">SAR/nuit</span>
           </div>
         </div>
-
-        <!-- Frais divers -->
         <div class="frais-item">
           <div class="frais-toggle">
             <label class="toggle-switch">
@@ -825,33 +970,10 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
           <div class="frais-input-wrap">
             <input type="number" id="frais-mekkah-divers" value="20" min="0" onchange="updateDevis()">
-            <span class="unit">€/pers.</span>
+            <span class="unit">SAR/pers.</span>
           </div>
         </div>
-
       </div>
-    </div>
-  </div>
-
-  <!-- DATES -->
-  <div class="card">
-    <div class="section-header">
-      <div class="section-icon"><i class="fas fa-calendar-alt"></i></div>
-      <div class="section-title">Dates du séjour</div>
-    </div>
-    <div class="row2" style="margin-bottom:8px">
-      <div>
-        <label>Date d'arrivée</label>
-        <input type="date" id="date-arrivee" onchange="updateDevis()">
-      </div>
-      <div>
-        <label>Date de départ</label>
-        <input type="date" id="date-depart" onchange="updateDevis()">
-      </div>
-    </div>
-    <div class="duree-info">
-      Durée totale :
-      <span class="duree-badge" id="duree-calc"><i class="fas fa-moon" style="font-size:9px"></i> 7 nuits</span>
     </div>
   </div>
 
@@ -940,16 +1062,87 @@ let devisCounter = Math.floor(Math.random()*90)+10;
 let LOGO_BASE64 = null;
 
 const CHAMBRE_CONFIG = {
-  single:    { label: 'Single',     pax: 1 },
-  double:    { label: 'Double',     pax: 2 },
-  triple:    { label: 'Triple',     pax: 3 },
-  quad:      { label: 'Quadruple',  pax: 4 },
-  quintuple: { label: 'Quintuple',  pax: 5 },
+  single:    { label: 'Single',       pax: 1 },
+  double:    { label: 'Double',       pax: 2 },
+  triple:    { label: 'Triple',       pax: 3 },
+  quad:      { label: 'Quadruple',    pax: 4 },
+  quintuple: { label: 'Quintuple',    pax: 5 },
   junior:    { label: 'Suite Junior', pax: 2 },
   senior:    { label: 'Suite Senior', pax: 2 },
 };
 
-// ─── CHAMBRE SELECTOR ───────────────────────────────────────
+// ─── SEMAINE ARABE ───────────────────────────────────────────
+// Semaine : dim(0), lun(1), mar(2), mer(3) → weekday
+// Week-end : jeu(4), ven(5), sam(6)        → weekend
+function isWeekend(date) {
+  const d = date.getDay(); // 0=dim,1=lun,...,6=sam
+  return d === 4 || d === 5 || d === 6;
+}
+
+/**
+ * Compte les nuits weekday et weekend entre deux dates.
+ * La nuit est comptée sur le jour d'arrivée (le jour de départ ne compte pas).
+ * @param {string} dateArriveeStr  YYYY-MM-DD
+ * @param {string} dateDepartStr   YYYY-MM-DD
+ * @returns {{ weekday: number, weekend: number, total: number }}
+ */
+function compterNuits(dateArriveeStr, dateDepartStr) {
+  if (!dateArriveeStr || !dateDepartStr) return { weekday: 0, weekend: 0, total: 0 };
+
+  // Travailler en UTC pour éviter les décalages horaires
+  const arr = new Date(dateArriveeStr + 'T00:00:00Z');
+  const dep = new Date(dateDepartStr  + 'T00:00:00Z');
+
+  let weekday = 0, weekend = 0;
+  const cur = new Date(arr);
+
+  while (cur < dep) {
+    if (isWeekend(cur)) {
+      weekend++;
+    } else {
+      weekday++;
+    }
+    cur.setUTCDate(cur.getUTCDate() + 1);
+  }
+
+  return { weekday, weekend, total: weekday + weekend };
+}
+
+// ─── RÉSUMÉ NUITS ────────────────────────────────────────────
+function updateNuitsSummary(ville) {
+  const arriveeVal = document.getElementById('date-arrivee-' + ville).value;
+  const departVal  = document.getElementById('date-depart-'  + ville).value;
+  const el = document.getElementById('nuits-summary-' + ville);
+
+  if (!arriveeVal || !departVal) {
+    el.innerHTML = '<span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>';
+    return;
+  }
+
+  const { weekday, weekend, total } = compterNuits(arriveeVal, departVal);
+
+  if (total <= 0) {
+    el.innerHTML = '<span style="color:#C0392B;font-size:11px"><i class="fas fa-exclamation-circle"></i> Date de départ antérieure ou égale à l\'arrivée</span>';
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="ns-item">
+      <div class="ns-dot-weekday"></div>
+      <span><strong>${weekday}</strong> nuit${weekday>1?'s':''} semaine</span>
+    </div>
+    <div class="ns-item">
+      <div class="ns-dot-weekend"></div>
+      <span><strong>${weekend}</strong> nuit${weekend>1?'s':''} week-end</span>
+    </div>
+    <div class="ns-total">
+      <i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>
+      ${total} nuit${total>1?'s':''} au total
+    </div>
+  `;
+}
+
+// ─── CHAMBRE ─────────────────────────────────────────────────
 function selectChambre(type) {
   document.querySelectorAll('.chambre-card').forEach(c => c.classList.remove('selected'));
   document.querySelector(`[data-type="${type}"]`).classList.add('selected');
@@ -960,8 +1153,8 @@ function selectChambre(type) {
 
 function updatePaxBadge() {
   const type = document.getElementById('chambre-type').value;
-  const nb = parseInt(document.getElementById('nb-chambres').value) || 1;
-  const pax = (CHAMBRE_CONFIG[type]?.pax || 2) * nb;
+  const nb   = parseInt(document.getElementById('nb-chambres').value) || 1;
+  const pax  = (CHAMBRE_CONFIG[type]?.pax || 2) * nb;
   document.getElementById('pax-badge').textContent = pax + ' personne' + (pax > 1 ? 's' : '');
 }
 
@@ -970,11 +1163,10 @@ function getChambres() {
   return CHAMBRE_CONFIG[t] || CHAMBRE_CONFIG.double;
 }
 
-// ─── FORMULE ────────────────────────────────────────────────
+// ─── FORMULE ─────────────────────────────────────────────────
 function toggleFormule(val) {
   document.getElementById('fo-ro').classList.toggle('active', val === 'RO');
   document.getElementById('fo-bb').classList.toggle('active', val === 'BB');
-  // Afficher/masquer champs PDJ
   const show = val === 'BB';
   document.getElementById('pdj-medine-wrap').style.opacity = show ? '1' : '0.4';
   document.getElementById('pdj-mekkah-wrap').style.opacity = show ? '1' : '0.4';
@@ -985,62 +1177,40 @@ function getFormule() {
   return document.querySelector('input[name=formule]:checked').value;
 }
 
-// ─── FRAIS TOGGLE ───────────────────────────────────────────
+// ─── FRAIS TOGGLE ────────────────────────────────────────────
 function toggleFrais(ville) {
-  const body = document.getElementById('frais-body-' + ville);
+  const body    = document.getElementById('frais-body-' + ville);
   const chevron = document.getElementById('frais-chevron-' + ville);
-  const isOpen = body.style.display !== 'none';
+  const isOpen  = body.style.display !== 'none';
   body.style.display = isOpen ? 'none' : 'block';
   chevron.classList.toggle('open', !isOpen);
 }
 
-// ─── HOTELS ─────────────────────────────────────────────────
+// ─── HOTELS ──────────────────────────────────────────────────
 let HOTELS = {};
 const HOTELS_VERSION = "2";
 
 function loadHotels() {
-  const saved = localStorage.getItem("hotels");
+  const saved        = localStorage.getItem("hotels");
   const savedVersion = localStorage.getItem("hotels_version");
   if (saved && savedVersion === HOTELS_VERSION) {
     HOTELS = JSON.parse(saved);
   } else {
     HOTELS = {
       medine: [
-        "Anwar Al Madinah Mövenpick",
-        "Pullman Zamzam Madinah",
-        "Sofitel Shahd Al Madinah",
-        "Intercontinental Dar Al Iman",
-        "Intercontinental Dar Al Hijra",
-        "Conrad Madinah",
-        "Hilton Madinah",
-        "Saja by Warwick Madinah",
-        "Elaf Al Taqwa",
-        "Elaf Taiba",
-        "Emaar Royal",
-        "Dar Al Taqwa",
-        "Rotana Al Manakha Madinah",
-        "Ancyra Hotel Madinah",
-        "Jayden Hotel",
-        "Maien Taiba",
-        "Peninsula Worth Hotel"
+        "Anwar Al Madinah Mövenpick","Pullman Zamzam Madinah","Sofitel Shahd Al Madinah",
+        "Intercontinental Dar Al Iman","Intercontinental Dar Al Hijra","Conrad Madinah",
+        "Hilton Madinah","Saja by Warwick Madinah","Elaf Al Taqwa","Elaf Taiba",
+        "Emaar Royal","Dar Al Taqwa","Rotana Al Manakha Madinah","Ancyra Hotel Madinah",
+        "Jayden Hotel","Maien Taiba","Peninsula Worth Hotel"
       ],
       mekkah: [
-        "Swissôtel Makkah - Abraj Al Bait",
-        "Fairmont Makkah Clock Royal Tower",
-        "Conrad Makkah",
-        "Pullman Zamzam Makkah",
-        "Raffles Makkah Palace",
-        "Mövenpick Hajar Tower Makkah",
-        "Al Marwa Rayhaan by Rotana",
-        "Hilton Makkah Convention Hotel",
-        "DoubleTree by Hilton Jabal Omar",
-        "Anjum Makkah",
-        "Voco Makkah",
-        "Novotel Makkah Thakher City",
-        "Tilal Jabal Al Kabah",
-        "Elaf Ajyad Makkah",
-        "Al Safwah Royale Orchid",
-        "Makkah Towers"
+        "Swissôtel Makkah - Abraj Al Bait","Fairmont Makkah Clock Royal Tower",
+        "Conrad Makkah","Pullman Zamzam Makkah","Raffles Makkah Palace",
+        "Mövenpick Hajar Tower Makkah","Al Marwa Rayhaan by Rotana",
+        "Hilton Makkah Convention Hotel","DoubleTree by Hilton Jabal Omar",
+        "Anjum Makkah","Voco Makkah","Novotel Makkah Thakher City",
+        "Tilal Jabal Al Kabah","Elaf Ajyad Makkah","Al Safwah Royale Orchid","Makkah Towers"
       ]
     };
     localStorage.setItem("hotels", JSON.stringify(HOTELS));
@@ -1053,21 +1223,20 @@ function populateHotels() {
   ["medine","mekkah"].forEach(ville => {
     const select = document.getElementById("hotel-" + ville);
     if (!select) return;
-    const valeurActuelle = select.value;
+    const val = select.value;
     select.innerHTML = '<option value="">— Choisir un hôtel —</option>';
     [...HOTELS[ville]].sort().forEach(hotel => {
-      const option = document.createElement("option");
-      option.value = hotel;
-      option.textContent = hotel;
-      select.appendChild(option);
+      const opt = document.createElement("option");
+      opt.value = hotel; opt.textContent = hotel;
+      select.appendChild(opt);
     });
-    if (valeurActuelle) select.value = valeurActuelle;
+    if (val) select.value = val;
   });
 }
 
 function ajouterHotel(ville) {
   const input = document.getElementById("hotel-" + ville + "-custom");
-  const nom = input.value.trim();
+  const nom   = input.value.trim();
   if (!nom) { alert("Saisissez un nom d'hôtel."); return; }
   if (!HOTELS[ville].includes(nom)) {
     HOTELS[ville].push(nom);
@@ -1080,186 +1249,108 @@ function ajouterHotel(ville) {
 }
 
 function getHotelMedine() {
-  const sel = document.getElementById('hotel-medine').value;
-  const custom = document.getElementById('hotel-medine-custom').value.trim();
-  return sel || custom || 'Hôtel Médine';
+  return document.getElementById('hotel-medine').value
+      || document.getElementById('hotel-medine-custom').value.trim()
+      || 'Hôtel Médine';
 }
 function getHotelMekkah() {
-  const sel = document.getElementById('hotel-mekkah').value;
-  const custom = document.getElementById('hotel-mekkah-custom').value.trim();
-  return sel || custom || 'Hôtel Mekkah';
+  return document.getElementById('hotel-mekkah').value
+      || document.getElementById('hotel-mekkah-custom').value.trim()
+      || 'Hôtel Mekkah';
 }
 function syncCustomMedine() { document.getElementById('hotel-medine-custom').value = ''; }
 function syncCustomMekkah() { document.getElementById('hotel-mekkah-custom').value = ''; }
 
-// ─── FORMAT ─────────────────────────────────────────────────
+// ─── FORMAT ──────────────────────────────────────────────────
 function fmt(n) {
   return n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 }
 
-// ─── FRAIS HELPERS ──────────────────────────────────────────
-function getFrais(ville) {
+// ─── FRAIS HELPERS ───────────────────────────────────────────
+function getFrais(ville, nuits, pax) {
   const on  = id => document.getElementById(id).checked;
   const val = id => parseFloat(document.getElementById(id).value) || 0;
-  const pax = getChambres().pax * (parseInt(document.getElementById('nb-chambres').value)||1);
 
   if (ville === 'medine') {
-    const nuits = parseInt(document.getElementById('nuits-medine').value)||0;
     let total = 0, items = [];
     if (on('frais-medine-transfer-on')) {
       const v = val('frais-medine-transfer') * pax;
-      total += v; items.push({ label: 'Transfert aéroport', montant: v, detail: `${val('frais-medine-transfer')} € × ${pax} pers.` });
+      total += v; items.push({ label: 'Transfert aéroport', montant: v, detail: `${val('frais-medine-transfer')} SAR × ${pax} pers.` });
     }
     if (on('frais-medine-transport-on')) {
       const v = val('frais-medine-transport') * pax;
-      total += v; items.push({ label: 'Transport Médine → Mekkah', montant: v, detail: `${val('frais-medine-transport')} € × ${pax} pers.` });
+      total += v; items.push({ label: 'Transport Médine → Mekkah', montant: v, detail: `${val('frais-medine-transport')} SAR × ${pax} pers.` });
     }
     if (on('frais-medine-taxe-on')) {
       const v = val('frais-medine-taxe') * nuits;
-      total += v; items.push({ label: 'Taxe de séjour', montant: v, detail: `${val('frais-medine-taxe')} €/nuit × ${nuits} nuits` });
+      total += v; items.push({ label: 'Taxe de séjour', montant: v, detail: `${val('frais-medine-taxe')} SAR/nuit × ${nuits} nuits` });
     }
     if (on('frais-medine-visa-on')) {
       const v = val('frais-medine-visa') * pax;
-      total += v; items.push({ label: 'Visa / Prestation', montant: v, detail: `${val('frais-medine-visa')} € × ${pax} pers.` });
+      total += v; items.push({ label: 'Visa / Prestation', montant: v, detail: `${val('frais-medine-visa')} SAR × ${pax} pers.` });
     }
     return { total, items };
   } else {
-    const nuits = parseInt(document.getElementById('nuits-mekkah').value)||0;
     let total = 0, items = [];
     if (on('frais-mekkah-transfer-on')) {
       const v = val('frais-mekkah-transfer') * pax;
-      total += v; items.push({ label: 'Transfert retour', montant: v, detail: `${val('frais-mekkah-transfer')} € × ${pax} pers.` });
+      total += v; items.push({ label: 'Transfert retour', montant: v, detail: `${val('frais-mekkah-transfer')} SAR × ${pax} pers.` });
     }
     if (on('frais-mekkah-guide-on')) {
       const v = val('frais-mekkah-guide') * pax;
-      total += v; items.push({ label: 'Guide / Accompagnateur', montant: v, detail: `${val('frais-mekkah-guide')} € × ${pax} pers.` });
+      total += v; items.push({ label: 'Guide / Accompagnateur', montant: v, detail: `${val('frais-mekkah-guide')} SAR × ${pax} pers.` });
     }
     if (on('frais-mekkah-taxe-on')) {
       const v = val('frais-mekkah-taxe') * nuits;
-      total += v; items.push({ label: 'Taxe de séjour', montant: v, detail: `${val('frais-mekkah-taxe')} €/nuit × ${nuits} nuits` });
+      total += v; items.push({ label: 'Taxe de séjour', montant: v, detail: `${val('frais-mekkah-taxe')} SAR/nuit × ${nuits} nuits` });
     }
     if (on('frais-mekkah-divers-on')) {
       const v = val('frais-mekkah-divers') * pax;
-      total += v; items.push({ label: 'Frais divers', montant: v, detail: `${val('frais-mekkah-divers')} € × ${pax} pers.` });
+      total += v; items.push({ label: 'Frais divers', montant: v, detail: `${val('frais-mekkah-divers')} SAR × ${pax} pers.` });
     }
     return { total, items };
   }
 }
 
-// ─── MAIN UPDATE ────────────────────────────────────────────
-function updateDevis(afficher = false) {
-  const nbCh    = parseInt(document.getElementById('nb-chambres').value) || 1;
-  const formule = getFormule();
-  const chambre = getChambres();
-  const validite= parseInt(document.getElementById('validite').value) || 1;
-  const pax     = chambre.pax * nbCh;
+// ─── CALCUL HÉBERGEMENT AVEC TARIFS JOUR ─────────────────────
+/**
+ * Calcule le coût d'hébergement total pour une ville.
+ * Retourne aussi les détails pour affichage.
+ */
+function calcHeberg(ville, nbCh) {
+  const prefix  = ville === 'medine' ? 'medine' : 'mekkah';
+  const arrivee = document.getElementById('date-arrivee-' + prefix).value;
+  const depart  = document.getElementById('date-depart-'  + prefix).value;
+  const pWd     = parseFloat(document.getElementById('prix-weekday-'  + prefix).value) || 0;
+  const pWe     = parseFloat(document.getElementById('prix-weekend-'  + prefix).value) || 0;
 
-  updatePaxBadge();
+  const { weekday, weekend, total } = compterNuits(arrivee, depart);
 
-  // ── Médine ──
-  const nuitsMedine   = parseInt(document.getElementById('nuits-medine').value) || 0;
-  const prixNuitMed   = parseFloat(document.getElementById('prix-nuit-medine').value) || 0;
-  const prixPdjMed    = parseFloat(document.getElementById('prix-pdj-medine').value) || 0;
-  const hotelMedine   = getHotelMedine();
-  const stMedine      = prixNuitMed * nuitsMedine * nbCh;
-  const pdjMedine     = formule === 'BB' ? prixPdjMed * pax * nuitsMedine : 0;
-  const fraisMedine   = getFrais('medine');
+  const coutWd = pWd * weekday * nbCh;
+  const coutWe = pWe * weekend * nbCh;
+  const coutTotal = coutWd + coutWe;
 
-  // ── Mekkah ──
-  const nuitsMekkah   = parseInt(document.getElementById('nuits-mekkah').value) || 0;
-  const prixNuitMek   = parseFloat(document.getElementById('prix-nuit-mekkah').value) || 0;
-  const prixPdjMek    = parseFloat(document.getElementById('prix-pdj-mekkah').value) || 0;
-  const hotelMekkah   = getHotelMekkah();
-  const stMekkah      = prixNuitMek * nuitsMekkah * nbCh;
-  const pdjMekkah     = formule === 'BB' ? prixPdjMek * pax * nuitsMekkah : 0;
-  const fraisMekkah   = getFrais('mekkah');
-
-  const totalNuits = nuitsMedine + nuitsMekkah;
-  const total      = stMedine + pdjMedine + fraisMedine.total
-                   + stMekkah + pdjMekkah + fraisMekkah.total;
-
-  // Badge durée
-  document.getElementById('duree-calc').innerHTML =
-    '<i class="fas fa-moon" style="font-size:9px"></i> ' + totalNuits + ' nuit' + (totalNuits > 1 ? 's' : '');
-
-  const da = document.getElementById('date-arrivee').value;
-  const dd = document.getElementById('date-depart').value;
-  if (da && dd) {
-    const diff = Math.round((new Date(dd) - new Date(da)) / (1000*60*60*24));
-    if (diff > 0) document.getElementById('duree-calc').innerHTML =
-      '<i class="fas fa-moon" style="font-size:9px"></i> ' + diff + ' nuit' + (diff > 1 ? 's' : '');
-  }
-
-  const today  = new Date();
-  const expiry = new Date(today.getTime() + validite * 86400000);
-  const fmtDate = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
-
-  document.getElementById('d-ref').textContent     = `ST-${today.getFullYear()}-${String(devisCounter).padStart(3,'0')}`;
-  document.getElementById('d-hotel-name').textContent = `Médine & Mekkah`;
-  document.getElementById('d-today').textContent   = 'Émis le ' + fmtDate(today);
-  document.getElementById('d-validity').textContent= "Valable jusqu'au " + fmtDate(expiry);
-
-  const prenom = document.getElementById('client-prenom').value.trim();
-  const nom    = document.getElementById('client-nom').value.trim();
-  const clientEl = document.getElementById('d-client-name');
-  clientEl.textContent = (prenom || nom) ? `À l'attention de : ${prenom} ${nom}`.trim() : '';
-
-  // ── Lignes du devis ──
-  const chLabel = nbCh > 1
-    ? `${nbCh} chambres ${chambre.label.toLowerCase()}`
-    : `1 chambre ${chambre.label.toLowerCase()}`;
-
-  let html = '';
-
-  if (nuitsMedine > 0) {
-    html += `<div class="line-city-header"><i class="fas fa-mosque" style="margin-right:5px"></i> Médine — ${hotelMedine}</div>`;
-
-    const totalMedine = stMedine + pdjMedine + fraisMedine.total;
-    // Hébergement
-    html += lineHTML(`Hébergement`, `${chLabel} × ${nuitsMedine} nuit${nuitsMedine>1?'s':''}`, fmt(stMedine));
-    // PDJ
-    if (formule === 'BB' && pdjMedine > 0) {
-      html += lineHTML(`Petit-déjeuner`, `${pax} pers. × ${nuitsMedine} nuit${nuitsMedine>1?'s':''}`, fmt(pdjMedine));
-    }
-    // Frais
-    fraisMedine.items.forEach(f => {
-      html += lineHTML(f.label, f.detail, fmt(f.montant));
-    });
-    // Sous-total Médine
-    html += `<div class="line-item" style="background:#F6F6F0;border-radius:8px;padding:8px 10px;margin:4px 0;">
-      <div style="font-size:12px;font-weight:700;color:var(--accent)">Sous-total Médine</div>
-      <div class="line-price">${fmt(totalMedine)}</div>
-    </div>`;
-  }
-
-  if (nuitsMekkah > 0) {
-    html += `<div class="line-city-header" style="margin-top:10px"><i class="fas fa-star-and-crescent" style="margin-right:5px"></i> Mekkah — ${hotelMekkah}</div>`;
-
-    const totalMekkah = stMekkah + pdjMekkah + fraisMekkah.total;
-    html += lineHTML(`Hébergement`, `${chLabel} × ${nuitsMekkah} nuit${nuitsMekkah>1?'s':''}`, fmt(stMekkah));
-    if (formule === 'BB' && pdjMekkah > 0) {
-      html += lineHTML(`Petit-déjeuner`, `${pax} pers. × ${nuitsMekkah} nuit${nuitsMekkah>1?'s':''}`, fmt(pdjMekkah));
-    }
-    fraisMekkah.items.forEach(f => {
-      html += lineHTML(f.label, f.detail, fmt(f.montant));
-    });
-    html += `<div class="line-item" style="background:#F6F6F0;border-radius:8px;padding:8px 10px;margin:4px 0;">
-      <div style="font-size:12px;font-weight:700;color:var(--accent)">Sous-total Mekkah</div>
-      <div class="line-price">${fmt(totalMekkah)}</div>
-    </div>`;
-  }
-
-  document.getElementById('d-lines').innerHTML = html;
-  document.getElementById('d-total').textContent = fmt(total);
-  document.getElementById('d-valid-text').textContent =
-    `Offre valable ${validite} jour${validite>1?'s':''} — expire le ${fmtDate(expiry)}`;
-
-  if (afficher) {
-    document.getElementById('devis-output').style.display = 'block';
-    document.getElementById('devis-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
+  return { weekday, weekend, total, coutWd, coutWe, coutTotal, pWd, pWe };
 }
 
+function calcPdj(ville, nbCh, pax) {
+  const formule = getFormule();
+  if (formule !== 'BB') return { total: 0, weekday: 0, weekend: 0 };
+
+  const prefix  = ville === 'medine' ? 'medine' : 'mekkah';
+  const arrivee = document.getElementById('date-arrivee-' + prefix).value;
+  const depart  = document.getElementById('date-depart-'  + prefix).value;
+  const pWd     = parseFloat(document.getElementById('prix-pdj-weekday-'  + prefix).value) || 0;
+  const pWe     = parseFloat(document.getElementById('prix-pdj-weekend-'  + prefix).value) || 0;
+  const { weekday, weekend } = compterNuits(arrivee, depart);
+
+  const coutWd = pWd * weekday * pax;
+  const coutWe = pWe * weekend * pax;
+
+  return { total: coutWd + coutWe, weekday: coutWd, weekend: coutWe, nbWd: weekday, nbWe: weekend };
+}
+
+// ─── LIGNE HTML ───────────────────────────────────────────────
 function lineHTML(label, detail, price) {
   return `<div class="line-item">
     <div>
@@ -1270,78 +1361,223 @@ function lineHTML(label, detail, price) {
   </div>`;
 }
 
-// ─── GET DEVIS DATA (pour PDF) ──────────────────────────────
+// ─── MAIN UPDATE ─────────────────────────────────────────────
+function updateDevis(afficher = false) {
+  const nbCh   = parseInt(document.getElementById('nb-chambres').value) || 1;
+  const chambre= getChambres();
+  const pax    = chambre.pax * nbCh;
+  const validite = parseInt(document.getElementById('validite').value) || 1;
+  const formule  = getFormule();
+
+  updatePaxBadge();
+  updateNuitsSummary('medine');
+  updateNuitsSummary('mekkah');
+
+  // ── MÉDINE ──
+  const hMed  = calcHeberg('medine', nbCh);
+  const pMed  = calcPdj('medine', nbCh, pax);
+  const fMed  = getFrais('medine', hMed.total, pax);
+
+  // ── MEKKAH ──
+  const hMek  = calcHeberg('mekkah', nbCh);
+  const pMek  = calcPdj('mekkah', nbCh, pax);
+  const fMek  = getFrais('mekkah', hMek.total, pax);
+
+  const totalNuits = hMed.total + hMek.total;
+  const grandTotal = hMed.coutTotal + pMed.total + fMed.total
+                   + hMek.coutTotal + pMek.total + fMek.total;
+
+  // Infos date
+  const today  = new Date();
+  const expiry = new Date(today.getTime() + validite * 86400000);
+  const fmtDate = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
+
+  document.getElementById('d-ref').textContent     = `ST-${today.getFullYear()}-${String(devisCounter).padStart(3,'0')}`;
+  document.getElementById('d-hotel-name').textContent = 'Médine & Mekkah';
+  document.getElementById('d-today').textContent   = 'Émis le ' + fmtDate(today);
+  document.getElementById('d-validity').textContent = "Valable jusqu'au " + fmtDate(expiry);
+
+  const prenom = document.getElementById('client-prenom').value.trim();
+  const nom    = document.getElementById('client-nom').value.trim();
+  const clientEl = document.getElementById('d-client-name');
+  clientEl.textContent = (prenom || nom) ? `À l'attention de : ${prenom} ${nom}`.trim() : '';
+
+  const chLabel = nbCh > 1
+    ? `${nbCh} chambres ${chambre.label.toLowerCase()}`
+    : `1 chambre ${chambre.label.toLowerCase()}`;
+
+  let html = '';
+
+  // ── Bloc MÉDINE ──
+  if (hMed.total > 0) {
+    const totalMed = hMed.coutTotal + pMed.total + fMed.total;
+    html += `<div class="line-city-header"><i class="fas fa-mosque" style="margin-right:5px"></i> Médine — ${getHotelMedine()}</div>`;
+
+    // Hébergement : détail weekday + weekend
+    let hebDetail = '';
+    if (hMed.weekday > 0 && hMed.weekend > 0) {
+      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine (${fmt(hMed.pWd)}/ch) + ${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end (${fmt(hMed.pWe)}/ch) × ${nbCh} ch.`;
+    } else if (hMed.weekday > 0) {
+      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMed.pWd)}/nuit)`;
+    } else {
+      hebDetail = `${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMed.pWe)}/nuit)`;
+    }
+    html += lineHTML('Hébergement', hebDetail, fmt(hMed.coutTotal));
+
+    // PDJ
+    if (formule === 'BB' && pMed.total > 0) {
+      let pdjDetail = '';
+      if (pMed.nbWd > 0 && pMed.nbWe > 0) {
+        pdjDetail = `${pMed.nbWd} nuit${pMed.nbWd>1?'s':''} semaine + ${pMed.nbWe} nuit${pMed.nbWe>1?'s':''} week-end × ${pax} pers.`;
+      } else {
+        pdjDetail = `${hMed.total} nuit${hMed.total>1?'s':''} × ${pax} pers.`;
+      }
+      html += lineHTML('Petit-déjeuner', pdjDetail, fmt(pMed.total));
+    }
+
+    // Frais
+    fMed.items.forEach(f => { html += lineHTML(f.label, f.detail, fmt(f.montant)); });
+
+    // Sous-total
+    html += `<div class="line-item" style="background:#F6F6F0;border-radius:8px;padding:8px 10px;margin:4px 0;">
+      <div style="font-size:12px;font-weight:700;color:var(--accent)">Sous-total Médine</div>
+      <div class="line-price">${fmt(totalMed)}</div>
+    </div>`;
+  }
+
+  // ── Bloc MEKKAH ──
+  if (hMek.total > 0) {
+    const totalMek = hMek.coutTotal + pMek.total + fMek.total;
+    html += `<div class="line-city-header" style="margin-top:10px"><i class="fas fa-star-and-crescent" style="margin-right:5px"></i> Mekkah — ${getHotelMekkah()}</div>`;
+
+    let hebDetail = '';
+    if (hMek.weekday > 0 && hMek.weekend > 0) {
+      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine (${fmt(hMek.pWd)}/ch) + ${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end (${fmt(hMek.pWe)}/ch) × ${nbCh} ch.`;
+    } else if (hMek.weekday > 0) {
+      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMek.pWd)}/nuit)`;
+    } else {
+      hebDetail = `${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMek.pWe)}/nuit)`;
+    }
+    html += lineHTML('Hébergement', hebDetail, fmt(hMek.coutTotal));
+
+    if (formule === 'BB' && pMek.total > 0) {
+      let pdjDetail = '';
+      if (pMek.nbWd > 0 && pMek.nbWe > 0) {
+        pdjDetail = `${pMek.nbWd} nuit${pMek.nbWd>1?'s':''} semaine + ${pMek.nbWe} nuit${pMek.nbWe>1?'s':''} week-end × ${pax} pers.`;
+      } else {
+        pdjDetail = `${hMek.total} nuit${hMek.total>1?'s':''} × ${pax} pers.`;
+      }
+      html += lineHTML('Petit-déjeuner', pdjDetail, fmt(pMek.total));
+    }
+
+    fMek.items.forEach(f => { html += lineHTML(f.label, f.detail, fmt(f.montant)); });
+
+    html += `<div class="line-item" style="background:#F6F6F0;border-radius:8px;padding:8px 10px;margin:4px 0;">
+      <div style="font-size:12px;font-weight:700;color:var(--accent)">Sous-total Mekkah</div>
+      <div class="line-price">${fmt(totalMek)}</div>
+    </div>`;
+  }
+
+  document.getElementById('d-lines').innerHTML = html;
+  document.getElementById('d-total').textContent = fmt(grandTotal);
+  document.getElementById('d-valid-text').textContent =
+    `Offre valable ${validite} jour${validite>1?'s':''} — expire le ${fmtDate(expiry)}`;
+
+  if (afficher) {
+    document.getElementById('devis-output').style.display = 'block';
+    document.getElementById('devis-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// ─── PDF ─────────────────────────────────────────────────────
+function buildPdfSections() {
+  const nbCh   = parseInt(document.getElementById('nb-chambres').value) || 1;
+  const chambre= getChambres();
+  const pax    = chambre.pax * nbCh;
+  const formule= getFormule();
+  const chLabel= nbCh > 1 ? `${nbCh} chambres ${chambre.label.toLowerCase()}` : `1 chambre ${chambre.label.toLowerCase()}`;
+
+  const sections = [];
+
+  // MÉDINE
+  const hMed = calcHeberg('medine', nbCh);
+  if (hMed.total > 0) {
+    const pMed = calcPdj('medine', nbCh, pax);
+    const fMed = getFrais('medine', hMed.total, pax);
+    const rows = [];
+
+    let hebDetail = '';
+    if (hMed.weekday > 0 && hMed.weekend > 0) {
+      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine (${fmt(hMed.pWd)}/ch) + ${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end (${fmt(hMed.pWe)}/ch) × ${nbCh} ch.`;
+    } else if (hMed.weekday > 0) {
+      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMed.pWd)}/nuit)`;
+    } else {
+      hebDetail = `${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMed.pWe)}/nuit)`;
+    }
+    rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(hMed.coutTotal) });
+
+    if (formule === 'BB' && pMed.total > 0) {
+      rows.push({ label: 'Petit-déjeuner', detail: `${hMed.total} nuit${hMed.total>1?'s':''} × ${pax} pers.`, price: fmt(pMed.total) });
+    }
+    fMed.items.forEach(f => rows.push({ label: f.label, detail: f.detail, price: fmt(f.montant) }));
+
+    sections.push({ title: `MÉDINE — ${getHotelMedine()}`, rows, subtotal: fmt(hMed.coutTotal + pMed.total + fMed.total) });
+  }
+
+  // MEKKAH
+  const hMek = calcHeberg('mekkah', nbCh);
+  if (hMek.total > 0) {
+    const pMek = calcPdj('mekkah', nbCh, pax);
+    const fMek = getFrais('mekkah', hMek.total, pax);
+    const rows = [];
+
+    let hebDetail = '';
+    if (hMek.weekday > 0 && hMek.weekend > 0) {
+      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine (${fmt(hMek.pWd)}/ch) + ${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end (${fmt(hMek.pWe)}/ch) × ${nbCh} ch.`;
+    } else if (hMek.weekday > 0) {
+      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMek.pWd)}/nuit)`;
+    } else {
+      hebDetail = `${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMek.pWe)}/nuit)`;
+    }
+    rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(hMek.coutTotal) });
+
+    if (formule === 'BB' && pMek.total > 0) {
+      rows.push({ label: 'Petit-déjeuner', detail: `${hMek.total} nuit${hMek.total>1?'s':''} × ${pax} pers.`, price: fmt(pMek.total) });
+    }
+    fMek.items.forEach(f => rows.push({ label: f.label, detail: f.detail, price: fmt(f.montant) }));
+
+    sections.push({ title: `MEKKAH — ${getHotelMekkah()}`, rows, subtotal: fmt(hMek.coutTotal + pMek.total + fMek.total) });
+  }
+
+  return sections;
+}
+
 function getDevisData() {
-  const lineEls = document.querySelectorAll('#d-lines .line-item');
-  const lines = [];
-  lineEls.forEach(el => {
-    const desc   = el.querySelector('.line-desc')?.textContent?.trim() || '';
-    const detail = el.querySelector('.line-detail')?.textContent?.trim() || '';
-    const price  = el.querySelector('.line-price')?.textContent?.trim() || '';
-    if (desc) lines.push({ desc, detail, price });
-  });
-  const headers = [];
-  document.querySelectorAll('#d-lines .line-city-header').forEach(h => {
-    headers.push(h.textContent.trim());
-  });
-  const nbCh  = parseInt(document.getElementById('nb-chambres').value) || 1;
-  const nuits = (parseInt(document.getElementById('nuits-medine').value)||0)
-              + (parseInt(document.getElementById('nuits-mekkah').value)||0);
+  const today = new Date();
+  const validite = parseInt(document.getElementById('validite').value) || 1;
+  const expiry   = new Date(today.getTime() + validite * 86400000);
+  const fmtDate  = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
+
+  const nbCh = parseInt(document.getElementById('nb-chambres').value) || 1;
+  const hMed = calcHeberg('medine', nbCh);
+  const hMek = calcHeberg('mekkah', nbCh);
+
   return {
     ref:      document.getElementById('d-ref').textContent.trim(),
-    hotel:    document.getElementById('d-hotel-name').textContent.trim(),
+    hotel:    'Médine & Mekkah',
     client:   document.getElementById('d-client-name').textContent.trim(),
-    dateEmis: document.getElementById('d-today').textContent.trim(),
-    dateVal:  document.getElementById('d-validity').textContent.trim(),
+    dateEmis: 'Émis le ' + fmtDate(today),
+    dateVal:  "Valable jusqu'au " + fmtDate(expiry),
     total:    document.getElementById('d-total').textContent.trim(),
     validTxt: document.getElementById('d-valid-text').textContent.trim(),
-    lines, nuits, nbCh,
+    nuits:    hMed.total + hMek.total,
+    nbCh,
     formule:  getFormule(),
     chambre:  getChambres(),
-    // Sections structurées pour le PDF
     sections: buildPdfSections(),
   };
 }
 
-function buildPdfSections() {
-  const sections = [];
-  const formule = getFormule();
-  const chambre = getChambres();
-  const nbCh    = parseInt(document.getElementById('nb-chambres').value) || 1;
-  const pax     = chambre.pax * nbCh;
-  const chLabel = nbCh > 1 ? `${nbCh} chambres ${chambre.label.toLowerCase()}` : `1 chambre ${chambre.label.toLowerCase()}`;
-
-  const nMed = parseInt(document.getElementById('nuits-medine').value)||0;
-  const nMek = parseInt(document.getElementById('nuits-mekkah').value)||0;
-
-  if (nMed > 0) {
-    const rows = [];
-    const pnm  = parseFloat(document.getElementById('prix-nuit-medine').value)||0;
-    const ppd  = parseFloat(document.getElementById('prix-pdj-medine').value)||0;
-    const st   = pnm * nMed * nbCh;
-    const pdj  = formule === 'BB' ? ppd * pax * nMed : 0;
-    const frais= getFrais('medine');
-    rows.push({ label: 'Hébergement', detail: `${chLabel} × ${nMed} nuit${nMed>1?'s':''}`, price: fmt(st) });
-    if (formule === 'BB' && pdj > 0) rows.push({ label: 'Petit-déjeuner', detail: `${pax} pers. × ${nMed} nuit${nMed>1?'s':''}`, price: fmt(pdj) });
-    frais.items.forEach(f => rows.push({ label: f.label, detail: f.detail, price: fmt(f.montant) }));
-    sections.push({ title: `MÉDINE — ${getHotelMedine()}`, rows, subtotal: fmt(st + pdj + frais.total) });
-  }
-  if (nMek > 0) {
-    const rows = [];
-    const pnm  = parseFloat(document.getElementById('prix-nuit-mekkah').value)||0;
-    const ppd  = parseFloat(document.getElementById('prix-pdj-mekkah').value)||0;
-    const st   = pnm * nMek * nbCh;
-    const pdj  = formule === 'BB' ? ppd * pax * nMek : 0;
-    const frais= getFrais('mekkah');
-    rows.push({ label: 'Hébergement', detail: `${chLabel} × ${nMek} nuit${nMek>1?'s':''}`, price: fmt(st) });
-    if (formule === 'BB' && pdj > 0) rows.push({ label: 'Petit-déjeuner', detail: `${pax} pers. × ${nMek} nuit${nMek>1?'s':''}`, price: fmt(pdj) });
-    frais.items.forEach(f => rows.push({ label: f.label, detail: f.detail, price: fmt(f.montant) }));
-    sections.push({ title: `MEKKAH — ${getHotelMekkah()}`, rows, subtotal: fmt(st + pdj + frais.total) });
-  }
-  return sections;
-}
-
-// ─── PDF ────────────────────────────────────────────────────
 function genererPDF(data) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
@@ -1352,18 +1588,16 @@ function genererPDF(data) {
   const setDraw = h => doc.setDrawColor(...hex2rgb(h));
   const setTxt  = h => doc.setTextColor(...hex2rgb(h));
 
-  // Header
   setFill('#1A3A5C'); doc.rect(0, 0, W, 56, 'F');
   setDraw('#C9A84C'); doc.setLineWidth(0.8); doc.line(0, 56, W, 56);
 
-  const logoSrc = LOGO_BASE64 || (document.querySelector('.logo-img')?.src);
+  const logoSrc = LOGO_BASE64 || document.querySelector('.logo-img')?.src;
   if (logoSrc) { try { doc.addImage(logoSrc, 'PNG', M, 6, 26, 26); } catch(e) {} }
 
   doc.setFont('helvetica','bold'); doc.setFontSize(16); setTxt('#FFFFFF');
   doc.text('SAMY TRAVEL', M + 30, 16);
   doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#C9A84C');
   doc.text('OMRA & PÈLERINAGE — AGENCE DE VOYAGES', M + 30, 22);
-
   doc.setFont('helvetica','normal'); doc.setFontSize(8); setTxt('#AAAAAA');
   doc.text('DEVIS N°', W - M, 14, { align: 'right' });
   doc.setFont('helvetica','bold'); doc.setFontSize(16); setTxt('#C9A84C');
@@ -1380,39 +1614,40 @@ function genererPDF(data) {
 
   let y = 66;
 
-  // Sections
   (data.sections || []).forEach((section, si) => {
-    // Titre section (ville + hôtel)
-    setFill('#F0DFA0');
-    doc.roundedRect(M, y, CW, 10, 2, 2, 'F');
+    setFill('#F0DFA0'); doc.roundedRect(M, y, CW, 10, 2, 2, 'F');
     doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setTxt('#7A5800');
     doc.text(section.title, M + 4, y + 6.8);
     y += 14;
 
-    // Lignes
     section.rows.forEach(row => {
       setDraw('#E8E8E8'); doc.setLineWidth(0.3); doc.line(M, y - 1, W - M, y - 1);
       doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A1A1A');
       doc.text(row.label, M, y + 4);
       if (row.detail) {
-        doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#888888');
-        doc.text(row.detail, M, y + 9);
+        doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt('#888888');
+        const lines = doc.splitTextToSize(row.detail, CW - 30);
+        doc.text(lines, M, y + 9);
+        doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A3A5C');
+        doc.text(row.price, W - M, y + 4, { align: 'right' });
+        y += 8 + lines.length * 4;
+      } else {
+        doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A3A5C');
+        doc.text(row.price, W - M, y + 4, { align: 'right' });
+        y += 10;
       }
-      doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A3A5C');
-      doc.text(row.price, W - M, y + 4, { align: 'right' });
-      y += row.detail ? 15 : 10;
     });
 
-    // Sous-total
     setFill('#EEF3F8'); setDraw('#C0D0E0'); doc.setLineWidth(0.4);
     doc.roundedRect(M, y, CW, 10, 2, 2, 'FD');
     doc.setFont('helvetica','bold'); doc.setFontSize(9); setTxt('#1A3A5C');
     doc.text('Sous-total ' + (si === 0 ? 'Médine' : 'Mekkah'), M + 4, y + 6.8);
     doc.text(section.subtotal, W - M - 4, y + 6.8, { align: 'right' });
     y += 16;
+
+    if (y > 260) { doc.addPage(); y = 20; }
   });
 
-  // Total
   setFill('#1A3A5C'); setDraw('#1A3A5C'); doc.setLineWidth(0.5);
   doc.roundedRect(M, y, CW, 16, 3, 3, 'FD');
   doc.setFont('helvetica','bold'); doc.setFontSize(11); setTxt('#FFFFFF');
@@ -1421,14 +1656,12 @@ function genererPDF(data) {
   doc.text(data.total, W - M - 6, y + 11, { align: 'right' });
   y += 22;
 
-  // Validité
   setFill('#F6F6F0'); setDraw('#E8E8E0'); doc.setLineWidth(0.3);
   doc.roundedRect(M, y, CW, 9, 2, 2, 'FD');
   doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#888888');
   doc.text('  ⏱  ' + data.validTxt, M + 4, y + 6);
   y += 15;
 
-  // Mention
   setDraw('#E8E8E0'); doc.setLineWidth(0.3); doc.line(M, y, W - M, y); y += 6;
   const mention = 'Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer\nun hébergement équivalent en cas d\'indisponibilité. Tous les frais annexes sont inclus dans le total.';
   doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt('#AAAAAA');
@@ -1437,11 +1670,11 @@ function genererPDF(data) {
   return doc;
 }
 
-// ─── WHATSAPP ───────────────────────────────────────────────
+// ─── WHATSAPP ────────────────────────────────────────────────
 async function envoyerWhatsappPDF() {
-  const btn = document.getElementById('btn-wa');
+  const btn      = document.getElementById('btn-wa');
   const statusEl = document.getElementById('wa-status');
-  const numero = document.getElementById('wa-number').value.trim().replace(/\s+/g,'');
+  const numero   = document.getElementById('wa-number').value.trim().replace(/\s+/g,'');
 
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération PDF…';
@@ -1449,12 +1682,12 @@ async function envoyerWhatsappPDF() {
   statusEl.innerHTML = '⏳ Création du PDF…';
 
   try {
-    const data = getDevisData();
-    const doc = genererPDF(data);
+    const data     = getDevisData();
+    const doc      = genererPDF(data);
     const filename = `Devis_SamyTravel_${data.ref}.pdf`;
-    const msg = `Voici le devis ci-joint.\n\nSamy Travel`;
-    const pdfBlob = doc.output('blob');
-    const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+    const msg      = `Voici le devis ci-joint.\n\nSamy Travel`;
+    const pdfBlob  = doc.output('blob');
+    const pdfFile  = new File([pdfBlob], filename, { type: 'application/pdf' });
 
     if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
       statusEl.innerHTML = '📤 Ouverture du partage…';
@@ -1465,7 +1698,7 @@ async function envoyerWhatsappPDF() {
       statusEl.innerHTML = '✅ PDF téléchargé ! Ouverture de WhatsApp…';
       await new Promise(r => setTimeout(r, 1000));
       const encoded = encodeURIComponent(msg);
-      const waUrl = numero
+      const waUrl   = numero
         ? `https://wa.me/${numero.replace(/^\+/,'')}?text=${encoded}`
         : `https://wa.me/?text=${encoded}`;
       window.open(waUrl, '_blank');
@@ -1483,7 +1716,7 @@ async function envoyerWhatsappPDF() {
   }
 }
 
-// ─── LOGO ───────────────────────────────────────────────────
+// ─── LOGO ────────────────────────────────────────────────────
 function chargerLogoBase64() {
   const logoEl = document.querySelector('.logo-img');
   if (!logoEl || !logoEl.src) return;
@@ -1491,7 +1724,7 @@ function chargerLogoBase64() {
   img.crossOrigin = 'anonymous';
   img.onload = function() {
     const canvas = document.createElement('canvas');
-    canvas.width = img.naturalWidth || 200;
+    canvas.width  = img.naturalWidth  || 200;
     canvas.height = img.naturalHeight || 200;
     canvas.getContext('2d').drawImage(img, 0, 0);
     try {
@@ -1505,14 +1738,10 @@ function chargerLogoBase64() {
   img.src = logoEl.src;
 }
 
-// ─── INIT ───────────────────────────────────────────────────
-const today = new Date();
-const dep = new Date(today.getTime() + 7*86400000);
-document.getElementById('date-arrivee').value = today.toISOString().split('T')[0];
-document.getElementById('date-depart').value  = dep.toISOString().split('T')[0];
-
+// ─── INIT ────────────────────────────────────────────────────
 loadHotels();
 chargerLogoBase64();
+updateDevis();
 </script>
 
 <script>
