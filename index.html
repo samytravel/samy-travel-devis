@@ -139,59 +139,129 @@ input[type=text], input[type=number], input[type=date], input[type=tel], select 
 input:focus, select:focus { border-color: var(--gold); }
 
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-.row4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
-@media(max-width:540px){
-  .row2 { grid-template-columns: 1fr; }
-  .row3 { grid-template-columns: 1fr 1fr; }
-  .row4 { grid-template-columns: 1fr 1fr; }
-}
+@media(max-width:540px){ .row2 { grid-template-columns: 1fr; } }
 
-/* CHAMBRE */
-.chambre-grid {
+/* ── PANIER DE CHAMBRES ── */
+.panier-ajout {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr auto auto;
   gap: 8px;
-  margin-bottom: 16px;
+  align-items: end;
+  margin-bottom: 14px;
 }
-@media(max-width:500px){ .chambre-grid { grid-template-columns: repeat(2, 1fr); } }
+@media(max-width:480px){
+  .panier-ajout { grid-template-columns: 1fr 1fr; }
+  .panier-ajout .btn-add-ch { grid-column: 1 / -1; }
+}
+.panier-ajout label { margin-bottom: 5px; }
+.panier-ajout input[type=number] { max-width: 72px; text-align: center; }
 
-.chambre-card {
-  border: 2px solid var(--border-strong);
-  border-radius: 10px;
-  padding: 10px 6px;
-  text-align: center;
+.btn-add-ch {
+  height: 40px;
+  padding: 0 16px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.15s;
-  background: #FAFAFA;
-}
-.chambre-card:hover { border-color: var(--gold); background: #FFFBEF; }
-.chambre-card.selected {
-  border-color: var(--gold);
-  background: linear-gradient(135deg, #FFFBEF 0%, #FFF3CC 100%);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
-}
-.chambre-card .cc-icon { font-size: 20px; margin-bottom: 4px; }
-.chambre-card .cc-label { font-size: 11px; font-weight: 700; color: var(--text); }
-.chambre-card .cc-pax { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
-.chambre-card.selected .cc-label { color: #8A6010; }
-
-.nb-ch-row {
   display: flex;
   align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.btn-add-ch:hover { background: #0F2840; }
+
+/* PANIER LISTE */
+.panier-liste {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.panier-item {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #FFFBEF 0%, #FFF3CC 100%);
+  border: 1.5px solid var(--gold);
+  border-radius: 10px;
+  padding: 8px 12px;
   gap: 10px;
-  margin-bottom: 16px;
 }
-.nb-ch-row label { margin: 0; white-space: nowrap; flex-shrink: 0; }
-.nb-ch-row input { max-width: 80px; }
-.pax-badge {
-  background: var(--gold-light);
-  color: #7A5800;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 4px 10px;
+.panier-item-icon { font-size: 18px; flex-shrink: 0; }
+.panier-item-info { flex: 1; }
+.panier-item-label { font-size: 13px; font-weight: 700; color: #7A5800; }
+.panier-item-detail { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.panier-item-qty {
+  background: var(--accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
   border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
+.btn-remove-ch {
+  background: none;
+  border: none;
+  color: #C0392B;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 4px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: background 0.12s;
+}
+.btn-remove-ch:hover { background: #FDE8E8; }
+
+.panier-empty {
+  text-align: center;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: #FAFAF8;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.panier-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #EEF3F8;
+  border-radius: 9px;
+  padding: 9px 14px;
+  margin-bottom: 14px;
+}
+.panier-total-label { font-size: 12px; font-weight: 700; color: var(--accent); }
+.panier-total-value { font-size: 13px; font-weight: 700; color: var(--accent); }
+
+/* FORMULE */
+.formule-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+.formule-option {
+  border: 2px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.formule-option:hover { border-color: var(--gold); }
+.formule-option.active {
+  border-color: var(--gold);
+  background: #FFFBEF;
+}
+.formule-option input { display: none; }
+.fo-label { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+.fo-sub { font-size: 11px; color: var(--text-muted); }
 
 /* HOTEL SECTION */
 .hotel-section {
@@ -236,10 +306,8 @@ input:focus, select:focus { border-color: var(--gold); }
 }
 .btn-valider-hotel:hover { background: #0F2840; }
 
-/* TARIFS SEMAINE/WEEKEND */
-.tarif-block {
-  margin-bottom: 12px;
-}
+/* TARIFS */
+.tarif-block { margin-bottom: 12px; }
 .tarif-block-title {
   font-size: 11px;
   font-weight: 700;
@@ -266,33 +334,20 @@ input:focus, select:focus { border-color: var(--gold); }
 }
 .tarif-item.weekday { border-left: 3px solid var(--accent); }
 .tarif-item.weekend { border-left: 3px solid var(--gold); }
+.tarif-item label { display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
 
-.tarif-item label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-bottom: 6px;
-}
 .badge-weekday {
-  background: #EEF3F8;
-  color: var(--weekday);
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 10px;
-  letter-spacing: 0.3px;
+  background: #EEF3F8; color: var(--weekday);
+  font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px;
 }
 .badge-weekend {
-  background: #FFF3E0;
-  color: var(--weekend);
-  font-size: 9px;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 10px;
-  letter-spacing: 0.3px;
+  background: #FFF3E0; color: var(--weekend);
+  font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px;
 }
 
-/* RÉSUMÉ NUITS */
+
+
+/* NUITS SUMMARY */
 .nuits-summary {
   background: #F0F4F8;
   border-radius: 9px;
@@ -305,19 +360,10 @@ input:focus, select:focus { border-color: var(--gold); }
   gap: 10px;
   flex-wrap: wrap;
 }
-.nuits-summary .ns-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
+.nuits-summary .ns-item { display: flex; align-items: center; gap: 5px; }
 .ns-dot-weekday { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 .ns-dot-weekend { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-.ns-total {
-  font-weight: 700;
-  color: var(--accent);
-  margin-left: auto;
-  white-space: nowrap;
-}
+.ns-total { font-weight: 700; color: var(--accent); margin-left: auto; white-space: nowrap; }
 
 /* FRAIS */
 .frais-grid {
@@ -334,138 +380,63 @@ input:focus, select:focus { border-color: var(--gold); }
   border-radius: 8px;
   padding: 10px 12px;
 }
-.frais-item label {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-bottom: 6px;
-}
+.frais-item label { display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
 .frais-item label i { color: var(--gold); font-size: 11px; }
-.frais-toggle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-.toggle-switch {
-  position: relative;
-  width: 36px;
-  height: 20px;
-  flex-shrink: 0;
-}
+.frais-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.toggle-switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
 .toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  inset: 0;
-  background: #ccc;
-  border-radius: 20px;
-  transition: background 0.2s;
+  position: absolute; cursor: pointer; inset: 0;
+  background: #ccc; border-radius: 20px; transition: background 0.2s;
 }
 .toggle-switch input:checked + .toggle-slider { background: var(--gold); }
 .toggle-slider:before {
-  content: '';
-  position: absolute;
-  height: 14px; width: 14px;
-  left: 3px; top: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: transform 0.2s;
+  content: ''; position: absolute;
+  height: 14px; width: 14px; left: 3px; top: 3px;
+  background: white; border-radius: 50%; transition: transform 0.2s;
 }
 .toggle-switch input:checked + .toggle-slider:before { transform: translateX(16px); }
 .toggle-label { font-size: 12px; font-weight: 600; color: var(--text); text-transform: none; letter-spacing: 0; }
-
 .frais-input-wrap { display: flex; align-items: center; gap: 6px; }
 .frais-input-wrap input { flex: 1; }
-.frais-input-wrap .unit {
-  font-size: 11px;
-  color: var(--text-muted);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
+.frais-input-wrap .unit { font-size: 11px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
 
-/* FORMULE */
-.formule-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 6px;
+.frais-section-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer; padding: 8px 0; margin-top: 8px;
 }
-.formule-option {
-  border: 2px solid var(--border-strong);
-  border-radius: 10px;
-  padding: 12px;
-  cursor: pointer;
-  transition: all 0.15s;
+.frais-section-toggle .ftitle {
+  font-size: 12px; font-weight: 700; color: var(--accent);
+  display: flex; align-items: center; gap: 6px;
 }
-.formule-option:hover { border-color: var(--gold); }
-.formule-option.active {
-  border-color: var(--gold);
-  background: #FFFBEF;
-}
-.formule-option input { display: none; }
-.fo-label { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
-.fo-sub { font-size: 11px; color: var(--text-muted); }
+.frais-section-toggle .ftitle i { color: var(--gold); }
+.frais-chevron { font-size: 11px; color: var(--text-muted); transition: transform 0.2s; }
+.frais-chevron.open { transform: rotate(180deg); }
+.frais-body { overflow: hidden; }
 
-/* PDJ tarif row */
-.pdj-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-@media(max-width:480px){ .pdj-row { grid-template-columns: 1fr; } }
-
-/* DURÉE */
-.duree-info { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-top: 8px; }
-.duree-badge {
-  background: var(--accent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 20px;
-}
-
-/* GENERATE */
+/* VALIDITE */
 .btn-generate {
   background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 15px;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  color: #fff; border: none; border-radius: 12px; padding: 15px;
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
   box-shadow: 0 4px 18px rgba(201,168,76,0.4);
-  transition: transform 0.12s, box-shadow 0.12s;
-  letter-spacing: 0.3px;
+  transition: transform 0.12s, box-shadow 0.12s; letter-spacing: 0.3px;
 }
 .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(201,168,76,0.5); }
 .btn-generate:active { transform: translateY(0); }
 
 /* DEVIS OUTPUT */
 .devis-card {
-  background: #fff;
-  border-radius: var(--radius);
+  background: #fff; border-radius: var(--radius);
   box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  overflow: hidden;
-  border: 1px solid var(--border);
+  overflow: hidden; border: 1px solid var(--border);
 }
 .devis-top {
   background: linear-gradient(135deg, var(--accent) 0%, #0A2540 100%);
   padding: 20px 20px 18px;
 }
-.devis-top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-}
+.devis-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .devis-logo { width: 40px; height: 40px; object-fit: contain; }
 .devis-num-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
 .devis-ref { font-size: 20px; font-weight: 800; color: var(--gold); }
@@ -475,111 +446,49 @@ input:focus, select:focus { border-color: var(--gold); }
 
 .devis-body { padding: 18px 20px; }
 .devis-section-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 12px;
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
 }
 
 .line-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  gap: 12px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 10px 0; border-bottom: 1px solid var(--border); gap: 12px;
 }
 .line-desc { font-size: 13px; font-weight: 600; }
 .line-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .line-price { font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; padding-top: 1px; }
 
 .line-city-header {
-  padding: 10px 0 4px;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--gold);
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  border-bottom: 2px solid var(--gold-light);
-  margin-top: 6px;
+  padding: 10px 0 4px; font-size: 11px; font-weight: 700;
+  color: var(--gold); text-transform: uppercase; letter-spacing: 0.8px;
+  border-bottom: 2px solid var(--gold-light); margin-top: 6px;
 }
 
 .total-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #F6F6F0;
-  border-radius: 10px;
-  padding: 14px 16px;
-  margin-top: 14px;
-  border: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  background: #F6F6F0; border-radius: 10px; padding: 14px 16px;
+  margin-top: 14px; border: 1px solid var(--border);
 }
 .total-label { font-size: 14px; font-weight: 700; }
 .total-amount { font-size: 22px; font-weight: 800; color: var(--accent); }
 
 .validity-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 10px;
-  background: #F6F6F0;
-  padding: 8px 12px;
-  border-radius: 8px;
+  display: flex; align-items: center; gap: 6px; font-size: 11px;
+  color: var(--text-muted); margin-top: 10px;
+  background: #F6F6F0; padding: 8px 12px; border-radius: 8px;
 }
 
 .devis-footer {
-  padding: 16px 20px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  padding: 16px 20px; border-top: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 12px;
 }
-.devis-mention {
-  font-size: 10px;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
+.devis-mention { font-size: 10px; color: var(--text-muted); line-height: 1.5; }
 
 .btn-whatsapp {
-  background: #25D366;
-  color: #fff;
-  border: none;
-  border-radius: 9px;
-  padding: 10px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  background: #25D366; color: #fff; border: none; border-radius: 9px;
+  padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-
-/* FRAIS TOGGLE */
-.frais-section-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  padding: 8px 0;
-  margin-top: 8px;
-}
-.frais-section-toggle .ftitle {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.frais-section-toggle .ftitle i { color: var(--gold); }
-.frais-chevron { font-size: 11px; color: var(--text-muted); transition: transform 0.2s; }
-.frais-chevron.open { transform: rotate(180deg); }
-.frais-body { overflow: hidden; }
 </style>
 </head>
 <body>
@@ -616,59 +525,48 @@ input:focus, select:focus { border-color: var(--gold); }
     </div>
   </div>
 
-  <!-- CHAMBRE & FORMULE -->
+  <!-- CHAMBRES & FORMULE -->
   <div class="card">
     <div class="section-header">
       <div class="section-icon"><i class="fas fa-bed"></i></div>
-      <div class="section-title">Type de chambre</div>
+      <div class="section-title">Chambres &amp; formule</div>
     </div>
 
-    <div class="chambre-grid" id="chambre-grid">
-      <div class="chambre-card" data-type="single" onclick="selectChambre('single')">
-        <div class="cc-icon"></div>
-        <div class="cc-label">Single</div>
-        <div class="cc-pax">1 pers.</div>
+    <!-- AJOUT CHAMBRE -->
+    <div class="panier-ajout">
+      <div>
+        <label>Type de chambre</label>
+        <select id="new-ch-type">
+          <option value="single">Single — 1 pers.</option>
+          <option value="double" selected>Double — 2 pers.</option>
+          <option value="triple">Triple — 3 pers.</option>
+          <option value="quad">Quadruple — 4 pers.</option>
+          <option value="quintuple">Quintuple — 5 pers.</option>
+          <option value="junior">Suite Junior — 2 pers.</option>
+          <option value="senior">Suite Senior — 2 pers.</option>
+        </select>
       </div>
-      <div class="chambre-card selected" data-type="double" onclick="selectChambre('double')">
-        <div class="cc-icon"></div>
-        <div class="cc-label">Double</div>
-        <div class="cc-pax">2 pers.</div>
+      <div>
+        <label>Qté</label>
+        <input type="number" id="new-ch-qty" min="1" max="20" value="1" style="max-width:72px;text-align:center">
       </div>
-      <div class="chambre-card" data-type="triple" onclick="selectChambre('triple')">
-        <div class="cc-icon"></div>
-        <div class="cc-label">Triple</div>
-        <div class="cc-pax">3 pers.</div>
-      </div>
-      <div class="chambre-card" data-type="quad" onclick="selectChambre('quad')">
-        <div class="cc-icon"></div>
-        <div class="cc-label">Quadruple</div>
-        <div class="cc-pax">4 pers.</div>
-      </div>
-      <div class="chambre-card" data-type="quintuple" onclick="selectChambre('quintuple')">
-        <div class="cc-icon"></div>
-        <div class="cc-label">Quintuple</div>
-        <div class="cc-pax">5 pers.</div>
-      </div>
-      <div class="chambre-card" data-type="junior" onclick="selectChambre('junior')">
-        <div class="cc-icon"></div>
-        <div class="cc-label">Suite Jr</div>
-        <div class="cc-pax">2 pers.</div>
-      </div>
-      <div class="chambre-card" data-type="senior" onclick="selectChambre('senior')">
-        <div class="cc-icon"></div>
-        <div class="cc-label">Suite Sr</div>
-        <div class="cc-pax">2 pers.</div>
-      </div>
-    </div>
-    <input type="hidden" id="chambre-type" value="double">
-
-    <div class="nb-ch-row">
-      <label>Nombre de chambres</label>
-      <input type="number" id="nb-chambres" min="1" value="1" style="max-width:70px" onchange="updateDevis()">
-      <div class="pax-badge" id="pax-badge">2 personnes</div>
+      <button type="button" class="btn-add-ch" onclick="ajouterChambre()">
+        <i class="fas fa-plus"></i> Ajouter
+      </button>
     </div>
 
-    <div style="margin-bottom:0">
+    <!-- PANIER -->
+    <div id="panier-liste" class="panier-liste">
+      <!-- rempli dynamiquement -->
+    </div>
+
+    <div class="panier-total" id="panier-total" style="display:none">
+      <span class="panier-total-label"><i class="fas fa-users" style="margin-right:5px;color:var(--gold)"></i> Total voyageurs</span>
+      <span class="panier-total-value" id="panier-total-value">0 personne</span>
+    </div>
+
+    <!-- FORMULE -->
+    <div>
       <label>Formule</label>
       <div class="formule-group">
         <label class="formule-option active" id="fo-ro">
@@ -678,7 +576,7 @@ input:focus, select:focus { border-color: var(--gold); }
         </label>
         <label class="formule-option" id="fo-bb">
           <input type="radio" name="formule" value="BB" onchange="toggleFormule('BB')">
-          <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed & Breakfast</div>
+          <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed &amp; Breakfast</div>
           <div class="fo-sub">Petit-déjeuner inclus</div>
         </label>
       </div>
@@ -709,7 +607,6 @@ input:focus, select:focus { border-color: var(--gold); }
       </div>
     </div>
 
-    <!-- DATES MÉDINE -->
     <div class="row2" style="margin-bottom:10px">
       <div>
         <label>Arrivée à Médine</label>
@@ -721,54 +618,32 @@ input:focus, select:focus { border-color: var(--gold); }
       </div>
     </div>
 
-    <!-- RÉSUMÉ NUITS MÉDINE -->
     <div class="nuits-summary" id="nuits-summary-medine">
       <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
     </div>
 
-    <!-- TARIFS MÉDINE -->
     <div class="tarif-block">
       <div class="tarif-block-title" style="color:var(--accent)">
         <i class="fas fa-tag" style="color:var(--gold)"></i> Prix par chambre / nuit
       </div>
       <div class="tarif-row">
         <div class="tarif-item weekday">
-          <label>
-            <span class="badge-weekday">SEMAINE</span>
-            dim → mer
-          </label>
+          <label><span class="badge-weekday">SEMAINE</span> dim → mer</label>
           <input type="number" id="prix-weekday-medine" value="80" min="0" onchange="updateDevis()">
         </div>
         <div class="tarif-item weekend">
-          <label>
-            <span class="badge-weekend">WEEK-END</span>
-            jeu → sam
-          </label>
+          <label><span class="badge-weekend">WEEK-END</span> jeu → sam</label>
           <input type="number" id="prix-weekend-medine" value="100" min="0" onchange="updateDevis()">
         </div>
       </div>
-      <!-- PDJ Médine -->
       <div id="pdj-medine-wrap">
-        <div class="pdj-row">
-          <div class="tarif-item weekday" style="border-left-color:var(--accent)">
-            <label>
-              <span class="badge-weekday">PDJ SEMAINE</span>
-              SAR/pers./nuit
-            </label>
-            <input type="number" id="prix-pdj-weekday-medine" value="15" min="0" onchange="updateDevis()">
-          </div>
-          <div class="tarif-item weekend" style="border-left-color:var(--gold)">
-            <label>
-              <span class="badge-weekend">PDJ WEEK-END</span>
-              SAR/pers./nuit
-            </label>
-            <input type="number" id="prix-pdj-weekend-medine" value="18" min="0" onchange="updateDevis()">
-          </div>
+        <div class="tarif-item weekday" style="margin-bottom:10px">
+          <label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label>
+          <input type="number" id="prix-pdj-medine" value="15" min="0" onchange="updateDevis()">
         </div>
       </div>
     </div>
 
-    <!-- FRAIS MÉDINE -->
     <div class="frais-section-toggle" onclick="toggleFrais('medine')">
       <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
       <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-medine"></i>
@@ -855,7 +730,6 @@ input:focus, select:focus { border-color: var(--gold); }
       </div>
     </div>
 
-    <!-- DATES MEKKAH -->
     <div class="row2" style="margin-bottom:10px">
       <div>
         <label>Arrivée à Mekkah</label>
@@ -867,54 +741,32 @@ input:focus, select:focus { border-color: var(--gold); }
       </div>
     </div>
 
-    <!-- RÉSUMÉ NUITS MEKKAH -->
     <div class="nuits-summary" id="nuits-summary-mekkah">
       <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
     </div>
 
-    <!-- TARIFS MEKKAH -->
     <div class="tarif-block">
       <div class="tarif-block-title" style="color:var(--accent)">
         <i class="fas fa-tag" style="color:var(--gold)"></i> Prix par chambre / nuit
       </div>
       <div class="tarif-row">
         <div class="tarif-item weekday">
-          <label>
-            <span class="badge-weekday">SEMAINE</span>
-            dim → mer
-          </label>
+          <label><span class="badge-weekday">SEMAINE</span> dim → mer</label>
           <input type="number" id="prix-weekday-mekkah" value="100" min="0" onchange="updateDevis()">
         </div>
         <div class="tarif-item weekend">
-          <label>
-            <span class="badge-weekend">WEEK-END</span>
-            jeu → sam
-          </label>
+          <label><span class="badge-weekend">WEEK-END</span> jeu → sam</label>
           <input type="number" id="prix-weekend-mekkah" value="130" min="0" onchange="updateDevis()">
         </div>
       </div>
-      <!-- PDJ Mekkah -->
       <div id="pdj-mekkah-wrap">
-        <div class="pdj-row">
-          <div class="tarif-item weekday">
-            <label>
-              <span class="badge-weekday">PDJ SEMAINE</span>
-              SAR/pers./nuit
-            </label>
-            <input type="number" id="prix-pdj-weekday-mekkah" value="15" min="0" onchange="updateDevis()">
-          </div>
-          <div class="tarif-item weekend">
-            <label>
-              <span class="badge-weekend">PDJ WEEK-END</span>
-              SAR/pers./nuit
-            </label>
-            <input type="number" id="prix-pdj-weekend-mekkah" value="18" min="0" onchange="updateDevis()">
-          </div>
+        <div class="tarif-item weekday" style="margin-bottom:10px">
+          <label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label>
+          <input type="number" id="prix-pdj-mekkah" value="15" min="0" onchange="updateDevis()">
         </div>
       </div>
     </div>
 
-    <!-- FRAIS MEKKAH -->
     <div class="frais-section-toggle" onclick="toggleFrais('mekkah')">
       <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
       <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-mekkah"></i>
@@ -1062,49 +914,110 @@ let devisCounter = Math.floor(Math.random()*90)+10;
 let LOGO_BASE64 = null;
 
 const CHAMBRE_CONFIG = {
-  single:    { label: 'Single',       pax: 1 },
-  double:    { label: 'Double',       pax: 2 },
-  triple:    { label: 'Triple',       pax: 3 },
-  quad:      { label: 'Quadruple',    pax: 4 },
-  quintuple: { label: 'Quintuple',    pax: 5 },
-  junior:    { label: 'Suite Junior', pax: 2 },
-  senior:    { label: 'Suite Senior', pax: 2 },
+  single:    { label: 'Single',       pax: 1, icon: '🛏️' },
+  double:    { label: 'Double',       pax: 2, icon: '🛏️' },
+  triple:    { label: 'Triple',       pax: 3, icon: '🛏️' },
+  quad:      { label: 'Quadruple',    pax: 4, icon: '🏨' },
+  quintuple: { label: 'Quintuple',    pax: 5, icon: '🏨' },
+  junior:    { label: 'Suite Junior', pax: 2, icon: '✨' },
+  senior:    { label: 'Suite Senior', pax: 2, icon: '✨' },
 };
 
+// ─── PANIER ──────────────────────────────────────────────────
+// panier = [{type, qty}]  — on peut avoir plusieurs lignes du même type
+let panier = [];
+
+function ajouterChambre() {
+  const type = document.getElementById('new-ch-type').value;
+  const qty  = parseInt(document.getElementById('new-ch-qty').value) || 1;
+  if (!type || qty < 1) return;
+
+  // Fusionner si le même type existe déjà
+  const existing = panier.find(l => l.type === type);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    panier.push({ type, qty });
+  }
+
+  renderPanier();
+  updateDevis();
+}
+
+function supprimerChambre(index) {
+  panier.splice(index, 1);
+  renderPanier();
+  updateDevis();
+}
+
+function renderPanier() {
+  const el = document.getElementById('panier-liste');
+  const totalEl = document.getElementById('panier-total');
+  const totalValEl = document.getElementById('panier-total-value');
+
+  if (panier.length === 0) {
+    el.innerHTML = `<div class="panier-empty">
+      <i class="fas fa-bed" style="font-size:20px;opacity:0.3;display:block;margin-bottom:6px"></i>
+      Aucune chambre ajoutée — utilisez le sélecteur ci-dessus
+    </div>`;
+    totalEl.style.display = 'none';
+    return;
+  }
+
+  let html = '';
+  let totalCh = 0, totalPax = 0;
+
+  panier.forEach((ligne, i) => {
+    const cfg = CHAMBRE_CONFIG[ligne.type];
+    const pax = cfg.pax * ligne.qty;
+    totalCh  += ligne.qty;
+    totalPax += pax;
+
+    html += `<div class="panier-item">
+      <div class="panier-item-icon">${cfg.icon}</div>
+      <div class="panier-item-info">
+        <div class="panier-item-label">${cfg.label}</div>
+        <div class="panier-item-detail">${pax} voyageur${pax>1?'s':''}</div>
+      </div>
+      <div class="panier-item-qty">${ligne.qty} ch.</div>
+      <button class="btn-remove-ch" onclick="supprimerChambre(${i})" title="Supprimer">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>`;
+  });
+
+  el.innerHTML = html;
+
+  totalEl.style.display = 'flex';
+  totalValEl.textContent = `${totalCh} chambre${totalCh>1?'s':''} · ${totalPax} voyageur${totalPax>1?'s':''}`;
+}
+
+/** Retourne {nbChambres, paxTotal} calculés depuis le panier */
+function getPanierStats() {
+  let nbCh = 0, pax = 0;
+  panier.forEach(l => {
+    nbCh += l.qty;
+    pax  += CHAMBRE_CONFIG[l.type].pax * l.qty;
+  });
+  return { nbCh, pax };
+}
+
 // ─── SEMAINE ARABE ───────────────────────────────────────────
-// Semaine : dim(0), lun(1), mar(2), mer(3) → weekday
-// Week-end : jeu(4), ven(5), sam(6)        → weekend
 function isWeekend(date) {
-  const d = date.getDay(); // 0=dim,1=lun,...,6=sam
+  const d = date.getDay();
   return d === 4 || d === 5 || d === 6;
 }
 
-/**
- * Compte les nuits weekday et weekend entre deux dates.
- * La nuit est comptée sur le jour d'arrivée (le jour de départ ne compte pas).
- * @param {string} dateArriveeStr  YYYY-MM-DD
- * @param {string} dateDepartStr   YYYY-MM-DD
- * @returns {{ weekday: number, weekend: number, total: number }}
- */
 function compterNuits(dateArriveeStr, dateDepartStr) {
   if (!dateArriveeStr || !dateDepartStr) return { weekday: 0, weekend: 0, total: 0 };
-
-  // Travailler en UTC pour éviter les décalages horaires
   const arr = new Date(dateArriveeStr + 'T00:00:00Z');
   const dep = new Date(dateDepartStr  + 'T00:00:00Z');
-
   let weekday = 0, weekend = 0;
   const cur = new Date(arr);
-
   while (cur < dep) {
-    if (isWeekend(cur)) {
-      weekend++;
-    } else {
-      weekday++;
-    }
+    if (isWeekend(cur)) weekend++; else weekday++;
     cur.setUTCDate(cur.getUTCDate() + 1);
   }
-
   return { weekday, weekend, total: weekday + weekend };
 }
 
@@ -1113,54 +1026,19 @@ function updateNuitsSummary(ville) {
   const arriveeVal = document.getElementById('date-arrivee-' + ville).value;
   const departVal  = document.getElementById('date-depart-'  + ville).value;
   const el = document.getElementById('nuits-summary-' + ville);
-
   if (!arriveeVal || !departVal) {
     el.innerHTML = '<span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>';
     return;
   }
-
   const { weekday, weekend, total } = compterNuits(arriveeVal, departVal);
-
   if (total <= 0) {
     el.innerHTML = '<span style="color:#C0392B;font-size:11px"><i class="fas fa-exclamation-circle"></i> Date de départ antérieure ou égale à l\'arrivée</span>';
     return;
   }
-
   el.innerHTML = `
-    <div class="ns-item">
-      <div class="ns-dot-weekday"></div>
-      <span><strong>${weekday}</strong> nuit${weekday>1?'s':''} semaine</span>
-    </div>
-    <div class="ns-item">
-      <div class="ns-dot-weekend"></div>
-      <span><strong>${weekend}</strong> nuit${weekend>1?'s':''} week-end</span>
-    </div>
-    <div class="ns-total">
-      <i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>
-      ${total} nuit${total>1?'s':''} au total
-    </div>
-  `;
-}
-
-// ─── CHAMBRE ─────────────────────────────────────────────────
-function selectChambre(type) {
-  document.querySelectorAll('.chambre-card').forEach(c => c.classList.remove('selected'));
-  document.querySelector(`[data-type="${type}"]`).classList.add('selected');
-  document.getElementById('chambre-type').value = type;
-  updatePaxBadge();
-  updateDevis();
-}
-
-function updatePaxBadge() {
-  const type = document.getElementById('chambre-type').value;
-  const nb   = parseInt(document.getElementById('nb-chambres').value) || 1;
-  const pax  = (CHAMBRE_CONFIG[type]?.pax || 2) * nb;
-  document.getElementById('pax-badge').textContent = pax + ' personne' + (pax > 1 ? 's' : '');
-}
-
-function getChambres() {
-  const t = document.getElementById('chambre-type').value || 'double';
-  return CHAMBRE_CONFIG[t] || CHAMBRE_CONFIG.double;
+    <div class="ns-item"><div class="ns-dot-weekday"></div><span><strong>${weekday}</strong> nuit${weekday>1?'s':''} semaine</span></div>
+    <div class="ns-item"><div class="ns-dot-weekend"></div><span><strong>${weekend}</strong> nuit${weekend>1?'s':''} week-end</span></div>
+    <div class="ns-total"><i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>${total} nuit${total>1?'s':''} au total</div>`;
 }
 
 // ─── FORMULE ─────────────────────────────────────────────────
@@ -1172,10 +1050,7 @@ function toggleFormule(val) {
   document.getElementById('pdj-mekkah-wrap').style.opacity = show ? '1' : '0.4';
   updateDevis();
 }
-
-function getFormule() {
-  return document.querySelector('input[name=formule]:checked').value;
-}
+function getFormule() { return document.querySelector('input[name=formule]:checked').value; }
 
 // ─── FRAIS TOGGLE ────────────────────────────────────────────
 function toggleFrais(ville) {
@@ -1312,42 +1187,31 @@ function getFrais(ville, nuits, pax) {
   }
 }
 
-// ─── CALCUL HÉBERGEMENT AVEC TARIFS JOUR ─────────────────────
-/**
- * Calcule le coût d'hébergement total pour une ville.
- * Retourne aussi les détails pour affichage.
- */
+// ─── CALCUL HÉBERGEMENT ──────────────────────────────────────
 function calcHeberg(ville, nbCh) {
   const prefix  = ville === 'medine' ? 'medine' : 'mekkah';
   const arrivee = document.getElementById('date-arrivee-' + prefix).value;
   const depart  = document.getElementById('date-depart-'  + prefix).value;
   const pWd     = parseFloat(document.getElementById('prix-weekday-'  + prefix).value) || 0;
   const pWe     = parseFloat(document.getElementById('prix-weekend-'  + prefix).value) || 0;
-
   const { weekday, weekend, total } = compterNuits(arrivee, depart);
-
-  const coutWd = pWd * weekday * nbCh;
-  const coutWe = pWe * weekend * nbCh;
-  const coutTotal = coutWd + coutWe;
-
-  return { weekday, weekend, total, coutWd, coutWe, coutTotal, pWd, pWe };
+  const coutWd  = pWd * weekday * nbCh;
+  const coutWe  = pWe * weekend * nbCh;
+  return { weekday, weekend, total, coutWd, coutWe, coutTotal: coutWd + coutWe, pWd, pWe };
 }
 
 function calcPdj(ville, nbCh, pax) {
   const formule = getFormule();
-  if (formule !== 'BB') return { total: 0, weekday: 0, weekend: 0 };
-
+  if (formule !== 'BB') return { total: 0, nbWd: 0, nbWe: 0 };
   const prefix  = ville === 'medine' ? 'medine' : 'mekkah';
   const arrivee = document.getElementById('date-arrivee-' + prefix).value;
   const depart  = document.getElementById('date-depart-'  + prefix).value;
-  const pWd     = parseFloat(document.getElementById('prix-pdj-weekday-'  + prefix).value) || 0;
-  const pWe     = parseFloat(document.getElementById('prix-pdj-weekend-'  + prefix).value) || 0;
-  const { weekday, weekend } = compterNuits(arrivee, depart);
-
-  const coutWd = pWd * weekday * pax;
-  const coutWe = pWe * weekend * pax;
-
-  return { total: coutWd + coutWe, weekday: coutWd, weekend: coutWe, nbWd: weekday, nbWe: weekend };
+  const p       = parseFloat(document.getElementById('prix-pdj-' + prefix).value) || 0;
+  const { weekday, weekend, total } = compterNuits(arrivee, depart);
+  return {
+    total: p * total * pax,
+    nbWd: weekday, nbWe: weekend, nuits: total
+  };
 }
 
 // ─── LIGNE HTML ───────────────────────────────────────────────
@@ -1361,33 +1225,36 @@ function lineHTML(label, detail, price) {
   </div>`;
 }
 
+// ─── RÉSUMÉ PANIER POUR LE DEVIS ─────────────────────────────
+/** Génère une ligne de description du panier pour le devis */
+function getPanierDescription() {
+  if (panier.length === 0) return '';
+  return panier.map(l => {
+    const cfg = CHAMBRE_CONFIG[l.type];
+    return l.qty > 1 ? `${l.qty}× ${cfg.label}` : cfg.label;
+  }).join(' + ');
+}
+
 // ─── MAIN UPDATE ─────────────────────────────────────────────
 function updateDevis(afficher = false) {
-  const nbCh   = parseInt(document.getElementById('nb-chambres').value) || 1;
-  const chambre= getChambres();
-  const pax    = chambre.pax * nbCh;
+  const { nbCh, pax } = getPanierStats();
   const validite = parseInt(document.getElementById('validite').value) || 1;
   const formule  = getFormule();
 
-  updatePaxBadge();
   updateNuitsSummary('medine');
   updateNuitsSummary('mekkah');
 
-  // ── MÉDINE ──
-  const hMed  = calcHeberg('medine', nbCh);
-  const pMed  = calcPdj('medine', nbCh, pax);
-  const fMed  = getFrais('medine', hMed.total, pax);
+  const hMed = calcHeberg('medine', nbCh);
+  const pMed = calcPdj('medine', nbCh, pax);
+  const fMed = getFrais('medine', hMed.total, pax);
 
-  // ── MEKKAH ──
-  const hMek  = calcHeberg('mekkah', nbCh);
-  const pMek  = calcPdj('mekkah', nbCh, pax);
-  const fMek  = getFrais('mekkah', hMek.total, pax);
+  const hMek = calcHeberg('mekkah', nbCh);
+  const pMek = calcPdj('mekkah', nbCh, pax);
+  const fMek = getFrais('mekkah', hMek.total, pax);
 
-  const totalNuits = hMed.total + hMek.total;
   const grandTotal = hMed.coutTotal + pMed.total + fMed.total
                    + hMek.coutTotal + pMek.total + fMek.total;
 
-  // Infos date
   const today  = new Date();
   const expiry = new Date(today.getTime() + validite * 86400000);
   const fmtDate = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
@@ -1402,9 +1269,8 @@ function updateDevis(afficher = false) {
   const clientEl = document.getElementById('d-client-name');
   clientEl.textContent = (prenom || nom) ? `À l'attention de : ${prenom} ${nom}`.trim() : '';
 
-  const chLabel = nbCh > 1
-    ? `${nbCh} chambres ${chambre.label.toLowerCase()}`
-    : `1 chambre ${chambre.label.toLowerCase()}`;
+  // Résumé chambres pour le devis
+  const panierDesc = getPanierDescription();
 
   let html = '';
 
@@ -1413,32 +1279,23 @@ function updateDevis(afficher = false) {
     const totalMed = hMed.coutTotal + pMed.total + fMed.total;
     html += `<div class="line-city-header"><i class="fas fa-mosque" style="margin-right:5px"></i> Médine — ${getHotelMedine()}</div>`;
 
-    // Hébergement : détail weekday + weekend
-    let hebDetail = '';
+    let hebDetail = panierDesc ? `${panierDesc} · ` : '';
     if (hMed.weekday > 0 && hMed.weekend > 0) {
-      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine (${fmt(hMed.pWd)}/ch) + ${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end (${fmt(hMed.pWe)}/ch) × ${nbCh} ch.`;
+      hebDetail += `${hMed.weekday} nuit${hMed.weekday>1?'s':''} sem. (${fmt(hMed.pWd)}/ch) + ${hMed.weekend} nuit${hMed.weekend>1?'s':''} w-e (${fmt(hMed.pWe)}/ch)`;
     } else if (hMed.weekday > 0) {
-      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMed.pWd)}/nuit)`;
+      hebDetail += `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine · ${fmt(hMed.pWd)}/ch/nuit`;
     } else {
-      hebDetail = `${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMed.pWe)}/nuit)`;
+      hebDetail += `${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end · ${fmt(hMed.pWe)}/ch/nuit`;
     }
     html += lineHTML('Hébergement', hebDetail, fmt(hMed.coutTotal));
 
-    // PDJ
     if (formule === 'BB' && pMed.total > 0) {
-      let pdjDetail = '';
-      if (pMed.nbWd > 0 && pMed.nbWe > 0) {
-        pdjDetail = `${pMed.nbWd} nuit${pMed.nbWd>1?'s':''} semaine + ${pMed.nbWe} nuit${pMed.nbWe>1?'s':''} week-end × ${pax} pers.`;
-      } else {
-        pdjDetail = `${hMed.total} nuit${hMed.total>1?'s':''} × ${pax} pers.`;
-      }
-      html += lineHTML('Petit-déjeuner', pdjDetail, fmt(pMed.total));
+      const p = parseFloat(document.getElementById('prix-pdj-medine').value) || 0;
+      html += lineHTML('Petit-déjeuner', `${p} SAR × ${pax} pers. × ${pMed.nuits} nuit${pMed.nuits>1?'s':''}`, fmt(pMed.total));
     }
 
-    // Frais
     fMed.items.forEach(f => { html += lineHTML(f.label, f.detail, fmt(f.montant)); });
 
-    // Sous-total
     html += `<div class="line-item" style="background:#F6F6F0;border-radius:8px;padding:8px 10px;margin:4px 0;">
       <div style="font-size:12px;font-weight:700;color:var(--accent)">Sous-total Médine</div>
       <div class="line-price">${fmt(totalMed)}</div>
@@ -1450,24 +1307,19 @@ function updateDevis(afficher = false) {
     const totalMek = hMek.coutTotal + pMek.total + fMek.total;
     html += `<div class="line-city-header" style="margin-top:10px"><i class="fas fa-star-and-crescent" style="margin-right:5px"></i> Mekkah — ${getHotelMekkah()}</div>`;
 
-    let hebDetail = '';
+    let hebDetail = panierDesc ? `${panierDesc} · ` : '';
     if (hMek.weekday > 0 && hMek.weekend > 0) {
-      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine (${fmt(hMek.pWd)}/ch) + ${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end (${fmt(hMek.pWe)}/ch) × ${nbCh} ch.`;
+      hebDetail += `${hMek.weekday} nuit${hMek.weekday>1?'s':''} sem. (${fmt(hMek.pWd)}/ch) + ${hMek.weekend} nuit${hMek.weekend>1?'s':''} w-e (${fmt(hMek.pWe)}/ch)`;
     } else if (hMek.weekday > 0) {
-      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMek.pWd)}/nuit)`;
+      hebDetail += `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine · ${fmt(hMek.pWd)}/ch/nuit`;
     } else {
-      hebDetail = `${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMek.pWe)}/nuit)`;
+      hebDetail += `${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end · ${fmt(hMek.pWe)}/ch/nuit`;
     }
     html += lineHTML('Hébergement', hebDetail, fmt(hMek.coutTotal));
 
     if (formule === 'BB' && pMek.total > 0) {
-      let pdjDetail = '';
-      if (pMek.nbWd > 0 && pMek.nbWe > 0) {
-        pdjDetail = `${pMek.nbWd} nuit${pMek.nbWd>1?'s':''} semaine + ${pMek.nbWe} nuit${pMek.nbWe>1?'s':''} week-end × ${pax} pers.`;
-      } else {
-        pdjDetail = `${hMek.total} nuit${hMek.total>1?'s':''} × ${pax} pers.`;
-      }
-      html += lineHTML('Petit-déjeuner', pdjDetail, fmt(pMek.total));
+      const p = parseFloat(document.getElementById('prix-pdj-mekkah').value) || 0;
+      html += lineHTML('Petit-déjeuner', `${p} SAR × ${pax} pers. × ${pMek.nuits} nuit${pMek.nuits>1?'s':''}`, fmt(pMek.total));
     }
 
     fMek.items.forEach(f => { html += lineHTML(f.label, f.detail, fmt(f.montant)); });
@@ -1491,63 +1343,46 @@ function updateDevis(afficher = false) {
 
 // ─── PDF ─────────────────────────────────────────────────────
 function buildPdfSections() {
-  const nbCh   = parseInt(document.getElementById('nb-chambres').value) || 1;
-  const chambre= getChambres();
-  const pax    = chambre.pax * nbCh;
-  const formule= getFormule();
-  const chLabel= nbCh > 1 ? `${nbCh} chambres ${chambre.label.toLowerCase()}` : `1 chambre ${chambre.label.toLowerCase()}`;
+  const { nbCh, pax } = getPanierStats();
+  const formule = getFormule();
+  const panierDesc = getPanierDescription();
 
   const sections = [];
 
-  // MÉDINE
-  const hMed = calcHeberg('medine', nbCh);
-  if (hMed.total > 0) {
-    const pMed = calcPdj('medine', nbCh, pax);
-    const fMed = getFrais('medine', hMed.total, pax);
+  ['medine','mekkah'].forEach((ville, si) => {
+    const h = calcHeberg(ville, nbCh);
+    if (h.total === 0) return;
+    const p = calcPdj(ville, nbCh, pax);
+    const f = getFrais(ville, h.total, pax);
     const rows = [];
 
-    let hebDetail = '';
-    if (hMed.weekday > 0 && hMed.weekend > 0) {
-      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine (${fmt(hMed.pWd)}/ch) + ${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end (${fmt(hMed.pWe)}/ch) × ${nbCh} ch.`;
-    } else if (hMed.weekday > 0) {
-      hebDetail = `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMed.pWd)}/nuit)`;
+    let hebDetail = panierDesc ? `${panierDesc} · ` : '';
+    if (h.weekday > 0 && h.weekend > 0) {
+      hebDetail += `${h.weekday} nuit${h.weekday>1?'s':''} sem. (${fmt(h.pWd)}/ch) + ${h.weekend} nuit${h.weekend>1?'s':''} w-e (${fmt(h.pWe)}/ch)`;
+    } else if (h.weekday > 0) {
+      hebDetail += `${h.weekday} nuit${h.weekday>1?'s':''} semaine · ${fmt(h.pWd)}/ch/nuit`;
     } else {
-      hebDetail = `${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMed.pWe)}/nuit)`;
+      hebDetail += `${h.weekend} nuit${h.weekend>1?'s':''} week-end · ${fmt(h.pWe)}/ch/nuit`;
     }
-    rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(hMed.coutTotal) });
+    rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(h.coutTotal) });
 
-    if (formule === 'BB' && pMed.total > 0) {
-      rows.push({ label: 'Petit-déjeuner', detail: `${hMed.total} nuit${hMed.total>1?'s':''} × ${pax} pers.`, price: fmt(pMed.total) });
+    if (formule === 'BB' && p.total > 0) {
+      const prixPdj = parseFloat(document.getElementById('prix-pdj-' + ville).value) || 0;
+      rows.push({ label: 'Petit-déjeuner', detail: `${prixPdj} SAR × ${pax} pers. × ${h.total} nuit${h.total>1?'s':''}`, price: fmt(p.total) });
     }
-    fMed.items.forEach(f => rows.push({ label: f.label, detail: f.detail, price: fmt(f.montant) }));
+    f.items.forEach(item => rows.push({ label: item.label, detail: item.detail, price: fmt(item.montant) }));
 
-    sections.push({ title: `MÉDINE — ${getHotelMedine()}`, rows, subtotal: fmt(hMed.coutTotal + pMed.total + fMed.total) });
-  }
+    const villeLabel = ville === 'medine' ? 'MÉDINE' : 'MEKKAH';
+    const hotelName  = ville === 'medine' ? getHotelMedine() : getHotelMekkah();
+    const subtotalNum = h.coutTotal + p.total + f.total;
 
-  // MEKKAH
-  const hMek = calcHeberg('mekkah', nbCh);
-  if (hMek.total > 0) {
-    const pMek = calcPdj('mekkah', nbCh, pax);
-    const fMek = getFrais('mekkah', hMek.total, pax);
-    const rows = [];
-
-    let hebDetail = '';
-    if (hMek.weekday > 0 && hMek.weekend > 0) {
-      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine (${fmt(hMek.pWd)}/ch) + ${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end (${fmt(hMek.pWe)}/ch) × ${nbCh} ch.`;
-    } else if (hMek.weekday > 0) {
-      hebDetail = `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine × ${nbCh} ch. (${fmt(hMek.pWd)}/nuit)`;
-    } else {
-      hebDetail = `${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end × ${nbCh} ch. (${fmt(hMek.pWe)}/nuit)`;
-    }
-    rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(hMek.coutTotal) });
-
-    if (formule === 'BB' && pMek.total > 0) {
-      rows.push({ label: 'Petit-déjeuner', detail: `${hMek.total} nuit${hMek.total>1?'s':''} × ${pax} pers.`, price: fmt(pMek.total) });
-    }
-    fMek.items.forEach(f => rows.push({ label: f.label, detail: f.detail, price: fmt(f.montant) }));
-
-    sections.push({ title: `MEKKAH — ${getHotelMekkah()}`, rows, subtotal: fmt(hMek.coutTotal + pMek.total + fMek.total) });
-  }
+    sections.push({
+      title: `${villeLabel} — ${hotelName}`,
+      rows,
+      subtotal: fmt(subtotalNum),
+      subtotalLabel: 'Sous-total ' + (ville === 'medine' ? 'Médine' : 'Mekkah')
+    });
+  });
 
   return sections;
 }
@@ -1557,11 +1392,9 @@ function getDevisData() {
   const validite = parseInt(document.getElementById('validite').value) || 1;
   const expiry   = new Date(today.getTime() + validite * 86400000);
   const fmtDate  = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
-
-  const nbCh = parseInt(document.getElementById('nb-chambres').value) || 1;
+  const { nbCh } = getPanierStats();
   const hMed = calcHeberg('medine', nbCh);
   const hMek = calcHeberg('mekkah', nbCh);
-
   return {
     ref:      document.getElementById('d-ref').textContent.trim(),
     hotel:    'Médine & Mekkah',
@@ -1571,9 +1404,6 @@ function getDevisData() {
     total:    document.getElementById('d-total').textContent.trim(),
     validTxt: document.getElementById('d-valid-text').textContent.trim(),
     nuits:    hMed.total + hMek.total,
-    nbCh,
-    formule:  getFormule(),
-    chambre:  getChambres(),
     sections: buildPdfSections(),
   };
 }
@@ -1615,12 +1445,15 @@ function genererPDF(data) {
   let y = 66;
 
   (data.sections || []).forEach((section, si) => {
+    if (y > 250) { doc.addPage(); y = 20; }
+
     setFill('#F0DFA0'); doc.roundedRect(M, y, CW, 10, 2, 2, 'F');
     doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setTxt('#7A5800');
     doc.text(section.title, M + 4, y + 6.8);
     y += 14;
 
     section.rows.forEach(row => {
+      if (y > 265) { doc.addPage(); y = 20; }
       setDraw('#E8E8E8'); doc.setLineWidth(0.3); doc.line(M, y - 1, W - M, y - 1);
       doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A1A1A');
       doc.text(row.label, M, y + 4);
@@ -1641,12 +1474,12 @@ function genererPDF(data) {
     setFill('#EEF3F8'); setDraw('#C0D0E0'); doc.setLineWidth(0.4);
     doc.roundedRect(M, y, CW, 10, 2, 2, 'FD');
     doc.setFont('helvetica','bold'); doc.setFontSize(9); setTxt('#1A3A5C');
-    doc.text('Sous-total ' + (si === 0 ? 'Médine' : 'Mekkah'), M + 4, y + 6.8);
+    doc.text(section.subtotalLabel, M + 4, y + 6.8);
     doc.text(section.subtotal, W - M - 4, y + 6.8, { align: 'right' });
     y += 16;
-
-    if (y > 260) { doc.addPage(); y = 20; }
   });
+
+  if (y > 255) { doc.addPage(); y = 20; }
 
   setFill('#1A3A5C'); setDraw('#1A3A5C'); doc.setLineWidth(0.5);
   doc.roundedRect(M, y, CW, 16, 3, 3, 'FD');
@@ -1741,6 +1574,7 @@ function chargerLogoBase64() {
 // ─── INIT ────────────────────────────────────────────────────
 loadHotels();
 chargerLogoBase64();
+renderPanier();
 updateDevis();
 </script>
 
