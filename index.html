@@ -610,11 +610,11 @@ input:focus, select:focus { border-color: var(--gold); }
     <div class="row2" style="margin-bottom:10px">
       <div>
         <label>Arrivée à Médine</label>
-        <input type="date" id="date-arrivee-medine" onchange="updateDevis()">
+        <input type="date" id="date-arrivee-medine" onchange="onArriveeMediane()">
       </div>
       <div>
         <label>Départ de Médine</label>
-        <input type="date" id="date-depart-medine" onchange="updateDevis()">
+        <input type="date" id="date-depart-medine" onchange="onDepartMedine()">
       </div>
     </div>
 
@@ -733,11 +733,11 @@ input:focus, select:focus { border-color: var(--gold); }
     <div class="row2" style="margin-bottom:10px">
       <div>
         <label>Arrivée à Mekkah</label>
-        <input type="date" id="date-arrivee-mekkah" onchange="updateDevis()">
+        <input type="date" id="date-arrivee-mekkah" onchange="onArriveeMekkah()">
       </div>
       <div>
         <label>Départ de Mekkah</label>
-        <input type="date" id="date-depart-mekkah" onchange="updateDevis()">
+        <input type="date" id="date-depart-mekkah" onchange="onDepartMekkah()">
       </div>
     </div>
 
@@ -1233,6 +1233,83 @@ function getPanierDescription() {
     const cfg = CHAMBRE_CONFIG[l.type];
     return l.qty > 1 ? `${l.qty}× ${cfg.label}` : cfg.label;
   }).join(' + ');
+}
+
+// ─── LOGIQUE DATES ───────────────────────────────────────────
+// Règles simples :
+//   1. Dans chaque ville : départ ≥ arrivée
+//   2. Les deux séjours ne se chevauchent pas
+//      → si départ Médine est rempli et arrivée Mekkah remplie : ils ne peuvent pas se croiser
+//      → même logique dans l'autre sens
+// On ne force PAS l'ordre Médine/Mekkah : les deux ordres sont acceptés.
+
+function onArriveeMediane() {
+  const el = document.getElementById('date-arrivee-medine');
+  const dep = document.getElementById('date-depart-medine');
+  // Départ Médine ne peut pas être avant arrivée Médine
+  if (dep.value && dep.value < el.value) dep.value = '';
+  dep.min = el.value || '';
+  checkNoOverlap();
+  updateDevis();
+}
+
+function onDepartMedine() {
+  const arr = document.getElementById('date-arrivee-medine');
+  const dep = document.getElementById('date-depart-medine');
+  // Auto-sync : arrivée Mekkah = départ Médine si Mekkah vient après
+  const arrMek = document.getElementById('date-arrivee-mekkah');
+  const depMek = document.getElementById('date-depart-mekkah');
+  if (dep.value) {
+    // Si Mekkah est après Médine (ou vide), proposer auto-remplissage
+    if (!arrMek.value || (!depMek.value && arrMek.value <= dep.value)) {
+      arrMek.value = dep.value;
+    }
+  }
+  checkNoOverlap();
+  updateDevis();
+}
+
+function onArriveeMekkah() {
+  const el = document.getElementById('date-arrivee-mekkah');
+  const dep = document.getElementById('date-depart-mekkah');
+  if (dep.value && dep.value < el.value) dep.value = '';
+  dep.min = el.value || '';
+  // Auto-sync : arrivée Médine = départ Mekkah si Médine vient après
+  const arrMed = document.getElementById('date-arrivee-medine');
+  const depMek = document.getElementById('date-depart-mekkah');
+  if (depMek.value && (!arrMed.value)) {
+    arrMed.value = depMek.value;
+  }
+  checkNoOverlap();
+  updateDevis();
+}
+
+function onDepartMekkah() {
+  const arrMed = document.getElementById('date-arrivee-medine');
+  const depMek = document.getElementById('date-depart-mekkah');
+  // Si Médine vient après Mekkah et arrivée Médine est vide, proposer auto-remplissage
+  if (depMek.value && !arrMed.value) {
+    // laisser l'utilisateur remplir, juste vérifier
+  }
+  checkNoOverlap();
+  updateDevis();
+}
+
+function checkNoOverlap() {
+  const aM  = document.getElementById('date-arrivee-medine').value;
+  const dM  = document.getElementById('date-depart-medine').value;
+  const aMk = document.getElementById('date-arrivee-mekkah').value;
+  const dMk = document.getElementById('date-depart-mekkah').value;
+
+  // Cas Médine AVANT Mekkah : départ Médine ≤ arrivée Mekkah
+  if (dM && aMk && dM > aMk) {
+    // chevauchement : vider la date conflictuelle côté Mekkah
+    document.getElementById('date-arrivee-mekkah').value = dM;
+  }
+  // Cas Mekkah AVANT Médine : départ Mekkah ≤ arrivée Médine
+  if (dMk && aM && dMk > aM) {
+    document.getElementById('date-arrivee-medine').value = dMk;
+  }
 }
 
 // ─── MAIN UPDATE ─────────────────────────────────────────────
