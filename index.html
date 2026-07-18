@@ -13,7 +13,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Samy Travel">
 <link rel="apple-touch-icon" href="images/icon-192.png">
-
 <style>
 :root {
   --gold: #C9A84C;
@@ -31,411 +30,129 @@
   --weekday: #1A3A5C;
   --weekend: #7A3A00;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-.header {
-  background: var(--accent);
-  padding: 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
-}
-.header-inner {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 12px 16px;
-  max-width: 700px;
-  margin: 0 auto;
-}
+.header { background: var(--accent); padding: 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+.header-inner { display: flex; align-items: center; gap: 14px; padding: 12px 16px; max-width: 760px; margin: 0 auto; }
 .logo-img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; }
 .brand-block { flex: 1; }
 .brand-name { font-size: 17px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
 .brand-sub { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 1px; }
-.header-badge {
-  background: var(--gold);
-  color: #1A1A1A;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
+.header-badge { background: var(--gold); color: #1A1A1A; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-.page {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 18px 14px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+.page { max-width: 760px; margin: 0 auto; padding: 18px 14px 40px; display: flex; flex-direction: column; gap: 14px; }
+.card { background: var(--card); border-radius: var(--radius); padding: 18px 18px 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.section-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0; }
+.section-title { font-size: 15px; font-weight: 700; color: var(--text); }
 
-.card {
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 18px 18px 20px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
-}
-.section-icon {
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%);
-  display: flex; align-items: center; justify-content: center;
-  color: #fff;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-.section-title {
-  font-size: 15px;
-  font-weight: 700;
-  color: var(--text);
-}
-
-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 5px;
-}
-
-input[type=text], input[type=number], input[type=date], input[type=tel], select {
-  width: 100%;
-  height: 40px;
-  border: 1.5px solid var(--border-strong);
-  border-radius: 9px;
-  padding: 0 12px;
-  font-size: 14px;
-  color: var(--text);
-  background: #fff;
-  outline: none;
-  transition: border-color 0.15s;
-  appearance: none;
-  -webkit-appearance: none;
-}
+label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+input[type=text], input[type=number], input[type=date], input[type=tel], select { width: 100%; height: 40px; border: 1.5px solid var(--border-strong); border-radius: 9px; padding: 0 12px; font-size: 14px; color: var(--text); background: #fff; outline: none; transition: border-color 0.15s; appearance: none; -webkit-appearance: none; }
 input:focus, select:focus { border-color: var(--gold); }
 
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-@media(max-width:540px){ .row2 { grid-template-columns: 1fr; } }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+@media(max-width:560px){ .row2, .row3 { grid-template-columns: 1fr; } }
 
-/* ── PANIER DE CHAMBRES ── */
-.panier-ajout {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 8px;
-  align-items: end;
-  margin-bottom: 14px;
-}
-@media(max-width:480px){
-  .panier-ajout { grid-template-columns: 1fr 1fr; }
-  .panier-ajout .btn-add-ch { grid-column: 1 / -1; }
-}
-.panier-ajout label { margin-bottom: 5px; }
-.panier-ajout input[type=number] { max-width: 72px; text-align: center; }
-
-.btn-add-ch {
-  height: 40px;
-  padding: 0 16px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 9px;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  transition: background 0.15s;
-}
+/* ── AJOUT CHAMBRE ── */
+.add-ch-bar { display: grid; grid-template-columns: 1fr auto auto auto; gap: 8px; align-items: end; margin-bottom: 14px; }
+@media(max-width:520px){ .add-ch-bar { grid-template-columns: 1fr 1fr; } .add-ch-bar .btn-add-ch { grid-column: 1 / -1; } }
+.btn-add-ch { height: 40px; padding: 0 16px; background: var(--accent); color: #fff; border: none; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; transition: background 0.15s; }
 .btn-add-ch:hover { background: #0F2840; }
 
-/* PANIER LISTE */
-.panier-liste {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-.panier-item {
-  display: flex;
-  align-items: center;
-  background: linear-gradient(135deg, #FFFBEF 0%, #FFF3CC 100%);
-  border: 1.5px solid var(--gold);
-  border-radius: 10px;
-  padding: 8px 12px;
-  gap: 10px;
-}
-.panier-item-icon { font-size: 18px; flex-shrink: 0; }
-.panier-item-info { flex: 1; }
-.panier-item-label { font-size: 13px; font-weight: 700; color: #7A5800; }
-.panier-item-detail { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
-.panier-item-qty {
-  background: var(--accent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 20px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.btn-remove-ch {
-  background: none;
-  border: none;
-  color: #C0392B;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 2px 4px;
-  border-radius: 6px;
-  flex-shrink: 0;
-  transition: background 0.12s;
-}
+/* ── PANIER ITEM ── */
+.panier-liste { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.panier-empty { text-align: center; padding: 18px; font-size: 12px; color: var(--text-muted); background: #FAFAF8; border: 1.5px dashed var(--border-strong); border-radius: 10px; margin-bottom: 12px; }
+.ch-item { border: 1.5px solid var(--border-strong); border-radius: 12px; overflow: hidden; }
+.ch-item-header { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: linear-gradient(135deg, #FFFBEF 0%, #FFF3CC 100%); border-bottom: 1px solid var(--border); cursor: pointer; }
+.ch-item.open .ch-item-header { border-bottom-color: var(--gold); }
+.ch-item-icon { font-size: 18px; flex-shrink: 0; }
+.ch-item-label { font-size: 13px; font-weight: 700; color: #7A5800; flex: 1; }
+.ch-item-summary { font-size: 11px; color: var(--text-muted); }
+.ch-item-badges { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.badge-ville { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px; white-space: nowrap; }
+.badge-medine { background: #EEF3F8; color: var(--accent); }
+.badge-mekkah { background: #FFF0E0; color: #7A3A00; }
+.badge-qty { background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+.ch-chevron { font-size: 11px; color: var(--text-muted); transition: transform 0.2s; }
+.ch-item.open .ch-chevron { transform: rotate(180deg); }
+.btn-remove-ch { background: none; border: none; color: #C0392B; cursor: pointer; font-size: 15px; padding: 2px 4px; border-radius: 6px; flex-shrink: 0; transition: background 0.12s; }
 .btn-remove-ch:hover { background: #FDE8E8; }
 
-.panier-empty {
-  text-align: center;
-  padding: 14px;
-  font-size: 12px;
-  color: var(--text-muted);
-  background: #FAFAF8;
-  border: 1.5px dashed var(--border-strong);
-  border-radius: 10px;
-  margin-bottom: 12px;
-}
+.ch-item-body { padding: 14px; display: none; }
+.ch-item.open .ch-item-body { display: block; }
 
-.panier-total {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #EEF3F8;
-  border-radius: 9px;
-  padding: 9px 14px;
-  margin-bottom: 14px;
-}
-.panier-total-label { font-size: 12px; font-weight: 700; color: var(--accent); }
-.panier-total-value { font-size: 13px; font-weight: 700; color: var(--accent); }
+/* ── VILLE SELECTOR ── */
+.ville-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+.ville-tab { flex: 1; height: 36px; border: 1.5px solid var(--border-strong); border-radius: 9px; background: #fff; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.15s; color: var(--text-muted); }
+.ville-tab.active-medine { border-color: var(--accent); background: #EEF3F8; color: var(--accent); }
+.ville-tab.active-mekkah { border-color: var(--gold); background: #FFF3E0; color: #7A3A00; }
 
-/* FORMULE */
-.formule-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 6px;
-}
-.formule-option {
-  border: 2px solid var(--border-strong);
-  border-radius: 10px;
-  padding: 12px;
-  cursor: pointer;
-  transition: all 0.15s;
-}
+/* ── HOTEL INLINE ── */
+.hotel-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.hotel-row select { flex: 1; }
+.hotel-row input[type=text] { flex: 1; }
+
+/* ── TARIFS INLINE ── */
+.tarif-inline { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+@media(max-width:480px){ .tarif-inline { grid-template-columns: 1fr; } }
+.tarif-cell { background: #F8F8F4; border-radius: 8px; padding: 8px 10px; border: 1.5px solid var(--border); }
+.tarif-cell.weekday { border-left: 3px solid var(--accent); }
+.tarif-cell.weekend { border-left: 3px solid var(--gold); }
+.tarif-cell label { display: flex; align-items: center; gap: 5px; margin-bottom: 5px; }
+.badge-weekday { background: #EEF3F8; color: var(--weekday); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px; }
+.badge-weekend { background: #FFF3E0; color: var(--weekend); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px; }
+
+/* ── NUITS SUMMARY ── */
+.nuits-summary { background: #F0F4F8; border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; font-size: 11px; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ns-dot-weekday { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.ns-dot-weekend { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+.ns-total { font-weight: 700; color: var(--accent); margin-left: auto; white-space: nowrap; }
+.ns-item { display: flex; align-items: center; gap: 4px; }
+
+/* ── FORMULE ── */
+.formule-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+.formule-option { border: 2px solid var(--border-strong); border-radius: 10px; padding: 12px; cursor: pointer; transition: all 0.15s; }
 .formule-option:hover { border-color: var(--gold); }
-.formule-option.active {
-  border-color: var(--gold);
-  background: #FFFBEF;
-}
+.formule-option.active { border-color: var(--gold); background: #FFFBEF; }
 .formule-option input { display: none; }
 .fo-label { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
 .fo-sub { font-size: 11px; color: var(--text-muted); }
 
-/* HOTEL SECTION */
-.hotel-section {
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  padding: 14px;
-  margin-bottom: 12px;
-  background: #FAFAF8;
-}
-.hotel-section-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.hotel-section-title i { color: var(--gold); }
-
-.hotel-ajout {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-}
-.hotel-ajout input { flex: 1; }
-.btn-valider-hotel {
-  height: 40px;
-  padding: 0 14px;
-  background: var(--accent);
-  color: #fff;
-  border: none;
-  border-radius: 9px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: background 0.15s;
-}
-.btn-valider-hotel:hover { background: #0F2840; }
-
-/* TARIFS */
-.tarif-block { margin-bottom: 12px; }
-.tarif-block-title {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.tarif-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 10px;
-}
-@media(max-width:480px){ .tarif-row { grid-template-columns: 1fr; } }
-
-.tarif-item {
-  background: #F8F8F4;
-  border-radius: 9px;
-  padding: 10px 12px;
-  border: 1.5px solid var(--border);
-}
-.tarif-item.weekday { border-left: 3px solid var(--accent); }
-.tarif-item.weekend { border-left: 3px solid var(--gold); }
-.tarif-item label { display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
-
-.badge-weekday {
-  background: #EEF3F8; color: var(--weekday);
-  font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px;
-}
-.badge-weekend {
-  background: #FFF3E0; color: var(--weekend);
-  font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px;
-}
-
-
-
-/* NUITS SUMMARY */
-.nuits-summary {
-  background: #F0F4F8;
-  border-radius: 9px;
-  padding: 10px 14px;
-  margin-bottom: 12px;
-  font-size: 12px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.nuits-summary .ns-item { display: flex; align-items: center; gap: 5px; }
-.ns-dot-weekday { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
-.ns-dot-weekend { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-.ns-total { font-weight: 700; color: var(--accent); margin-left: auto; white-space: nowrap; }
-
-/* FRAIS */
-.frais-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-top: 12px;
-}
+/* ── FRAIS ── */
+.frais-section-toggle { display: flex; align-items: center; justify-content: space-between; cursor: pointer; padding: 8px 0; margin-top: 6px; }
+.frais-section-toggle .ftitle { font-size: 12px; font-weight: 700; color: var(--accent); display: flex; align-items: center; gap: 6px; }
+.frais-section-toggle .ftitle i { color: var(--gold); }
+.frais-chevron { font-size: 11px; color: var(--text-muted); transition: transform 0.2s; }
+.frais-chevron.open { transform: rotate(180deg); }
+.frais-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
 @media(max-width:480px){ .frais-grid { grid-template-columns: 1fr; } }
-
-.frais-item {
-  background: #F8F8F4;
-  border: 1.5px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-.frais-item label { display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
-.frais-item label i { color: var(--gold); font-size: 11px; }
+.frais-item { background: #F8F8F4; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 12px; }
 .frais-toggle { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .toggle-switch { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
 .toggle-switch input { opacity: 0; width: 0; height: 0; }
-.toggle-slider {
-  position: absolute; cursor: pointer; inset: 0;
-  background: #ccc; border-radius: 20px; transition: background 0.2s;
-}
+.toggle-slider { position: absolute; cursor: pointer; inset: 0; background: #ccc; border-radius: 20px; transition: background 0.2s; }
 .toggle-switch input:checked + .toggle-slider { background: var(--gold); }
-.toggle-slider:before {
-  content: ''; position: absolute;
-  height: 14px; width: 14px; left: 3px; top: 3px;
-  background: white; border-radius: 50%; transition: transform 0.2s;
-}
+.toggle-slider:before { content: ''; position: absolute; height: 14px; width: 14px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: transform 0.2s; }
 .toggle-switch input:checked + .toggle-slider:before { transform: translateX(16px); }
 .toggle-label { font-size: 12px; font-weight: 600; color: var(--text); text-transform: none; letter-spacing: 0; }
 .frais-input-wrap { display: flex; align-items: center; gap: 6px; }
 .frais-input-wrap input { flex: 1; }
 .frais-input-wrap .unit { font-size: 11px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
 
-.frais-section-toggle {
-  display: flex; align-items: center; justify-content: space-between;
-  cursor: pointer; padding: 8px 0; margin-top: 8px;
-}
-.frais-section-toggle .ftitle {
-  font-size: 12px; font-weight: 700; color: var(--accent);
-  display: flex; align-items: center; gap: 6px;
-}
-.frais-section-toggle .ftitle i { color: var(--gold); }
-.frais-chevron { font-size: 11px; color: var(--text-muted); transition: transform 0.2s; }
-.frais-chevron.open { transform: rotate(180deg); }
-.frais-body { overflow: hidden; }
+/* ── PANIER TOTAL ── */
+.panier-total { display: flex; align-items: center; justify-content: space-between; background: #EEF3F8; border-radius: 9px; padding: 9px 14px; margin-bottom: 14px; }
+.panier-total-label { font-size: 12px; font-weight: 700; color: var(--accent); }
+.panier-total-value { font-size: 13px; font-weight: 700; color: var(--accent); }
 
-/* VALIDITE */
-.btn-generate {
-  background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%);
-  color: #fff; border: none; border-radius: 12px; padding: 15px;
-  font-size: 15px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  box-shadow: 0 4px 18px rgba(201,168,76,0.4);
-  transition: transform 0.12s, box-shadow 0.12s; letter-spacing: 0.3px;
-}
+/* ── GÉNÉRATION ── */
+.btn-generate { background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%); color: #fff; border: none; border-radius: 12px; padding: 15px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 18px rgba(201,168,76,0.4); transition: transform 0.12s, box-shadow 0.12s; letter-spacing: 0.3px; }
 .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(201,168,76,0.5); }
-.btn-generate:active { transform: translateY(0); }
 
-/* DEVIS OUTPUT */
-.devis-card {
-  background: #fff; border-radius: var(--radius);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  overflow: hidden; border: 1px solid var(--border);
-}
-.devis-top {
-  background: linear-gradient(135deg, var(--accent) 0%, #0A2540 100%);
-  padding: 20px 20px 18px;
-}
+/* ── DEVIS OUTPUT ── */
+.devis-card { background: #fff; border-radius: var(--radius); box-shadow: 0 4px 24px rgba(0,0,0,0.10); overflow: hidden; border: 1px solid var(--border); }
+.devis-top { background: linear-gradient(135deg, var(--accent) 0%, #0A2540 100%); padding: 20px 20px 18px; }
 .devis-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
 .devis-logo { width: 40px; height: 40px; object-fit: contain; }
 .devis-num-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
@@ -443,57 +160,24 @@ input:focus, select:focus { border-color: var(--gold); }
 .devis-hotel { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 3px; }
 .devis-dates-col { text-align: right; }
 .devis-date { font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 3px; }
-
 .devis-body { padding: 18px 20px; }
-.devis-section-label {
-  font-size: 10px; font-weight: 700; color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
-}
-
-.line-item {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  padding: 10px 0; border-bottom: 1px solid var(--border); gap: 12px;
-}
+.devis-section-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.line-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 12px; }
 .line-desc { font-size: 13px; font-weight: 600; }
 .line-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .line-price { font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; padding-top: 1px; }
-
-.line-city-header {
-  padding: 10px 0 4px; font-size: 11px; font-weight: 700;
-  color: var(--gold); text-transform: uppercase; letter-spacing: 0.8px;
-  border-bottom: 2px solid var(--gold-light); margin-top: 6px;
-}
-
-.total-row {
-  display: flex; justify-content: space-between; align-items: center;
-  background: #F6F6F0; border-radius: 10px; padding: 14px 16px;
-  margin-top: 14px; border: 1px solid var(--border);
-}
+.line-city-header { padding: 10px 0 4px; font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 2px solid var(--gold-light); margin-top: 6px; }
+.total-row { display: flex; justify-content: space-between; align-items: center; background: #F6F6F0; border-radius: 10px; padding: 14px 16px; margin-top: 14px; border: 1px solid var(--border); }
 .total-label { font-size: 14px; font-weight: 700; }
 .total-amount { font-size: 22px; font-weight: 800; color: var(--accent); }
-
-.validity-row {
-  display: flex; align-items: center; gap: 6px; font-size: 11px;
-  color: var(--text-muted); margin-top: 10px;
-  background: #F6F6F0; padding: 8px 12px; border-radius: 8px;
-}
-
-.devis-footer {
-  padding: 16px 20px; border-top: 1px solid var(--border);
-  display: flex; flex-direction: column; gap: 12px;
-}
+.validity-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 10px; background: #F6F6F0; padding: 8px 12px; border-radius: 8px; }
+.devis-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
 .devis-mention { font-size: 10px; color: var(--text-muted); line-height: 1.5; }
-
-.btn-whatsapp {
-  background: #25D366; color: #fff; border: none; border-radius: 9px;
-  padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
+.btn-whatsapp { background: #25D366; color: #fff; border: none; border-radius: 9px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-inner">
     <img class="logo-img" src="images/logo.png" alt="Samy Travel">
@@ -525,15 +209,35 @@ input:focus, select:focus { border-color: var(--gold); }
     </div>
   </div>
 
-  <!-- CHAMBRES & FORMULE -->
+  <!-- FORMULE -->
+  <div class="card">
+    <div class="section-header">
+      <div class="section-icon"><i class="fas fa-coffee"></i></div>
+      <div class="section-title">Formule</div>
+    </div>
+    <div class="formule-group">
+      <label class="formule-option active" id="fo-ro">
+        <input type="radio" name="formule" value="RO" checked onchange="updateDevis()">
+        <div class="fo-label"><i class="fas fa-home" style="color:var(--gold)"></i> Room Only</div>
+        <div class="fo-sub">Sans petit-déjeuner</div>
+      </label>
+      <label class="formule-option" id="fo-bb">
+        <input type="radio" name="formule" value="BB" onchange="updateDevis()">
+        <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed &amp; Breakfast</div>
+        <div class="fo-sub">Petit-déjeuner inclus</div>
+      </label>
+    </div>
+  </div>
+
+  <!-- CHAMBRES -->
   <div class="card">
     <div class="section-header">
       <div class="section-icon"><i class="fas fa-bed"></i></div>
-      <div class="section-title">Chambres &amp; formule</div>
+      <div class="section-title">Chambres</div>
     </div>
 
-    <!-- AJOUT CHAMBRE -->
-    <div class="panier-ajout">
+    <!-- BARRE D'AJOUT -->
+    <div class="add-ch-bar">
       <div>
         <label>Type de chambre</label>
         <select id="new-ch-type">
@@ -547,6 +251,13 @@ input:focus, select:focus { border-color: var(--gold); }
         </select>
       </div>
       <div>
+        <label>Ville</label>
+        <select id="new-ch-ville" style="min-width:110px">
+          <option value="medine">Médine</option>
+          <option value="mekkah">Mekkah</option>
+        </select>
+      </div>
+      <div>
         <label>Qté</label>
         <input type="number" id="new-ch-qty" min="1" max="20" value="1" style="max-width:72px;text-align:center">
       </div>
@@ -556,276 +267,11 @@ input:focus, select:focus { border-color: var(--gold); }
     </div>
 
     <!-- PANIER -->
-    <div id="panier-liste" class="panier-liste">
-      <!-- rempli dynamiquement -->
-    </div>
+    <div id="panier-liste" class="panier-liste"></div>
 
     <div class="panier-total" id="panier-total" style="display:none">
       <span class="panier-total-label"><i class="fas fa-users" style="margin-right:5px;color:var(--gold)"></i> Total voyageurs</span>
       <span class="panier-total-value" id="panier-total-value">0 personne</span>
-    </div>
-
-    <!-- FORMULE -->
-    <div>
-      <label>Formule</label>
-      <div class="formule-group">
-        <label class="formule-option active" id="fo-ro">
-          <input type="radio" name="formule" value="RO" checked onchange="toggleFormule('RO')">
-          <div class="fo-label"><i class="fas fa-home" style="color:var(--gold)"></i> Room Only</div>
-          <div class="fo-sub">Sans petit-déjeuner</div>
-        </label>
-        <label class="formule-option" id="fo-bb">
-          <input type="radio" name="formule" value="BB" onchange="toggleFormule('BB')">
-          <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed &amp; Breakfast</div>
-          <div class="fo-sub">Petit-déjeuner inclus</div>
-        </label>
-      </div>
-    </div>
-  </div>
-
-  <!-- MÉDINE -->
-  <div class="card">
-    <div class="section-header">
-      <div class="section-icon"><i class="fas fa-mosque"></i></div>
-      <div class="section-title">Médine</div>
-    </div>
-
-    <div class="hotel-section">
-      <div class="hotel-section-title"><i class="fas fa-building"></i> Hôtel</div>
-      <div>
-        <label>Sélectionner un hôtel</label>
-        <select id="hotel-medine" onchange="syncCustomMedine(); updateDevis()">
-          <option value="">— Choisir un hôtel —</option>
-        </select>
-      </div>
-      <div style="margin-top:10px">
-        <label>Ou saisir manuellement</label>
-        <div class="hotel-ajout">
-          <input type="text" id="hotel-medine-custom" placeholder="Nom de l'hôtel…">
-          <button type="button" class="btn-valider-hotel" onclick="ajouterHotel('medine')">Valider</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="row2" style="margin-bottom:10px">
-      <div>
-        <label>Arrivée à Médine</label>
-        <input type="date" id="date-arrivee-medine" onchange="onArriveeMediane()">
-      </div>
-      <div>
-        <label>Départ de Médine</label>
-        <input type="date" id="date-depart-medine" onchange="onDepartMedine()">
-      </div>
-    </div>
-
-    <div class="nuits-summary" id="nuits-summary-medine">
-      <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
-    </div>
-
-    <div class="tarif-block">
-      <div class="tarif-block-title" style="color:var(--accent)">
-        <i class="fas fa-tag" style="color:var(--gold)"></i> Prix par chambre / nuit
-      </div>
-      <div class="tarif-row">
-        <div class="tarif-item weekday">
-          <label><span class="badge-weekday">SEMAINE</span> dim, lun, mar, mer</label>
-          <input type="number" id="prix-weekday-medine" value="80" min="0" onchange="updateDevis()">
-        </div>
-        <div class="tarif-item weekend">
-          <label><span class="badge-weekend">WEEK-END</span> jeu, ven, sam</label>
-          <input type="number" id="prix-weekend-medine" value="100" min="0" onchange="updateDevis()">
-        </div>
-      </div>
-      <div id="pdj-medine-wrap">
-        <div class="tarif-item weekday" style="margin-bottom:10px">
-          <label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label>
-          <input type="number" id="prix-pdj-medine" value="15" min="0" onchange="updateDevis()">
-        </div>
-      </div>
-    </div>
-
-    <div class="frais-section-toggle" onclick="toggleFrais('medine')">
-      <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
-      <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-medine"></i>
-    </div>
-    <div class="frais-body" id="frais-body-medine" style="display:none">
-      <div class="frais-grid">
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-medine-transfer-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert aéroport</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-medine-transfer" value="30" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/pers.</span>
-          </div>
-        </div>
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-medine-transport-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-road" style="color:var(--gold);margin-right:4px"></i> Transport Méd.→Mek.</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-medine-transport" value="25" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/pers.</span>
-          </div>
-        </div>
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-medine-taxe-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-medine-taxe" value="5" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/nuit</span>
-          </div>
-        </div>
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-medine-visa-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-passport" style="color:var(--gold);margin-right:4px"></i> Visa / Prestation</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-medine-visa" value="50" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/pers.</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MEKKAH -->
-  <div class="card">
-    <div class="section-header">
-      <div class="section-icon"><i class="fas fa-star-and-crescent"></i></div>
-      <div class="section-title">Mekkah</div>
-    </div>
-
-    <div class="hotel-section">
-      <div class="hotel-section-title"><i class="fas fa-building"></i> Hôtel</div>
-      <div>
-        <label>Sélectionner un hôtel</label>
-        <select id="hotel-mekkah" onchange="syncCustomMekkah(); updateDevis()">
-          <option value="">— Choisir un hôtel —</option>
-        </select>
-      </div>
-      <div style="margin-top:10px">
-        <label>Ou saisir manuellement</label>
-        <div class="hotel-ajout">
-          <input type="text" id="hotel-mekkah-custom" placeholder="Nom de l'hôtel…">
-          <button type="button" class="btn-valider-hotel" onclick="ajouterHotel('mekkah')">Valider</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="row2" style="margin-bottom:10px">
-      <div>
-        <label>Arrivée à Mekkah</label>
-        <input type="date" id="date-arrivee-mekkah" onchange="onArriveeMekkah()">
-      </div>
-      <div>
-        <label>Départ de Mekkah</label>
-        <input type="date" id="date-depart-mekkah" onchange="onDepartMekkah()">
-      </div>
-    </div>
-
-    <div class="nuits-summary" id="nuits-summary-mekkah">
-      <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
-    </div>
-
-    <div class="tarif-block">
-      <div class="tarif-block-title" style="color:var(--accent)">
-        <i class="fas fa-tag" style="color:var(--gold)"></i> Prix par chambre / nuit
-      </div>
-      <div class="tarif-row">
-        <div class="tarif-item weekday">
-          <label><span class="badge-weekday">SEMAINE</span> dim, lun, mar, mer</label>
-          <input type="number" id="prix-weekday-mekkah" value="100" min="0" onchange="updateDevis()">
-        </div>
-        <div class="tarif-item weekend">
-          <label><span class="badge-weekend">WEEK-END</span> jeu, ven, sam</label>
-          <input type="number" id="prix-weekend-mekkah" value="130" min="0" onchange="updateDevis()">
-        </div>
-      </div>
-      <div id="pdj-mekkah-wrap">
-        <div class="tarif-item weekday" style="margin-bottom:10px">
-          <label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label>
-          <input type="number" id="prix-pdj-mekkah" value="15" min="0" onchange="updateDevis()">
-        </div>
-      </div>
-    </div>
-
-    <div class="frais-section-toggle" onclick="toggleFrais('mekkah')">
-      <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
-      <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-mekkah"></i>
-    </div>
-    <div class="frais-body" id="frais-body-mekkah" style="display:none">
-      <div class="frais-grid">
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-mekkah-transfer-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert retour</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-mekkah-transfer" value="30" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/pers.</span>
-          </div>
-        </div>
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-mekkah-guide-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-user-tie" style="color:var(--gold);margin-right:4px"></i> Guide / Accomp.</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-mekkah-guide" value="40" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/pers.</span>
-          </div>
-        </div>
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-mekkah-taxe-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-mekkah-taxe" value="5" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/nuit</span>
-          </div>
-        </div>
-        <div class="frais-item">
-          <div class="frais-toggle">
-            <label class="toggle-switch">
-              <input type="checkbox" id="frais-mekkah-divers-on" onchange="updateDevis()">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="toggle-label"><i class="fas fa-ellipsis-h" style="color:var(--gold);margin-right:4px"></i> Frais divers</span>
-          </div>
-          <div class="frais-input-wrap">
-            <input type="number" id="frais-mekkah-divers" value="20" min="0" onchange="updateDevis()">
-            <span class="unit">SAR/pers.</span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -875,26 +321,20 @@ input:focus, select:focus { border-color: var(--gold); }
           </div>
         </div>
       </div>
-
       <div class="devis-body">
         <div class="devis-section-label">Détail du séjour</div>
         <div id="d-lines"></div>
-
         <div class="total-row">
           <div class="total-label">Total TTC</div>
           <div class="total-amount" id="d-total"></div>
         </div>
-
         <div class="validity-row">
           <i class="fas fa-clock" style="font-size:12px"></i>
           <span id="d-valid-text"></span>
         </div>
       </div>
-
       <div class="devis-footer">
-        <div class="devis-mention">
-          Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer un hébergement équivalent en cas d'indisponibilité. Tous les frais annexes sont inclus dans le montant total ci-dessus.
-        </div>
+        <div class="devis-mention">Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer un hébergement équivalent en cas d'indisponibilité. Tous les frais annexes sont inclus dans le montant total ci-dessus.</div>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <input type="tel" id="wa-number" placeholder="Ex : 0033612345678" style="height:34px;font-size:12px;border-color:var(--border-strong)">
           <button class="btn-whatsapp" id="btn-wa" onclick="envoyerWhatsappPDF()">
@@ -923,31 +363,100 @@ const CHAMBRE_CONFIG = {
   senior:    { label: 'Suite Senior', pax: 2, icon: '✨' },
 };
 
+// ─── DONNÉES HOTELS ──────────────────────────────────────────
+let HOTELS = {};
+const HOTELS_VERSION = "3";
+function loadHotels() {
+  const saved = localStorage.getItem("hotels");
+  const savedVersion = localStorage.getItem("hotels_version");
+  if (saved && savedVersion === HOTELS_VERSION) {
+    HOTELS = JSON.parse(saved);
+  } else {
+    HOTELS = {
+      medine: ["Anwar Al Madinah Mövenpick","Pullman Zamzam Madinah","Sofitel Shahd Al Madinah","Intercontinental Dar Al Iman","Intercontinental Dar Al Hijra","Conrad Madinah","Hilton Madinah","Saja by Warwick Madinah","Elaf Al Taqwa","Elaf Taiba","Emaar Royal","Dar Al Taqwa","Rotana Al Manakha Madinah","Ancyra Hotel Madinah","Jayden Hotel","Maien Taiba","Peninsula Worth Hotel"],
+      mekkah: ["Swissôtel Makkah - Abraj Al Bait","Fairmont Makkah Clock Royal Tower","Conrad Makkah","Pullman Zamzam Makkah","Raffles Makkah Palace","Mövenpick Hajar Tower Makkah","Al Marwa Rayhaan by Rotana","Hilton Makkah Convention Hotel","DoubleTree by Hilton Jabal Omar","Anjum Makkah","Voco Makkah","Novotel Makkah Thakher City","Tilal Jabal Al Kabah","Elaf Ajyad Makkah","Al Safwah Royale Orchid","Makkah Towers"]
+    };
+    localStorage.setItem("hotels", JSON.stringify(HOTELS));
+    localStorage.setItem("hotels_version", HOTELS_VERSION);
+  }
+}
+
 // ─── PANIER ──────────────────────────────────────────────────
-// panier = [{type, qty}]  — on peut avoir plusieurs lignes du même type
 let panier = [];
+let nextId = 1;
 
 function ajouterChambre() {
-  const type = document.getElementById('new-ch-type').value;
-  const qty  = parseInt(document.getElementById('new-ch-qty').value) || 1;
-  if (!type || qty < 1) return;
+  const type  = document.getElementById('new-ch-type').value;
+  const ville = document.getElementById('new-ch-ville').value;
+  const qty   = parseInt(document.getElementById('new-ch-qty').value) || 1;
 
-  // Fusionner si le même type existe déjà
-  const existing = panier.find(l => l.type === type);
-  if (existing) {
-    existing.qty += qty;
-  } else {
-    panier.push({ type, qty });
-  }
+  const defaultsM = { prixWd: 80, prixWe: 100, prixPdj: 15 };
+  const defaultsK = { prixWd: 100, prixWe: 130, prixPdj: 15 };
+  const d = ville === 'medine' ? defaultsM : defaultsK;
 
+  const ligne = {
+    id: nextId++,
+    type, qty, ville,
+    hotel: '', custom_hotel: '',
+    arrivee: '', depart: '',
+    prixWd: d.prixWd, prixWe: d.prixWe, prixPdj: d.prixPdj,
+    frais: {
+      transfertOn: false, transfertVal: 30,
+      transportOn: false, transportVal: 25,
+      taxeOn: false, taxeVal: 5,
+      visaOn: false, visaVal: 50,
+      guideOn: false, guideVal: 40,
+      diversOn: false, diversVal: 20
+    },
+    open: true
+  };
+  panier.push(ligne);
   renderPanier();
   updateDevis();
 }
 
-function supprimerChambre(index) {
-  panier.splice(index, 1);
+function supprimerChambre(id) {
+  panier = panier.filter(l => l.id !== id);
   renderPanier();
   updateDevis();
+}
+
+function toggleItem(id) {
+  const l = panier.find(x => x.id === id);
+  if (l) { l.open = !l.open; renderPanier(); }
+}
+
+function syncFromDOM(id) {
+  const l = panier.find(x => x.id === id);
+  if (!l) return;
+  const g = s => { const el = document.getElementById(s + '-' + id); return el ? el.value : ''; };
+  const gc = s => { const el = document.getElementById(s + '-' + id); return el ? el.checked : false; };
+  const gn = (s, def) => { const el = document.getElementById(s + '-' + id); return el ? (parseFloat(el.value) || def) : def; };
+
+  l.hotel        = g('hotel-sel');
+  l.custom_hotel = g('hotel-custom');
+  l.arrivee      = g('arrivee');
+  l.depart       = g('depart');
+  l.prixWd       = gn('prix-wd', 80);
+  l.prixWe       = gn('prix-we', 100);
+  l.prixPdj      = gn('prix-pdj', 15);
+
+  l.frais.transfertOn  = gc('f-transfert-on');
+  l.frais.transfertVal = gn('f-transfert-v', 30);
+  l.frais.transportOn  = gc('f-transport-on');
+  l.frais.transportVal = gn('f-transport-v', 25);
+  l.frais.taxeOn       = gc('f-taxe-on');
+  l.frais.taxeVal      = gn('f-taxe-v', 5);
+  l.frais.visaOn       = gc('f-visa-on');
+  l.frais.visaVal      = gn('f-visa-v', 50);
+  l.frais.guideOn      = gc('f-guide-on');
+  l.frais.guideVal     = gn('f-guide-v', 40);
+  l.frais.diversOn     = gc('f-divers-on');
+  l.frais.diversVal    = gn('f-divers-v', 20);
+}
+
+function syncAllFromDOM() {
+  panier.forEach(l => syncFromDOM(l.id));
 }
 
 function renderPanier() {
@@ -956,265 +465,382 @@ function renderPanier() {
   const totalValEl = document.getElementById('panier-total-value');
 
   if (panier.length === 0) {
-    el.innerHTML = `<div class="panier-empty">
-      <i class="fas fa-bed" style="font-size:20px;opacity:0.3;display:block;margin-bottom:6px"></i>
-      Aucune chambre ajoutée — utilisez le sélecteur ci-dessus
-    </div>`;
+    el.innerHTML = `<div class="panier-empty"><i class="fas fa-bed" style="font-size:22px;opacity:0.3;display:block;margin-bottom:8px"></i>Aucune chambre ajoutée — utilisez le sélecteur ci-dessus</div>`;
     totalEl.style.display = 'none';
     return;
   }
 
-  let html = '';
   let totalCh = 0, totalPax = 0;
+  panier.forEach(l => { totalCh += l.qty; totalPax += CHAMBRE_CONFIG[l.type].pax * l.qty; });
 
-  panier.forEach((ligne, i) => {
-    const cfg = CHAMBRE_CONFIG[ligne.type];
-    const pax = cfg.pax * ligne.qty;
-    totalCh  += ligne.qty;
-    totalPax += pax;
+  let html = '';
+  panier.forEach(l => {
+    const cfg = CHAMBRE_CONFIG[l.type];
+    const pax = cfg.pax * l.qty;
+    const villeLabel = l.ville === 'medine' ? 'Médine' : 'Mekkah';
+    const villeBadge = `<span class="badge-ville badge-${l.ville}">${villeLabel}</span>`;
+    const hotelDisplay = l.hotel || l.custom_hotel || '— hôtel non sélectionné —';
+    const nuits = compterNuits(l.arrivee, l.depart);
+    const nuitsSummary = nuits.total > 0 ? `${nuits.total} nuit${nuits.total>1?'s':''}` : 'dates non saisies';
 
-    html += `<div class="panier-item">
-      <div class="panier-item-icon">${cfg.icon}</div>
-      <div class="panier-item-info">
-        <div class="panier-item-label">${cfg.label}</div>
-        <div class="panier-item-detail">${pax} voyageur${pax>1?'s':''}</div>
+    const hotelOpts = ['<option value="">— Choisir un hôtel —</option>',
+      ...[...HOTELS[l.ville]].sort().map(h => `<option value="${h}"${l.hotel === h ? ' selected' : ''}>${h}</option>`)
+    ].join('');
+
+    const fraisHtml = l.ville === 'medine' ? `
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-transfert-on-${l.id}" ${l.frais.transfertOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert aéroport</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-transfert-v-${l.id}" value="${l.frais.transfertVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
       </div>
-      <div class="panier-item-qty">${ligne.qty} ch.</div>
-      <button class="btn-remove-ch" onclick="supprimerChambre(${i})" title="Supprimer">
-        <i class="fas fa-times"></i>
-      </button>
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-transport-on-${l.id}" ${l.frais.transportOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-road" style="color:var(--gold);margin-right:4px"></i> Transport Méd.→Mek.</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-transport-v-${l.id}" value="${l.frais.transportVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
+      </div>
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div>
+      </div>
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-visa-on-${l.id}" ${l.frais.visaOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-passport" style="color:var(--gold);margin-right:4px"></i> Visa / Prestation</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-visa-v-${l.id}" value="${l.frais.visaVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
+      </div>` : `
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-transfert-on-${l.id}" ${l.frais.transfertOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert retour</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-transfert-v-${l.id}" value="${l.frais.transfertVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
+      </div>
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-guide-on-${l.id}" ${l.frais.guideOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-user-tie" style="color:var(--gold);margin-right:4px"></i> Guide / Accomp.</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-guide-v-${l.id}" value="${l.frais.guideVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
+      </div>
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div>
+      </div>
+      <div class="frais-item">
+        <div class="frais-toggle">
+          <label class="toggle-switch"><input type="checkbox" id="f-divers-on-${l.id}" ${l.frais.diversOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
+          <span class="toggle-label"><i class="fas fa-ellipsis-h" style="color:var(--gold);margin-right:4px"></i> Frais divers</span>
+        </div>
+        <div class="frais-input-wrap"><input type="number" id="f-divers-v-${l.id}" value="${l.frais.diversVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
+      </div>`;
+
+    const formule = getFormule();
+    const pdjVisible = formule === 'BB';
+
+    html += `<div class="ch-item ${l.open ? 'open' : ''}" id="ch-item-${l.id}">
+      <div class="ch-item-header" onclick="toggleItem(${l.id})">
+        <div class="ch-item-icon">${cfg.icon}</div>
+        <div style="flex:1">
+          <div class="ch-item-label">${cfg.label} × ${l.qty}</div>
+          <div class="ch-item-summary">${pax} voy. · ${hotelDisplay} · ${nuitsSummary}</div>
+        </div>
+        <div class="ch-item-badges">
+          ${villeBadge}
+          <span class="badge-qty">${l.qty} ch.</span>
+        </div>
+        <i class="fas fa-chevron-down ch-chevron"></i>
+        <button class="btn-remove-ch" onclick="event.stopPropagation();supprimerChambre(${l.id})" title="Supprimer"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="ch-item-body">
+
+        <!-- HÔTEL -->
+        <div style="margin-bottom:10px">
+          <label>Hôtel à ${villeLabel}</label>
+          <div class="hotel-row">
+            <select id="hotel-sel-${l.id}" onchange="onHotelChange(${l.id})">${hotelOpts}</select>
+          </div>
+          <div class="hotel-row" style="margin-top:6px">
+            <input type="text" id="hotel-custom-${l.id}" value="${l.custom_hotel}" placeholder="Ou saisir manuellement…" oninput="onChange(${l.id})">
+            <button type="button" style="height:40px;padding:0 12px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap" onclick="ajouterHotelCustom(${l.id})">Enregistrer</button>
+          </div>
+        </div>
+
+        <!-- DATES -->
+        <div class="row2" style="margin-bottom:10px">
+          <div>
+            <label>Arrivée à ${villeLabel}</label>
+            <input type="date" id="arrivee-${l.id}" value="${l.arrivee}" onchange="onDateChange(${l.id})">
+          </div>
+          <div>
+            <label>Départ de ${villeLabel}</label>
+            <input type="date" id="depart-${l.id}" value="${l.depart}" onchange="onDateChange(${l.id})">
+          </div>
+        </div>
+
+        <!-- NUITS RÉSUMÉ -->
+        <div id="nuits-summary-${l.id}" class="nuits-summary">
+          <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
+        </div>
+
+        <!-- TARIFS -->
+        <div class="tarif-inline">
+          <div class="tarif-cell weekday">
+            <label><span class="badge-weekday">SEMAINE</span> sam → jeu soir</label>
+            <input type="number" id="prix-wd-${l.id}" value="${l.prixWd}" min="0" onchange="onChange(${l.id})">
+          </div>
+          <div class="tarif-cell weekend">
+            <label><span class="badge-weekend">WEEK-END</span> jeu soir → sam</label>
+            <input type="number" id="prix-we-${l.id}" value="${l.prixWe}" min="0" onchange="onChange(${l.id})">
+          </div>
+        </div>
+
+        ${pdjVisible ? `<div class="tarif-cell weekday" style="margin-bottom:10px">
+          <label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label>
+          <input type="number" id="prix-pdj-${l.id}" value="${l.prixPdj}" min="0" onchange="onChange(${l.id})">
+        </div>` : `<div id="pdj-hidden-${l.id}" style="display:none"><div class="tarif-cell weekday" style="margin-bottom:10px">
+          <label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label>
+          <input type="number" id="prix-pdj-${l.id}" value="${l.prixPdj}" min="0" onchange="onChange(${l.id})">
+        </div></div>`}
+
+        <!-- FRAIS -->
+        <div class="frais-section-toggle" onclick="toggleFraisItem(${l.id})">
+          <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
+          <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-${l.id}"></i>
+        </div>
+        <div id="frais-body-${l.id}" style="display:none">
+          <div class="frais-grid">${fraisHtml}</div>
+        </div>
+
+      </div>
     </div>`;
   });
 
   el.innerHTML = html;
+  panier.forEach(l => updateNuitsSummary(l.id));
 
-  totalEl.style.display = 'flex';
+  totalEl.style.display = totalCh > 0 ? 'flex' : 'none';
   totalValEl.textContent = `${totalCh} chambre${totalCh>1?'s':''} · ${totalPax} voyageur${totalPax>1?'s':''}`;
 }
 
-/** Retourne {nbChambres, paxTotal} calculés depuis le panier */
-function getPanierStats() {
-  let nbCh = 0, pax = 0;
-  panier.forEach(l => {
-    nbCh += l.qty;
-    pax  += CHAMBRE_CONFIG[l.type].pax * l.qty;
-  });
-  return { nbCh, pax };
+function onChange(id) {
+  syncFromDOM(id);
+  updateNuitsSummary(id);
+  updateDevis();
 }
 
-// ─── SEMAINE ARABE ───────────────────────────────────────────
+function onDateChange(id) {
+  syncFromDOM(id);
+  updateNuitsSummary(id);
+  updateDevis();
+}
+
+function onHotelChange(id) {
+  const sel = document.getElementById('hotel-sel-' + id);
+  const custom = document.getElementById('hotel-custom-' + id);
+  if (sel && sel.value && custom) custom.value = '';
+  onChange(id);
+}
+
+function ajouterHotelCustom(id) {
+  const l = panier.find(x => x.id === id);
+  if (!l) return;
+  syncFromDOM(id);
+  const nom = l.custom_hotel.trim();
+  if (!nom) { alert("Saisissez un nom d'hôtel."); return; }
+  if (!HOTELS[l.ville].includes(nom)) {
+    HOTELS[l.ville].push(nom);
+    localStorage.setItem("hotels", JSON.stringify(HOTELS));
+  }
+  l.hotel = nom;
+  renderPanier();
+  updateDevis();
+}
+
+function toggleFraisItem(id) {
+  const body = document.getElementById('frais-body-' + id);
+  const chevron = document.getElementById('frais-chevron-' + id);
+  if (!body) return;
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  if (chevron) chevron.classList.toggle('open', !isOpen);
+}
+
+// ─── UTILITAIRES ─────────────────────────────────────────────
+function getFormule() { return document.querySelector('input[name=formule]:checked').value; }
+
+// ══════════════════════════════════════════════════════════════
+// LOGIQUE WEEK-END ARABE CORRIGÉE
+// Week-end saoudien = jeudi soir + vendredi
+// Une nuit est "week-end" si elle COMMENCE un jeudi (4) ou un vendredi (5)
+//   → nuit jeu→ven  : commence jeudi  → week-end
+//   → nuit ven→sam  : commence vendredi → week-end
+//   → nuit sam→dim  : commence samedi  → semaine
+//   → nuit mer→jeu  : commence mercredi → semaine
+// ══════════════════════════════════════════════════════════════
 function isWeekend(date) {
-  const d = date.getDay();
-  return d === 4 || d === 5 || d === 6;
+  // date = jour de DÉBUT de la nuit (ex: jeudi = nuit jeu→ven)
+  const d = date.getUTCDay(); // 0=dim 1=lun 2=mar 3=mer 4=jeu 5=ven 6=sam
+  return d === 4 || d === 5; // jeudi ou vendredi → week-end
 }
 
-function compterNuits(dateArriveeStr, dateDepartStr) {
-  if (!dateArriveeStr || !dateDepartStr) return { weekday: 0, weekend: 0, total: 0 };
-  const arr = new Date(dateArriveeStr + 'T00:00:00Z');
-  const dep = new Date(dateDepartStr  + 'T00:00:00Z');
+function compterNuits(arrStr, depStr) {
+  if (!arrStr || !depStr) return { weekday: 0, weekend: 0, total: 0 };
+  const arr = new Date(arrStr + 'T00:00:00Z');
+  const dep = new Date(depStr  + 'T00:00:00Z');
+  if (dep <= arr) return { weekday: 0, weekend: 0, total: 0 };
   let weekday = 0, weekend = 0;
   const cur = new Date(arr);
   while (cur < dep) {
+    // La nuit commence le jour "cur" (ex: si cur=jeudi, nuit jeu→ven = week-end)
     if (isWeekend(cur)) weekend++; else weekday++;
     cur.setUTCDate(cur.getUTCDate() + 1);
   }
   return { weekday, weekend, total: weekday + weekend };
 }
 
-// ─── RÉSUMÉ NUITS ────────────────────────────────────────────
-function updateNuitsSummary(ville) {
-  const arriveeVal = document.getElementById('date-arrivee-' + ville).value;
-  const departVal  = document.getElementById('date-depart-'  + ville).value;
-  const el = document.getElementById('nuits-summary-' + ville);
-  if (!arriveeVal || !departVal) {
+function updateNuitsSummary(id) {
+  const l = panier.find(x => x.id === id);
+  const el = document.getElementById('nuits-summary-' + id);
+  if (!l || !el) return;
+  if (!l.arrivee || !l.depart) {
     el.innerHTML = '<span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>';
     return;
   }
-  const { weekday, weekend, total } = compterNuits(arriveeVal, departVal);
-  if (total <= 0) {
+  const n = compterNuits(l.arrivee, l.depart);
+  if (n.total <= 0) {
     el.innerHTML = '<span style="color:#C0392B;font-size:11px"><i class="fas fa-exclamation-circle"></i> Date de départ antérieure ou égale à l\'arrivée</span>';
     return;
   }
-  el.innerHTML = `
-    <div class="ns-item"><div class="ns-dot-weekday"></div><span><strong>${weekday}</strong> nuit${weekday>1?'s':''} semaine</span></div>
-    <div class="ns-item"><div class="ns-dot-weekend"></div><span><strong>${weekend}</strong> nuit${weekend>1?'s':''} week-end</span></div>
-    <div class="ns-total"><i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>${total} nuit${total>1?'s':''} au total</div>`;
+  el.innerHTML = `<div class="ns-item"><div class="ns-dot-weekday"></div><span><strong>${n.weekday}</strong> nuit${n.weekday>1?'s':''} semaine</span></div><div class="ns-item"><div class="ns-dot-weekend"></div><span><strong>${n.weekend}</strong> nuit${n.weekend>1?'s':''} week-end</span></div><div class="ns-total"><i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>${n.total} nuit${n.total>1?'s':''} au total</div>`;
 }
 
-// ─── FORMULE ─────────────────────────────────────────────────
-function toggleFormule(val) {
-  document.getElementById('fo-ro').classList.toggle('active', val === 'RO');
-  document.getElementById('fo-bb').classList.toggle('active', val === 'BB');
-  const show = val === 'BB';
-  document.getElementById('pdj-medine-wrap').style.opacity = show ? '1' : '0.4';
-  document.getElementById('pdj-mekkah-wrap').style.opacity = show ? '1' : '0.4';
-  updateDevis();
-}
-function getFormule() { return document.querySelector('input[name=formule]:checked').value; }
-
-// ─── FRAIS TOGGLE ────────────────────────────────────────────
-function toggleFrais(ville) {
-  const body    = document.getElementById('frais-body-' + ville);
-  const chevron = document.getElementById('frais-chevron-' + ville);
-  const isOpen  = body.style.display !== 'none';
-  body.style.display = isOpen ? 'none' : 'block';
-  chevron.classList.toggle('open', !isOpen);
-}
-
-// ─── HOTELS ──────────────────────────────────────────────────
-let HOTELS = {};
-const HOTELS_VERSION = "2";
-
-function loadHotels() {
-  const saved        = localStorage.getItem("hotels");
-  const savedVersion = localStorage.getItem("hotels_version");
-  if (saved && savedVersion === HOTELS_VERSION) {
-    HOTELS = JSON.parse(saved);
-  } else {
-    HOTELS = {
-      medine: [
-        "Anwar Al Madinah Mövenpick","Pullman Zamzam Madinah","Sofitel Shahd Al Madinah",
-        "Intercontinental Dar Al Iman","Intercontinental Dar Al Hijra","Conrad Madinah",
-        "Hilton Madinah","Saja by Warwick Madinah","Elaf Al Taqwa","Elaf Taiba",
-        "Emaar Royal","Dar Al Taqwa","Rotana Al Manakha Madinah","Ancyra Hotel Madinah",
-        "Jayden Hotel","Maien Taiba","Peninsula Worth Hotel"
-      ],
-      mekkah: [
-        "Swissôtel Makkah - Abraj Al Bait","Fairmont Makkah Clock Royal Tower",
-        "Conrad Makkah","Pullman Zamzam Makkah","Raffles Makkah Palace",
-        "Mövenpick Hajar Tower Makkah","Al Marwa Rayhaan by Rotana",
-        "Hilton Makkah Convention Hotel","DoubleTree by Hilton Jabal Omar",
-        "Anjum Makkah","Voco Makkah","Novotel Makkah Thakher City",
-        "Tilal Jabal Al Kabah","Elaf Ajyad Makkah","Al Safwah Royale Orchid","Makkah Towers"
-      ]
-    };
-    localStorage.setItem("hotels", JSON.stringify(HOTELS));
-    localStorage.setItem("hotels_version", HOTELS_VERSION);
-  }
-  populateHotels();
-}
-
-function populateHotels() {
-  ["medine","mekkah"].forEach(ville => {
-    const select = document.getElementById("hotel-" + ville);
-    if (!select) return;
-    const val = select.value;
-    select.innerHTML = '<option value="">— Choisir un hôtel —</option>';
-    [...HOTELS[ville]].sort().forEach(hotel => {
-      const opt = document.createElement("option");
-      opt.value = hotel; opt.textContent = hotel;
-      select.appendChild(opt);
-    });
-    if (val) select.value = val;
-  });
-}
-
-function ajouterHotel(ville) {
-  const input = document.getElementById("hotel-" + ville + "-custom");
-  const nom   = input.value.trim();
-  if (!nom) { alert("Saisissez un nom d'hôtel."); return; }
-  if (!HOTELS[ville].includes(nom)) {
-    HOTELS[ville].push(nom);
-    localStorage.setItem("hotels", JSON.stringify(HOTELS));
-    populateHotels();
-  }
-  document.getElementById("hotel-" + ville).value = nom;
-  input.value = "";
-  updateDevis();
-}
-
-function getHotelMedine() {
-  return document.getElementById('hotel-medine').value
-      || document.getElementById('hotel-medine-custom').value.trim()
-      || 'Hôtel Médine';
-}
-function getHotelMekkah() {
-  return document.getElementById('hotel-mekkah').value
-      || document.getElementById('hotel-mekkah-custom').value.trim()
-      || 'Hôtel Mekkah';
-}
-function syncCustomMedine() { document.getElementById('hotel-medine-custom').value = ''; }
-function syncCustomMekkah() { document.getElementById('hotel-mekkah-custom').value = ''; }
-
-// ─── FORMAT ──────────────────────────────────────────────────
+// ─── FORMAT MONNAIE ───────────────────────────────────────────
 function fmt(n) {
   return n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 }
 
-// ─── FRAIS HELPERS ───────────────────────────────────────────
-function getFrais(ville, nuits, pax) {
-  const on  = id => document.getElementById(id).checked;
-  const val = id => parseFloat(document.getElementById(id).value) || 0;
+// ─── CALCUL PAR LIGNE ────────────────────────────────────────
+function calcLigne(l) {
+  const cfg = CHAMBRE_CONFIG[l.type];
+  const pax = cfg.pax * l.qty;
+  const nuits = compterNuits(l.arrivee, l.depart);
+  const formule = getFormule();
 
-  if (ville === 'medine') {
-    let total = 0, items = [];
-    if (on('frais-medine-transfer-on')) {
-      const v = val('frais-medine-transfer') * pax;
-      total += v; items.push({ label: 'Transfert aéroport', montant: v, detail: `${val('frais-medine-transfer')} SAR × ${pax} pers.` });
-    }
-    if (on('frais-medine-transport-on')) {
-      const v = val('frais-medine-transport') * pax;
-      total += v; items.push({ label: 'Transport Médine → Mekkah', montant: v, detail: `${val('frais-medine-transport')} SAR × ${pax} pers.` });
-    }
-    if (on('frais-medine-taxe-on')) {
-      const v = val('frais-medine-taxe') * nuits;
-      total += v; items.push({ label: 'Taxe de séjour', montant: v, detail: `${val('frais-medine-taxe')} SAR/nuit × ${nuits} nuits` });
-    }
-    if (on('frais-medine-visa-on')) {
-      const v = val('frais-medine-visa') * pax;
-      total += v; items.push({ label: 'Visa / Prestation', montant: v, detail: `${val('frais-medine-visa')} SAR × ${pax} pers.` });
-    }
-    return { total, items };
-  } else {
-    let total = 0, items = [];
-    if (on('frais-mekkah-transfer-on')) {
-      const v = val('frais-mekkah-transfer') * pax;
-      total += v; items.push({ label: 'Transfert retour', montant: v, detail: `${val('frais-mekkah-transfer')} SAR × ${pax} pers.` });
-    }
-    if (on('frais-mekkah-guide-on')) {
-      const v = val('frais-mekkah-guide') * pax;
-      total += v; items.push({ label: 'Guide / Accompagnateur', montant: v, detail: `${val('frais-mekkah-guide')} SAR × ${pax} pers.` });
-    }
-    if (on('frais-mekkah-taxe-on')) {
-      const v = val('frais-mekkah-taxe') * nuits;
-      total += v; items.push({ label: 'Taxe de séjour', montant: v, detail: `${val('frais-mekkah-taxe')} SAR/nuit × ${nuits} nuits` });
-    }
-    if (on('frais-mekkah-divers-on')) {
-      const v = val('frais-mekkah-divers') * pax;
-      total += v; items.push({ label: 'Frais divers', montant: v, detail: `${val('frais-mekkah-divers')} SAR × ${pax} pers.` });
-    }
-    return { total, items };
+  const coutWd = l.prixWd * nuits.weekday * l.qty;
+  const coutWe = l.prixWe * nuits.weekend * l.qty;
+  const coutHeb = coutWd + coutWe;
+  const coutPdj = formule === 'BB' ? l.prixPdj * nuits.total * pax : 0;
+
+  let coutFrais = 0;
+  const fraisItems = [];
+  const f = l.frais;
+
+  if (f.transfertOn) { const v = f.transfertVal * pax; coutFrais += v; fraisItems.push({ label: l.ville === 'medine' ? 'Transfert aéroport' : 'Transfert retour', montant: v, detail: `${f.transfertVal} SAR × ${pax} pers.` }); }
+  if (l.ville === 'medine' && f.transportOn) { const v = f.transportVal * pax; coutFrais += v; fraisItems.push({ label: 'Transport Médine → Mekkah', montant: v, detail: `${f.transportVal} SAR × ${pax} pers.` }); }
+  if (f.taxeOn) { const v = f.taxeVal * nuits.total; coutFrais += v; fraisItems.push({ label: 'Taxe de séjour', montant: v, detail: `${f.taxeVal} SAR/nuit × ${nuits.total} nuits` }); }
+  if (l.ville === 'medine' && f.visaOn) { const v = f.visaVal * pax; coutFrais += v; fraisItems.push({ label: 'Visa / Prestation', montant: v, detail: `${f.visaVal} SAR × ${pax} pers.` }); }
+  if (l.ville === 'mekkah' && f.guideOn) { const v = f.guideVal * pax; coutFrais += v; fraisItems.push({ label: 'Guide / Accompagnateur', montant: v, detail: `${f.guideVal} SAR × ${pax} pers.` }); }
+  if (l.ville === 'mekkah' && f.diversOn) { const v = f.diversVal * pax; coutFrais += v; fraisItems.push({ label: 'Frais divers', montant: v, detail: `${f.diversVal} SAR × ${pax} pers.` }); }
+
+  return { pax, nuits, coutWd, coutWe, coutHeb, coutPdj, coutFrais, fraisItems, total: coutHeb + coutPdj + coutFrais };
+}
+
+// ─── UPDATE DEVIS ────────────────────────────────────────────
+function updateDevis(afficher = false) {
+  syncAllFromDOM();
+
+  const formule = getFormule();
+  document.getElementById('fo-ro').classList.toggle('active', formule === 'RO');
+  document.getElementById('fo-bb').classList.toggle('active', formule === 'BB');
+
+  const validite = parseInt(document.getElementById('validite').value) || 1;
+  const today    = new Date();
+  const expiry   = new Date(today.getTime() + validite * 86400000);
+  const fmtDate  = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
+
+  document.getElementById('d-ref').textContent      = `ST-${today.getFullYear()}-${String(devisCounter).padStart(3,'0')}`;
+  document.getElementById('d-today').textContent    = 'Émis le ' + fmtDate(today);
+  document.getElementById('d-validity').textContent = "Valable jusqu'au " + fmtDate(expiry);
+
+  const prenom = document.getElementById('client-prenom').value.trim();
+  const nom    = document.getElementById('client-nom').value.trim();
+  document.getElementById('d-client-name').textContent = (prenom || nom) ? `À l'attention de : ${prenom} ${nom}`.trim() : '';
+
+  const villes = ['medine', 'mekkah'];
+  let html = '';
+  let grandTotal = 0;
+  const villesPresentes = [];
+
+  villes.forEach(ville => {
+    const lignes = panier.filter(l => l.ville === ville);
+    if (lignes.length === 0) return;
+
+    const villeIcon = ville === 'medine'
+      ? '<i class="fas fa-mosque" style="margin-right:5px"></i>'
+      : '<i class="fas fa-star-and-crescent" style="margin-right:5px"></i>';
+    const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
+
+    const hotels = [...new Set(lignes.map(l => l.hotel || l.custom_hotel).filter(Boolean))];
+    const hotelsLabel = hotels.length ? hotels.join(', ') : '';
+
+    html += `<div class="line-city-header">${villeIcon} ${villeLabel}${hotelsLabel ? ' — ' + hotelsLabel : ''}</div>`;
+
+    lignes.forEach(l => {
+      const cfg = CHAMBRE_CONFIG[l.type];
+      const calc = calcLigne(l);
+      if (calc.nuits.total === 0) return;
+
+      const hotelNom = l.hotel || l.custom_hotel || 'hôtel non précisé';
+
+      // ── Ligne hébergement avec détail semaine + week-end ──
+      let hebDetail = `${l.qty} ch. ${cfg.label}`;
+      if (hotels.length > 1 || lignes.length > 1) hebDetail = hotelNom + ' · ' + hebDetail;
+      const detailNuits = [];
+      if (calc.nuits.weekday > 0) detailNuits.push(`${calc.nuits.weekday} nuit${calc.nuits.weekday>1?'s':''} semaine × ${l.prixWd} SAR`);
+      if (calc.nuits.weekend > 0) detailNuits.push(`${calc.nuits.weekend} nuit${calc.nuits.weekend>1?'s':''} week-end × ${l.prixWe} SAR`);
+      if (l.qty > 1) detailNuits.push(`× ${l.qty} ch.`);
+      if (detailNuits.length) hebDetail += ' · ' + detailNuits.join(' + ');
+
+      html += lineHTML('Hébergement', hebDetail, fmt(calc.coutHeb));
+
+      // ── Petit-déjeuner ──
+      if (formule === 'BB' && calc.coutPdj > 0) {
+        html += lineHTML('Petit-déjeuner',
+          `${calc.pax} pers. × ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''} × ${l.prixPdj} SAR`,
+          fmt(calc.coutPdj));
+      }
+
+      // ── Frais optionnels ──
+      calc.fraisItems.forEach(fi => html += lineHTML(fi.label, fi.detail, fmt(fi.montant)));
+
+      grandTotal += calc.total;
+    });
+
+    villesPresentes.push(villeLabel);
+  });
+
+  document.getElementById('d-hotel-name').textContent = villesPresentes.join(' & ') || 'Médine & Mekkah';
+  document.getElementById('d-lines').innerHTML = html || '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:12px">Ajoutez des chambres avec leurs dates pour voir le détail du devis</div>';
+  document.getElementById('d-total').textContent = fmt(grandTotal);
+  document.getElementById('d-valid-text').textContent = `Offre valable ${validite} jour${validite>1?'s':''} — expire le ${fmtDate(expiry)}`;
+
+  if (afficher) {
+    document.getElementById('devis-output').style.display = 'block';
+    document.getElementById('devis-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
-// ─── CALCUL HÉBERGEMENT ──────────────────────────────────────
-function calcHeberg(ville, nbCh) {
-  const prefix  = ville === 'medine' ? 'medine' : 'mekkah';
-  const arrivee = document.getElementById('date-arrivee-' + prefix).value;
-  const depart  = document.getElementById('date-depart-'  + prefix).value;
-  const pWd     = parseFloat(document.getElementById('prix-weekday-'  + prefix).value) || 0;
-  const pWe     = parseFloat(document.getElementById('prix-weekend-'  + prefix).value) || 0;
-  const { weekday, weekend, total } = compterNuits(arrivee, depart);
-  const coutWd  = pWd * weekday * nbCh;
-  const coutWe  = pWe * weekend * nbCh;
-  return { weekday, weekend, total, coutWd, coutWe, coutTotal: coutWd + coutWe, pWd, pWe };
-}
-
-function calcPdj(ville, nbCh, pax) {
-  const formule = getFormule();
-  if (formule !== 'BB') return { total: 0, nbWd: 0, nbWe: 0 };
-  const prefix  = ville === 'medine' ? 'medine' : 'mekkah';
-  const arrivee = document.getElementById('date-arrivee-' + prefix).value;
-  const depart  = document.getElementById('date-depart-'  + prefix).value;
-  const p       = parseFloat(document.getElementById('prix-pdj-' + prefix).value) || 0;
-  const { weekday, weekend, total } = compterNuits(arrivee, depart);
-  return {
-    total: p * total * pax,
-    nbWd: weekday, nbWe: weekend, nuits: total
-  };
-}
-
-// ─── LIGNE HTML ───────────────────────────────────────────────
 function lineHTML(label, detail, price) {
   return `<div class="line-item">
     <div>
@@ -1225,263 +851,62 @@ function lineHTML(label, detail, price) {
   </div>`;
 }
 
-// ─── RÉSUMÉ PANIER POUR LE DEVIS ─────────────────────────────
-/** Génère une ligne de description du panier pour le devis */
-function getPanierDescription() {
-  if (panier.length === 0) return '';
-  return panier.map(l => {
-    const cfg = CHAMBRE_CONFIG[l.type];
-    return l.qty > 1 ? `${l.qty}× ${cfg.label}` : cfg.label;
-  }).join(' + ');
-}
-
-// ─── LOGIQUE DATES ───────────────────────────────────────────
-// Règles simples :
-//   1. Dans chaque ville : départ ≥ arrivée
-//   2. Les deux séjours ne se chevauchent pas
-//      → si départ Médine est rempli et arrivée Mekkah remplie : ils ne peuvent pas se croiser
-//      → même logique dans l'autre sens
-// On ne force PAS l'ordre Médine/Mekkah : les deux ordres sont acceptés.
-
-function onArriveeMediane() {
-  const el = document.getElementById('date-arrivee-medine');
-  const dep = document.getElementById('date-depart-medine');
-  // Départ Médine ne peut pas être avant arrivée Médine
-  if (dep.value && dep.value < el.value) dep.value = '';
-  dep.min = el.value || '';
-  checkNoOverlap();
-  updateDevis();
-}
-
-function onDepartMedine() {
-  const arr = document.getElementById('date-arrivee-medine');
-  const dep = document.getElementById('date-depart-medine');
-  // Auto-sync : arrivée Mekkah = départ Médine si Mekkah vient après
-  const arrMek = document.getElementById('date-arrivee-mekkah');
-  const depMek = document.getElementById('date-depart-mekkah');
-  if (dep.value) {
-    // Si Mekkah est après Médine (ou vide), proposer auto-remplissage
-    if (!arrMek.value || (!depMek.value && arrMek.value <= dep.value)) {
-      arrMek.value = dep.value;
-    }
-  }
-  checkNoOverlap();
-  updateDevis();
-}
-
-function onArriveeMekkah() {
-  const el = document.getElementById('date-arrivee-mekkah');
-  const dep = document.getElementById('date-depart-mekkah');
-  if (dep.value && dep.value < el.value) dep.value = '';
-  dep.min = el.value || '';
-  // Auto-sync : arrivée Médine = départ Mekkah si Médine vient après
-  const arrMed = document.getElementById('date-arrivee-medine');
-  const depMek = document.getElementById('date-depart-mekkah');
-  if (depMek.value && (!arrMed.value)) {
-    arrMed.value = depMek.value;
-  }
-  checkNoOverlap();
-  updateDevis();
-}
-
-function onDepartMekkah() {
-  const arrMed = document.getElementById('date-arrivee-medine');
-  const depMek = document.getElementById('date-depart-mekkah');
-  // Si Médine vient après Mekkah et arrivée Médine est vide, proposer auto-remplissage
-  if (depMek.value && !arrMed.value) {
-    // laisser l'utilisateur remplir, juste vérifier
-  }
-  checkNoOverlap();
-  updateDevis();
-}
-
-function checkNoOverlap() {
-  const aM  = document.getElementById('date-arrivee-medine').value;
-  const dM  = document.getElementById('date-depart-medine').value;
-  const aMk = document.getElementById('date-arrivee-mekkah').value;
-  const dMk = document.getElementById('date-depart-mekkah').value;
-
-  // Cas Médine AVANT Mekkah : départ Médine ≤ arrivée Mekkah
-  if (dM && aMk && dM > aMk) {
-    // chevauchement : vider la date conflictuelle côté Mekkah
-    document.getElementById('date-arrivee-mekkah').value = dM;
-  }
-  // Cas Mekkah AVANT Médine : départ Mekkah ≤ arrivée Médine
-  if (dMk && aM && dMk > aM) {
-    document.getElementById('date-arrivee-medine').value = dMk;
-  }
-}
-
-// ─── MAIN UPDATE ─────────────────────────────────────────────
-function updateDevis(afficher = false) {
-  const { nbCh, pax } = getPanierStats();
-  const validite = parseInt(document.getElementById('validite').value) || 1;
-  const formule  = getFormule();
-
-  updateNuitsSummary('medine');
-  updateNuitsSummary('mekkah');
-
-  const hMed = calcHeberg('medine', nbCh);
-  const pMed = calcPdj('medine', nbCh, pax);
-  const fMed = getFrais('medine', hMed.total, pax);
-
-  const hMek = calcHeberg('mekkah', nbCh);
-  const pMek = calcPdj('mekkah', nbCh, pax);
-  const fMek = getFrais('mekkah', hMek.total, pax);
-
-  const grandTotal = hMed.coutTotal + pMed.total + fMed.total
-                   + hMek.coutTotal + pMek.total + fMek.total;
-
-  const today  = new Date();
-  const expiry = new Date(today.getTime() + validite * 86400000);
-  const fmtDate = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
-
-  document.getElementById('d-ref').textContent     = `ST-${today.getFullYear()}-${String(devisCounter).padStart(3,'0')}`;
-  document.getElementById('d-hotel-name').textContent = 'Médine & Mekkah';
-  document.getElementById('d-today').textContent   = 'Émis le ' + fmtDate(today);
-  document.getElementById('d-validity').textContent = "Valable jusqu'au " + fmtDate(expiry);
-
-  const prenom = document.getElementById('client-prenom').value.trim();
-  const nom    = document.getElementById('client-nom').value.trim();
-  const clientEl = document.getElementById('d-client-name');
-  clientEl.textContent = (prenom || nom) ? `À l'attention de : ${prenom} ${nom}`.trim() : '';
-
-  // Résumé chambres pour le devis
-  const panierDesc = getPanierDescription();
-
-  let html = '';
-
-  // ── Bloc MÉDINE ──
-  if (hMed.total > 0) {
-    const totalMed = hMed.coutTotal + pMed.total + fMed.total;
-    html += `<div class="line-city-header"><i class="fas fa-mosque" style="margin-right:5px"></i> Médine — ${getHotelMedine()}</div>`;
-
-    let hebDetail = panierDesc ? `${panierDesc} · ` : '';
-    if (hMed.weekday > 0 && hMed.weekend > 0) {
-      hebDetail += `${hMed.weekday} nuit${hMed.weekday>1?'s':''} sem. (${fmt(hMed.pWd)}/ch) + ${hMed.weekend} nuit${hMed.weekend>1?'s':''} w-e (${fmt(hMed.pWe)}/ch)`;
-    } else if (hMed.weekday > 0) {
-      hebDetail += `${hMed.weekday} nuit${hMed.weekday>1?'s':''} semaine · ${fmt(hMed.pWd)}/ch/nuit`;
-    } else {
-      hebDetail += `${hMed.weekend} nuit${hMed.weekend>1?'s':''} week-end · ${fmt(hMed.pWe)}/ch/nuit`;
-    }
-    html += lineHTML('Hébergement', hebDetail, fmt(hMed.coutTotal));
-
-    if (formule === 'BB' && pMed.total > 0) {
-      const p = parseFloat(document.getElementById('prix-pdj-medine').value) || 0;
-      html += lineHTML('Petit-déjeuner', `${p} SAR × ${pax} pers. × ${pMed.nuits} nuit${pMed.nuits>1?'s':''}`, fmt(pMed.total));
-    }
-
-    fMed.items.forEach(f => { html += lineHTML(f.label, f.detail, fmt(f.montant)); });
-
-    html += `<div class="line-item" style="background:#F6F6F0;border-radius:8px;padding:8px 10px;margin:4px 0;">
-      <div style="font-size:12px;font-weight:700;color:var(--accent)">Sous-total Médine</div>
-      <div class="line-price">${fmt(totalMed)}</div>
-    </div>`;
-  }
-
-  // ── Bloc MEKKAH ──
-  if (hMek.total > 0) {
-    const totalMek = hMek.coutTotal + pMek.total + fMek.total;
-    html += `<div class="line-city-header" style="margin-top:10px"><i class="fas fa-star-and-crescent" style="margin-right:5px"></i> Mekkah — ${getHotelMekkah()}</div>`;
-
-    let hebDetail = panierDesc ? `${panierDesc} · ` : '';
-    if (hMek.weekday > 0 && hMek.weekend > 0) {
-      hebDetail += `${hMek.weekday} nuit${hMek.weekday>1?'s':''} sem. (${fmt(hMek.pWd)}/ch) + ${hMek.weekend} nuit${hMek.weekend>1?'s':''} w-e (${fmt(hMek.pWe)}/ch)`;
-    } else if (hMek.weekday > 0) {
-      hebDetail += `${hMek.weekday} nuit${hMek.weekday>1?'s':''} semaine · ${fmt(hMek.pWd)}/ch/nuit`;
-    } else {
-      hebDetail += `${hMek.weekend} nuit${hMek.weekend>1?'s':''} week-end · ${fmt(hMek.pWe)}/ch/nuit`;
-    }
-    html += lineHTML('Hébergement', hebDetail, fmt(hMek.coutTotal));
-
-    if (formule === 'BB' && pMek.total > 0) {
-      const p = parseFloat(document.getElementById('prix-pdj-mekkah').value) || 0;
-      html += lineHTML('Petit-déjeuner', `${p} SAR × ${pax} pers. × ${pMek.nuits} nuit${pMek.nuits>1?'s':''}`, fmt(pMek.total));
-    }
-
-    fMek.items.forEach(f => { html += lineHTML(f.label, f.detail, fmt(f.montant)); });
-
-    html += `<div class="line-item" style="background:#F6F6F0;border-radius:8px;padding:8px 10px;margin:4px 0;">
-      <div style="font-size:12px;font-weight:700;color:var(--accent)">Sous-total Mekkah</div>
-      <div class="line-price">${fmt(totalMek)}</div>
-    </div>`;
-  }
-
-  document.getElementById('d-lines').innerHTML = html;
-  document.getElementById('d-total').textContent = fmt(grandTotal);
-  document.getElementById('d-valid-text').textContent =
-    `Offre valable ${validite} jour${validite>1?'s':''} — expire le ${fmtDate(expiry)}`;
-
-  if (afficher) {
-    document.getElementById('devis-output').style.display = 'block';
-    document.getElementById('devis-output').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  }
-}
-
 // ─── PDF ─────────────────────────────────────────────────────
-function buildPdfSections() {
-  const { nbCh, pax } = getPanierStats();
-  const formule = getFormule();
-  const panierDesc = getPanierDescription();
-
-  const sections = [];
-
-  ['medine','mekkah'].forEach((ville, si) => {
-    const h = calcHeberg(ville, nbCh);
-    if (h.total === 0) return;
-    const p = calcPdj(ville, nbCh, pax);
-    const f = getFrais(ville, h.total, pax);
-    const rows = [];
-
-    let hebDetail = panierDesc ? `${panierDesc} · ` : '';
-    if (h.weekday > 0 && h.weekend > 0) {
-      hebDetail += `${h.weekday} nuit${h.weekday>1?'s':''} sem. (${fmt(h.pWd)}/ch) + ${h.weekend} nuit${h.weekend>1?'s':''} w-e (${fmt(h.pWe)}/ch)`;
-    } else if (h.weekday > 0) {
-      hebDetail += `${h.weekday} nuit${h.weekday>1?'s':''} semaine · ${fmt(h.pWd)}/ch/nuit`;
-    } else {
-      hebDetail += `${h.weekend} nuit${h.weekend>1?'s':''} week-end · ${fmt(h.pWe)}/ch/nuit`;
-    }
-    rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(h.coutTotal) });
-
-    if (formule === 'BB' && p.total > 0) {
-      const prixPdj = parseFloat(document.getElementById('prix-pdj-' + ville).value) || 0;
-      rows.push({ label: 'Petit-déjeuner', detail: `${prixPdj} SAR × ${pax} pers. × ${h.total} nuit${h.total>1?'s':''}`, price: fmt(p.total) });
-    }
-    f.items.forEach(item => rows.push({ label: item.label, detail: item.detail, price: fmt(item.montant) }));
-
-    const villeLabel = ville === 'medine' ? 'MÉDINE' : 'MEKKAH';
-    const hotelName  = ville === 'medine' ? getHotelMedine() : getHotelMekkah();
-    const subtotalNum = h.coutTotal + p.total + f.total;
-
-    sections.push({
-      title: `${villeLabel} — ${hotelName}`,
-      rows,
-      subtotal: fmt(subtotalNum),
-      subtotalLabel: 'Sous-total ' + (ville === 'medine' ? 'Médine' : 'Mekkah')
-    });
-  });
-
-  return sections;
-}
-
 function getDevisData() {
+  syncAllFromDOM();
   const today = new Date();
   const validite = parseInt(document.getElementById('validite').value) || 1;
-  const expiry   = new Date(today.getTime() + validite * 86400000);
-  const fmtDate  = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
-  const { nbCh } = getPanierStats();
-  const hMed = calcHeberg('medine', nbCh);
-  const hMek = calcHeberg('mekkah', nbCh);
+  const expiry = new Date(today.getTime() + validite * 86400000);
+  const fmtDate = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
+  const formule = getFormule();
+
+  const sections = [];
+  let grandTotal = 0;
+
+  ['medine','mekkah'].forEach(ville => {
+    const lignes = panier.filter(l => l.ville === ville);
+    if (lignes.length === 0) return;
+    const villeLabel = ville === 'medine' ? 'MÉDINE' : 'MEKKAH';
+    const rows = [];
+    let sousTotalNum = 0;
+
+    lignes.forEach(l => {
+      const cfg = CHAMBRE_CONFIG[l.type];
+      const calc = calcLigne(l);
+      if (calc.nuits.total === 0) return;
+
+      const hotelNomPdf = l.hotel || l.custom_hotel || '';
+      let hebBase = (hotelNomPdf ? hotelNomPdf + ' · ' : '') + `${l.qty} ch. ${cfg.label}`;
+      const detailNuits = [];
+      if (calc.nuits.weekday > 0) detailNuits.push(`${calc.nuits.weekday} nuit${calc.nuits.weekday>1?'s':''} semaine × ${l.prixWd} SAR`);
+      if (calc.nuits.weekend > 0) detailNuits.push(`${calc.nuits.weekend} nuit${calc.nuits.weekend>1?'s':''} week-end × ${l.prixWe} SAR`);
+      if (l.qty > 1) detailNuits.push(`× ${l.qty} ch.`);
+      const hebDetail = hebBase + (detailNuits.length ? ' · ' + detailNuits.join(' + ') : '');
+
+      rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(calc.coutHeb) });
+
+      if (formule === 'BB' && calc.coutPdj > 0) {
+        rows.push({ label: 'Petit-déjeuner', detail: `${calc.pax} pers. × ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''} × ${l.prixPdj} SAR`, price: fmt(calc.coutPdj) });
+      }
+      calc.fraisItems.forEach(fi => rows.push({ label: fi.label, detail: fi.detail, price: fmt(fi.montant) }));
+
+      sousTotalNum += calc.total;
+    });
+
+    if (sousTotalNum === 0) return;
+    grandTotal += sousTotalNum;
+    sections.push({ title: villeLabel, rows, subtotal: fmt(sousTotalNum), subtotalLabel: 'Sous-total ' + (ville === 'medine' ? 'Médine' : 'Mekkah') });
+  });
+
   return {
-    ref:      document.getElementById('d-ref').textContent.trim(),
-    hotel:    'Médine & Mekkah',
-    client:   document.getElementById('d-client-name').textContent.trim(),
+    ref: document.getElementById('d-ref').textContent.trim(),
+    hotel: document.getElementById('d-hotel-name').textContent.trim(),
+    client: document.getElementById('d-client-name').textContent.trim(),
     dateEmis: 'Émis le ' + fmtDate(today),
-    dateVal:  "Valable jusqu'au " + fmtDate(expiry),
-    total:    document.getElementById('d-total').textContent.trim(),
+    dateVal: "Valable jusqu'au " + fmtDate(expiry),
+    total: fmt(grandTotal),
     validTxt: document.getElementById('d-valid-text').textContent.trim(),
-    nuits:    hMed.total + hMek.total,
-    sections: buildPdfSections(),
+    sections
   };
 }
 
@@ -1489,7 +914,6 @@ function genererPDF(data) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
   const W = 210, M = 14, CW = W - M*2;
-
   const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
   const setFill = h => doc.setFillColor(...hex2rgb(h));
   const setDraw = h => doc.setDrawColor(...hex2rgb(h));
@@ -1511,53 +935,51 @@ function genererPDF(data) {
   doc.text(data.ref, W - M, 22, { align: 'right' });
   doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#AAAAAA');
   doc.text(data.hotel, W - M, 28, { align: 'right' });
-  if (data.client) {
-    doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#FFFFFF');
-    doc.text(data.client, W - M, 34, { align: 'right' });
-  }
+  if (data.client) { doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#FFFFFF'); doc.text(data.client, W - M, 34, { align: 'right' }); }
   doc.setFontSize(8); setTxt('#AAAAAA');
   doc.text(data.dateEmis, M + 30, 40);
   doc.text(data.dateVal, W - M, 40, { align: 'right' });
 
   let y = 66;
-
-  (data.sections || []).forEach((section, si) => {
+  (data.sections || []).forEach(section => {
     if (y > 250) { doc.addPage(); y = 20; }
-
     setFill('#F0DFA0'); doc.roundedRect(M, y, CW, 10, 2, 2, 'F');
     doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setTxt('#7A5800');
     doc.text(section.title, M + 4, y + 6.8);
     y += 14;
 
     section.rows.forEach(row => {
-      if (y > 265) { doc.addPage(); y = 20; }
+      if (y > 258) { doc.addPage(); y = 20; }
       setDraw('#E8E8E8'); doc.setLineWidth(0.3); doc.line(M, y - 1, W - M, y - 1);
+
+      // Libellé + prix sur la même ligne
       doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A1A1A');
       doc.text(row.label, M, y + 4);
+      if (row.price) {
+        doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A3A5C');
+        doc.text(row.price, W - M, y + 4, { align: 'right' });
+      }
+
       if (row.detail) {
         doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt('#888888');
-        const lines = doc.splitTextToSize(row.detail, CW - 30);
+        const lines = doc.splitTextToSize(row.detail, CW - 20);
         doc.text(lines, M, y + 9);
-        doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A3A5C');
-        doc.text(row.price, W - M, y + 4, { align: 'right' });
         y += 8 + lines.length * 4;
       } else {
-        doc.setFont('helvetica','bold'); doc.setFontSize(9.5); setTxt('#1A3A5C');
-        doc.text(row.price, W - M, y + 4, { align: 'right' });
         y += 10;
       }
     });
 
-    setFill('#EEF3F8'); setDraw('#C0D0E0'); doc.setLineWidth(0.4);
-    doc.roundedRect(M, y, CW, 10, 2, 2, 'FD');
-    doc.setFont('helvetica','bold'); doc.setFontSize(9); setTxt('#1A3A5C');
-    doc.text(section.subtotalLabel, M + 4, y + 6.8);
-    doc.text(section.subtotal, W - M - 4, y + 6.8, { align: 'right' });
-    y += 16;
+    // Sous-total section
+    y += 2;
+    setFill('#EEF3F8'); doc.roundedRect(M, y, CW, 8, 1, 1, 'F');
+    doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#1A3A5C');
+    doc.text(section.subtotalLabel, M + 4, y + 5.5);
+    doc.text(section.subtotal, W - M - 4, y + 5.5, { align: 'right' });
+    y += 14;
   });
 
   if (y > 255) { doc.addPage(); y = 20; }
-
   setFill('#1A3A5C'); setDraw('#1A3A5C'); doc.setLineWidth(0.5);
   doc.roundedRect(M, y, CW, 16, 3, 3, 'FD');
   doc.setFont('helvetica','bold'); doc.setFontSize(11); setTxt('#FFFFFF');
@@ -1572,33 +994,28 @@ function genererPDF(data) {
   doc.text('  ⏱  ' + data.validTxt, M + 4, y + 6);
   y += 15;
 
-  setDraw('#E8E8E0'); doc.setLineWidth(0.3); doc.line(M, y, W - M, y); y += 6;
-  const mention = 'Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer\nun hébergement équivalent en cas d\'indisponibilité. Tous les frais annexes sont inclus dans le total.';
+  setDraw('#E8E8E0'); doc.line(M, y, W - M, y); y += 6;
   doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt('#AAAAAA');
-  doc.text(mention, M, y);
+  doc.text('Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer\nun hébergement équivalent en cas d\'indisponibilité. Tous les frais annexes sont inclus dans le total.', M, y);
 
   return doc;
 }
 
-// ─── WHATSAPP ────────────────────────────────────────────────
 async function envoyerWhatsappPDF() {
-  const btn      = document.getElementById('btn-wa');
+  const btn = document.getElementById('btn-wa');
   const statusEl = document.getElementById('wa-status');
-  const numero   = document.getElementById('wa-number').value.trim().replace(/\s+/g,'');
-
+  const numero = document.getElementById('wa-number').value.trim().replace(/\s+/g,'');
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération PDF…';
   statusEl.style.display = 'block';
   statusEl.innerHTML = '⏳ Création du PDF…';
-
   try {
-    const data     = getDevisData();
-    const doc      = genererPDF(data);
+    const data = getDevisData();
+    const doc = genererPDF(data);
     const filename = `Devis_SamyTravel_${data.ref}.pdf`;
-    const msg      = `Voici le devis ci-joint.\n\nSamy Travel`;
-    const pdfBlob  = doc.output('blob');
-    const pdfFile  = new File([pdfBlob], filename, { type: 'application/pdf' });
-
+    const msg = `Voici le devis ci-joint.\n\nSamy Travel`;
+    const pdfBlob = doc.output('blob');
+    const pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
     if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
       statusEl.innerHTML = '📤 Ouverture du partage…';
       await navigator.share({ files: [pdfFile], text: msg });
@@ -1608,25 +1025,18 @@ async function envoyerWhatsappPDF() {
       statusEl.innerHTML = '✅ PDF téléchargé ! Ouverture de WhatsApp…';
       await new Promise(r => setTimeout(r, 1000));
       const encoded = encodeURIComponent(msg);
-      const waUrl   = numero
-        ? `https://wa.me/${numero.replace(/^\+/,'')}?text=${encoded}`
-        : `https://wa.me/?text=${encoded}`;
+      const waUrl = numero ? `https://wa.me/${numero.replace(/^\+/,'')}?text=${encoded}` : `https://wa.me/?text=${encoded}`;
       window.open(waUrl, '_blank');
       statusEl.innerHTML = '📤 WhatsApp ouvert — joignez le PDF depuis vos téléchargements !';
     }
   } catch(err) {
-    if (err.name !== 'AbortError') {
-      statusEl.innerHTML = '❌ Erreur : ' + err.message;
-    } else {
-      statusEl.innerHTML = '↩️ Partage annulé.';
-    }
+    statusEl.innerHTML = err.name !== 'AbortError' ? '❌ Erreur : ' + err.message : '↩️ Partage annulé.';
   } finally {
     btn.disabled = false;
     btn.innerHTML = '<i class="fab fa-whatsapp"></i> Envoyer le PDF WhatsApp';
   }
 }
 
-// ─── LOGO ────────────────────────────────────────────────────
 function chargerLogoBase64() {
   const logoEl = document.querySelector('.logo-img');
   if (!logoEl || !logoEl.src) return;
@@ -1634,15 +1044,10 @@ function chargerLogoBase64() {
   img.crossOrigin = 'anonymous';
   img.onload = function() {
     const canvas = document.createElement('canvas');
-    canvas.width  = img.naturalWidth  || 200;
-    canvas.height = img.naturalHeight || 200;
+    canvas.width = img.naturalWidth || 200; canvas.height = img.naturalHeight || 200;
     canvas.getContext('2d').drawImage(img, 0, 0);
-    try {
-      LOGO_BASE64 = canvas.toDataURL('image/png');
-      document.getElementById('devis-logo-img').src = LOGO_BASE64;
-    } catch(e) {
-      document.getElementById('devis-logo-img').src = logoEl.src;
-    }
+    try { LOGO_BASE64 = canvas.toDataURL('image/png'); document.getElementById('devis-logo-img').src = LOGO_BASE64; }
+    catch(e) { document.getElementById('devis-logo-img').src = logoEl.src; }
   };
   img.onerror = () => { document.getElementById('devis-logo-img').src = logoEl.src; };
   img.src = logoEl.src;
