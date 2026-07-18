@@ -1,4 +1,4 @@
-const CACHE_NAME = 'samy-travel-v12';
+const CACHE_NAME = 'samy-travel-v13';
 const ASSETS = [
   '/samy-travel-devis/',
   '/samy-travel-devis/index.html',
