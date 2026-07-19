@@ -804,13 +804,10 @@ function updateDevis(afficher = false) {
       const hotelNom = l.hotel || l.custom_hotel || 'hôtel non précisé';
 
       // ── Ligne hébergement avec détail semaine + week-end ──
-      let hebDetail = `${l.qty} ch. ${cfg.label}`;
-      if (hotels.length > 1 || lignes.length > 1) hebDetail = hotelNom + ' · ' + hebDetail;
-      const detailNuits = [];
-      if (calc.nuits.weekday > 0) detailNuits.push(`${calc.nuits.weekday} nuit${calc.nuits.weekday>1?'s':''} semaine × ${l.prixWd} SAR`);
-      if (calc.nuits.weekend > 0) detailNuits.push(`${calc.nuits.weekend} nuit${calc.nuits.weekend>1?'s':''} week-end × ${l.prixWe} SAR`);
-      if (l.qty > 1) detailNuits.push(`× ${l.qty} ch.`);
-      if (detailNuits.length) hebDetail += ' · ' + detailNuits.join(' + ');
+     const hotelNom = l.hotel || l.custom_hotel || 'hôtel non précisé';
+const dateArr = l.arrivee ? new Date(l.arrivee + 'T00:00:00Z').toLocaleDateString('fr-FR', {day:'2-digit', month:'short'}) : '—';
+const dateDep = l.depart  ? new Date(l.depart  + 'T00:00:00Z').toLocaleDateString('fr-FR', {day:'2-digit', month:'short'}) : '—';
+let hebDetail = `${hotelNom} · ${l.qty} ch. ${cfg.label} · ${dateArr} → ${dateDep} · ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''}`;
 
       html += lineHTML('Hébergement', hebDetail, fmt(calc.coutHeb));
 
@@ -876,12 +873,10 @@ function getDevisData() {
       if (calc.nuits.total === 0) return;
 
       const hotelNomPdf = l.hotel || l.custom_hotel || '';
-      let hebBase = (hotelNomPdf ? hotelNomPdf + ' · ' : '') + `${l.qty} ch. ${cfg.label}`;
-      const detailNuits = [];
-      if (calc.nuits.weekday > 0) detailNuits.push(`${calc.nuits.weekday} nuit${calc.nuits.weekday>1?'s':''} semaine × ${l.prixWd} SAR`);
-      if (calc.nuits.weekend > 0) detailNuits.push(`${calc.nuits.weekend} nuit${calc.nuits.weekend>1?'s':''} week-end × ${l.prixWe} SAR`);
-      if (l.qty > 1) detailNuits.push(`× ${l.qty} ch.`);
-      const hebDetail = hebBase + (detailNuits.length ? ' · ' + detailNuits.join(' + ') : '');
+      
+      const dateArrPdf = l.arrivee ? new Date(l.arrivee + 'T00:00:00Z').toLocaleDateString('fr-FR', {day:'2-digit', month:'short'}) : '—';
+const dateDepPdf = l.depart  ? new Date(l.depart  + 'T00:00:00Z').toLocaleDateString('fr-FR', {day:'2-digit', month:'short'}) : '—';
+const hebDetail = `${hotelNomPdf || 'hôtel non précisé'} · ${l.qty} ch. ${cfg.label} · ${dateArrPdf} → ${dateDepPdf} · ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''}`;
 
       rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(calc.coutHeb) });
 
