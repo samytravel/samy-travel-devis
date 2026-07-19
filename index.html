@@ -809,7 +809,8 @@ const dateArr = l.arrivee ? new Date(l.arrivee + 'T00:00:00Z').toLocaleDateStrin
 const dateDep = l.depart  ? new Date(l.depart  + 'T00:00:00Z').toLocaleDateString('fr-FR', {day:'2-digit', month:'short'}) : '—';
 let hebDetail = `${hotelNom} · ${l.qty} ch. ${cfg.label} · ${dateArr} → ${dateDep} · ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''}`;
 
-      html += lineHTML('Hébergement', hebDetail, fmt(calc.coutHeb));
+      html += lineHTML('Hébeconst villeLabel2 = l.ville === 'medine' ? 'Médine' : 'Mekkah';
+html += lineHTML('Hébergement ' + villeLabel2, hebDetail, fmt(calc.coutHeb));rgement', hebDetail, fmt(calc.coutHeb));
 
       // ── Petit-déjeuner ──
       if (formule === 'BB' && calc.coutPdj > 0) {
@@ -878,7 +879,8 @@ function getDevisData() {
 const dateDepPdf = l.depart  ? new Date(l.depart  + 'T00:00:00Z').toLocaleDateString('fr-FR', {day:'2-digit', month:'short'}) : '—';
 const hebDetail = `${hotelNomPdf || 'hôtel non précisé'} · ${l.qty} ch. ${cfg.label} · ${dateArrPdf} → ${dateDepPdf} · ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''}`;
 
-      rows.push({ label: 'Hébergement', detail: hebDetail, price: fmt(calc.coutHeb) });
+      roconst villeRow = ville === 'medine' ? 'Médine' : 'Mekkah';
+rows.push({ label: 'Hébergement ' + villeRow, detail: hebDetail, price: fmt(calc.coutHeb) });ws.push({ label: 'Hébergement', detail: hebDetail, price: fmt(calc.coutHeb) });
 
       if (formule === 'BB' && calc.coutPdj > 0) {
         rows.push({ label: 'Petit-déjeuner', detail: `${calc.pax} pers. × ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''} × ${l.prixPdj} SAR`, price: fmt(calc.coutPdj) });
