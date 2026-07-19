@@ -596,11 +596,11 @@ function renderPanier() {
         <!-- TARIFS -->
         <div class="tarif-inline">
           <div class="tarif-cell weekday">
-            <label><span class="badge-weekday">SEMAINE</span> sam → jeu soir</label>
+            <label><span class="badge-weekday">SEMAINE</span> du samedi au jeudi midi</label>
             <input type="number" id="prix-wd-${l.id}" value="${l.prixWd}" min="0" onchange="onChange(${l.id})">
           </div>
           <div class="tarif-cell weekend">
-            <label><span class="badge-weekend">WEEK-END</span> jeu soir → sam</label>
+            <label><span class="badge-weekend">WEEK-END</span> du jeudi midi au samedi</label>
             <input type="number" id="prix-we-${l.id}" value="${l.prixWe}" min="0" onchange="onChange(${l.id})">
           </div>
         </div>
