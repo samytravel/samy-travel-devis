@@ -723,9 +723,7 @@ function updateDevis(afficher = false) {
       ? '<i class="fas fa-mosque" style="margin-right:5px"></i>'
       : '<i class="fas fa-star-and-crescent" style="margin-right:5px"></i>';
     const villeLabel = ville==='medine' ? 'Médine' : 'Mekkah';
-    const hotels = [...new Set(lignes.map(l => l.hotel||l.custom_hotel).filter(Boolean))];
-    const hotelsLabel = hotels.length ? hotels.join(', ') : '';
-    html += '<div class="line-city-header">'+villeIcon+' '+villeLabel+(hotelsLabel?' — '+hotelsLabel:'')+'</div>';
+    html += '<div class="line-city-header">'+villeIcon+' Hébergement '+villeLabel+'</div>';
 
     lignes.forEach(l => {
       const cfg = CHAMBRE_CONFIG[l.type];
