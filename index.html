@@ -41,7 +41,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .brand-sub { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 1px; }
 .header-badge { background: var(--gold); color: #1A1A1A; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
 
+/* NAV TABS */
+.nav-tabs { background: #0F2840; display: flex; max-width: 760px; margin: 0 auto; }
+.nav-tab { flex: 1; padding: 10px 6px; text-align: center; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.55); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 5px; }
+.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+.nav-tab:hover:not(.active) { color: rgba(255,255,255,0.85); }
+.tab-badge { background: var(--gold); color: #1A1A1A; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
+
 .page { max-width: 760px; margin: 0 auto; padding: 18px 14px 40px; display: flex; flex-direction: column; gap: 14px; }
+.tab-content { display: none; }
+.tab-content.active { display: flex; flex-direction: column; gap: 14px; }
+
 .card { background: var(--card); border-radius: var(--radius); padding: 18px 18px 20px; box-shadow: var(--shadow); border: 1px solid var(--border); }
 .section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
 .section-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; flex-shrink: 0; }
@@ -77,7 +87,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .ch-item.open .ch-chevron { transform: rotate(180deg); }
 .btn-remove-ch { background: none; border: none; color: #C0392B; cursor: pointer; font-size: 15px; padding: 2px 4px; border-radius: 6px; flex-shrink: 0; transition: background 0.12s; }
 .btn-remove-ch:hover { background: #FDE8E8; }
-
 .ch-item-body { padding: 14px; display: none; }
 .ch-item.open .ch-item-body { display: block; }
 
@@ -135,6 +144,10 @@ input:focus, select:focus { border-color: var(--gold); }
 .btn-generate { background: linear-gradient(135deg, var(--gold) 0%, #A07A2A 100%); color: #fff; border: none; border-radius: 12px; padding: 15px; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 4px 18px rgba(201,168,76,0.4); transition: transform 0.12s, box-shadow 0.12s; letter-spacing: 0.3px; }
 .btn-generate:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(201,168,76,0.5); }
 
+.btn-save { background: var(--accent2); color: #fff; border: none; border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s; }
+.btn-save:hover { background: #1E4E36; }
+
+/* DEVIS OUTPUT */
 .devis-card { background: #fff; border-radius: var(--radius); box-shadow: 0 4px 24px rgba(0,0,0,0.10); overflow: hidden; border: 1px solid var(--border); }
 .devis-top { background: linear-gradient(135deg, var(--accent) 0%, #0A2540 100%); padding: 20px 20px 18px; }
 .devis-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
@@ -158,6 +171,67 @@ input:focus, select:focus { border-color: var(--gold); }
 .devis-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
 .devis-mention { font-size: 10px; color: var(--text-muted); line-height: 1.5; }
 .btn-whatsapp { background: #25D366; color: #fff; border: none; border-radius: 9px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+/* TYPE BADGE */
+.doc-type-badge { display: inline-block; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+.badge-devis-type { background: #EEF3F8; color: var(--accent); }
+.badge-facture-type { background: #FFF0D0; color: #7A5800; border: 1.5px solid var(--gold); }
+
+/* LISTE DEVIS */
+.liste-empty { text-align: center; padding: 32px 20px; color: var(--text-muted); }
+.liste-empty i { font-size: 36px; opacity: 0.25; display: block; margin-bottom: 12px; }
+.devis-list-item { background: #fff; border: 1.5px solid var(--border-strong); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+.devis-list-item:hover { border-color: var(--gold); box-shadow: 0 2px 12px rgba(201,168,76,0.15); }
+.dli-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.dli-icon-devis { background: #EEF3F8; }
+.dli-icon-facture { background: #FFF3D0; }
+.dli-body { flex: 1; min-width: 0; }
+.dli-ref { font-size: 14px; font-weight: 700; color: var(--accent); }
+.dli-client { font-size: 12px; color: var(--text); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dli-date { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.dli-right { text-align: right; flex-shrink: 0; }
+.dli-total { font-size: 15px; font-weight: 800; color: var(--accent); }
+.dli-type { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-top: 4px; display: inline-block; }
+.dli-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.btn-action { height: 34px; padding: 0 12px; border: 1.5px solid var(--border-strong); border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; background: #fff; display: flex; align-items: center; gap: 5px; transition: all 0.15s; white-space: nowrap; }
+.btn-action:hover { border-color: var(--gold); background: #FFFBEF; }
+.btn-action.danger { color: #C0392B; }
+.btn-action.danger:hover { border-color: #C0392B; background: #FDE8E8; }
+.btn-convert { background: var(--gold); color: #fff; border-color: var(--gold); }
+.btn-convert:hover { background: #A07A2A; border-color: #A07A2A; }
+
+/* MODAL */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.hidden { display: none; }
+.modal-box { background: #fff; border-radius: 16px; padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 8px 40px rgba(0,0,0,0.25); }
+.modal-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.modal-title i { color: var(--gold); }
+.modal-body { font-size: 13px; color: #444; margin-bottom: 20px; line-height: 1.6; }
+.modal-input-wrap { margin-bottom: 16px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.modal-btn { padding: 10px 20px; border-radius: 9px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; }
+.modal-btn-cancel { background: #F0F0EC; color: #555; }
+.modal-btn-cancel:hover { background: #E0E0DC; }
+.modal-btn-ok { background: var(--gold); color: #fff; }
+.modal-btn-ok:hover { background: #A07A2A; }
+
+/* FACTURE STAMP */
+.facture-stamp { background: linear-gradient(135deg, #FFF3D0 0%, #FFF0C0 100%); border: 2px solid var(--gold); border-radius: 10px; padding: 10px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.facture-stamp i { color: var(--gold); font-size: 18px; }
+.facture-stamp-text { font-size: 12px; font-weight: 700; color: #7A5800; }
+.facture-stamp-sub { font-size: 11px; color: #A07A2A; margin-top: 2px; }
+
+/* SECTION FILTER */
+.liste-filter-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.filter-btn { padding: 7px 14px; border: 1.5px solid var(--border-strong); border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; background: #fff; color: var(--text); transition: all 0.15s; }
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.filter-btn.active.gold { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+/* TOAST */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1A1A1A; color: #fff; padding: 11px 22px; border-radius: 24px; font-size: 13px; font-weight: 600; z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
+.toast.show { opacity: 1; }
+.toast.success { background: #2E6A4E; }
+.toast.error { background: #8B2020; }
 </style>
 </head>
 <body>
@@ -169,11 +243,23 @@ input:focus, select:focus { border-color: var(--gold); }
       <div class="brand-name">Samy Travel</div>
       <div class="brand-sub">Organisateur de voyage</div>
     </div>
-    <div class="header-badge">Devis</div>
+    <div class="header-badge">Pro</div>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="switchTab('nouveau')" id="tab-nouveau">
+      <i class="fas fa-plus-circle"></i> Nouveau devis
+    </div>
+    <div class="nav-tab" onclick="switchTab('liste')" id="tab-liste">
+      <i class="fas fa-folder-open"></i> Mes devis &amp; factures
+      <span class="tab-badge" id="badge-count">0</span>
+    </div>
   </div>
 </div>
 
 <div class="page">
+
+<!-- ======================== ONGLET NOUVEAU ======================== -->
+<div class="tab-content active" id="content-nouveau">
 
   <!-- CLIENT -->
   <div class="card">
@@ -288,7 +374,8 @@ input:focus, select:focus { border-color: var(--gold); }
               <img class="devis-logo" src="" id="devis-logo-img" alt="Samy Travel">
             </div>
             <div>
-              <div class="devis-num-label">Devis N°</div>
+              <span class="doc-type-badge badge-devis-type" id="d-type-badge">DEVIS</span>
+              <div class="devis-num-label">Référence</div>
               <div class="devis-ref" id="d-ref">ST-2026-001</div>
               <div class="devis-hotel" id="d-hotel-name"></div>
               <div class="devis-hotel" id="d-client-name" style="margin-top:4px;font-weight:600;color:#fff"></div>
@@ -314,6 +401,11 @@ input:focus, select:focus { border-color: var(--gold); }
       </div>
       <div class="devis-footer">
         <div class="devis-mention">Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer un hébergement équivalent en cas d'indisponibilité. Tous les frais annexes sont inclus dans le montant total ci-dessus.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn-save" style="flex:1" onclick="sauvegarderDevis()">
+            <i class="fas fa-save"></i> Sauvegarder le devis
+          </button>
+        </div>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <input type="tel" id="wa-number" placeholder="Ex : 0033612345678" style="height:34px;font-size:12px;border-color:var(--border-strong)">
           <button class="btn-whatsapp" id="btn-wa" onclick="envoyerWhatsappPDF()">
@@ -327,9 +419,69 @@ input:focus, select:focus { border-color: var(--gold); }
 
 </div>
 
+<!-- ======================== ONGLET LISTE ======================== -->
+<div class="tab-content" id="content-liste">
+
+  <div class="card" style="padding:14px 18px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div style="font-size:14px;font-weight:700">Documents sauvegardés</div>
+      <button class="btn-action danger" onclick="viderListe()" style="font-size:11px;padding:0 10px;height:30px">
+        <i class="fas fa-trash-alt"></i> Tout effacer
+      </button>
+    </div>
+    <div class="liste-filter-bar">
+      <button class="filter-btn active" onclick="filtrerListe('tous',this)">Tous</button>
+      <button class="filter-btn" onclick="filtrerListe('devis',this)">Devis uniquement</button>
+      <button class="filter-btn gold" onclick="filtrerListe('facture',this)">Factures uniquement</button>
+    </div>
+    <div id="liste-documents"></div>
+  </div>
+
+</div>
+
+</div><!-- .page -->
+
+<!-- MODAL CONVERSION -->
+<div class="modal-overlay hidden" id="modal-convert">
+  <div class="modal-box">
+    <div class="modal-title"><i class="fas fa-file-invoice-dollar"></i> Convertir en facture</div>
+    <div class="modal-body">
+      Ce devis sera converti en <strong>FACTURE</strong>. Vous pouvez modifier les informations ci-dessous avant de confirmer.
+    </div>
+    <div class="modal-input-wrap">
+      <label>Numéro de facture</label>
+      <input type="text" id="modal-fac-num" placeholder="FAC-2026-001">
+    </div>
+    <div class="modal-input-wrap">
+      <label>Date de règlement (optionnel)</label>
+      <input type="date" id="modal-fac-date">
+    </div>
+    <div class="modal-input-wrap">
+      <label>Mode de paiement</label>
+      <select id="modal-fac-mode">
+        <option value="">Non précisé</option>
+        <option value="Virement bancaire">Virement bancaire</option>
+        <option value="Chèque">Chèque</option>
+        <option value="Espèces">Espèces</option>
+        <option value="Carte bancaire">Carte bancaire</option>
+        <option value="PayPal">PayPal</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="fermerModal()">Annuler</button>
+      <button class="modal-btn modal-btn-ok" onclick="confirmerConversion()"><i class="fas fa-check"></i> Convertir</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
 <script>
 let devisCounter = Math.floor(Math.random()*90)+10;
 let LOGO_BASE64 = null;
+let currentFilterType = 'tous';
+let convertingId = null;
 
 const CHAMBRE_CONFIG = {
   single:    { label: 'Single',       pax: 1, icon: '🛏️' },
@@ -358,6 +510,44 @@ function loadHotels() {
   }
 }
 
+// ===== DOCUMENTS STORAGE =====
+function getDocuments() {
+  try { return JSON.parse(localStorage.getItem('st_documents') || '[]'); } catch(e) { return []; }
+}
+function saveDocuments(docs) {
+  localStorage.setItem('st_documents', JSON.stringify(docs));
+  updateBadge();
+}
+function updateBadge() {
+  const docs = getDocuments();
+  document.getElementById('badge-count').textContent = docs.length;
+}
+function getNextFacNum() {
+  const docs = getDocuments();
+  const factures = docs.filter(d => d.type === 'facture');
+  const year = new Date().getFullYear();
+  const num = factures.length + 1;
+  return 'FAC-'+year+'-'+String(num).padStart(3,'0');
+}
+
+// ===== TABS =====
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('content-'+tab).classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  if (tab === 'liste') renderListe();
+}
+
+// ===== TOAST =====
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show '+type;
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+// ===== PANIER =====
 let panier = [];
 let nextId = 1;
 
@@ -368,22 +558,14 @@ function ajouterChambre() {
   const defaultsM = { prixWd: 80, prixWe: 100, prixPdj: 15 };
   const defaultsK = { prixWd: 100, prixWe: 130, prixPdj: 15 };
   const d = ville === 'medine' ? defaultsM : defaultsK;
-  const ligne = {
+  panier.push({
     id: nextId++, type, qty, ville,
     hotel: '', custom_hotel: '',
     arrivee: '', depart: '',
     prixWd: d.prixWd, prixWe: d.prixWe, prixPdj: d.prixPdj,
-    frais: {
-      transfertOn: false, transfertVal: 30,
-      transportOn: false, transportVal: 25,
-      taxeOn: false, taxeVal: 5,
-      visaOn: false, visaVal: 50,
-      guideOn: false, guideVal: 40,
-      diversOn: false, diversVal: 20
-    },
+    frais: { transfertOn:false,transfertVal:30,transportOn:false,transportVal:25,taxeOn:false,taxeVal:5,visaOn:false,visaVal:50,guideOn:false,guideVal:40,diversOn:false,diversVal:20 },
     open: true
-  };
-  panier.push(ligne);
+  });
   renderPanier();
   updateDevis();
 }
@@ -457,62 +639,14 @@ function renderPanier() {
     ].join('');
 
     const fraisHtml = l.ville === 'medine' ? `
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-transfert-on-${l.id}" ${l.frais.transfertOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert aéroport</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-transfert-v-${l.id}" value="${l.frais.transfertVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
-      </div>
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-transport-on-${l.id}" ${l.frais.transportOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-road" style="color:var(--gold);margin-right:4px"></i> Transport Méd.→Mek.</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-transport-v-${l.id}" value="${l.frais.transportVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
-      </div>
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div>
-      </div>
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-visa-on-${l.id}" ${l.frais.visaOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-passport" style="color:var(--gold);margin-right:4px"></i> Visa / Prestation</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-visa-v-${l.id}" value="${l.frais.visaVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
-      </div>` : `
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-transfert-on-${l.id}" ${l.frais.transfertOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert retour</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-transfert-v-${l.id}" value="${l.frais.transfertVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
-      </div>
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-guide-on-${l.id}" ${l.frais.guideOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-user-tie" style="color:var(--gold);margin-right:4px"></i> Guide / Accomp.</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-guide-v-${l.id}" value="${l.frais.guideVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
-      </div>
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div>
-      </div>
-      <div class="frais-item">
-        <div class="frais-toggle">
-          <label class="toggle-switch"><input type="checkbox" id="f-divers-on-${l.id}" ${l.frais.diversOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label>
-          <span class="toggle-label"><i class="fas fa-ellipsis-h" style="color:var(--gold);margin-right:4px"></i> Frais divers</span>
-        </div>
-        <div class="frais-input-wrap"><input type="number" id="f-divers-v-${l.id}" value="${l.frais.diversVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div>
-      </div>`;
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-transfert-on-${l.id}" ${l.frais.transfertOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert aéroport</span></div><div class="frais-input-wrap"><input type="number" id="f-transfert-v-${l.id}" value="${l.frais.transfertVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-transport-on-${l.id}" ${l.frais.transportOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-road" style="color:var(--gold);margin-right:4px"></i> Transport Méd.→Mek.</span></div><div class="frais-input-wrap"><input type="number" id="f-transport-v-${l.id}" value="${l.frais.transportVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span></div><div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div></div>
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-visa-on-${l.id}" ${l.frais.visaOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-passport" style="color:var(--gold);margin-right:4px"></i> Visa / Prestation</span></div><div class="frais-input-wrap"><input type="number" id="f-visa-v-${l.id}" value="${l.frais.visaVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>` : `
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-transfert-on-${l.id}" ${l.frais.transfertOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert retour</span></div><div class="frais-input-wrap"><input type="number" id="f-transfert-v-${l.id}" value="${l.frais.transfertVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-guide-on-${l.id}" ${l.frais.guideOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-user-tie" style="color:var(--gold);margin-right:4px"></i> Guide / Accomp.</span></div><div class="frais-input-wrap"><input type="number" id="f-guide-v-${l.id}" value="${l.frais.guideVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span></div><div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div></div>
+      <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-divers-on-${l.id}" ${l.frais.diversOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-ellipsis-h" style="color:var(--gold);margin-right:4px"></i> Frais divers</span></div><div class="frais-input-wrap"><input type="number" id="f-divers-v-${l.id}" value="${l.frais.diversVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>`;
 
     const formule = getFormule();
     const pdjVisible = formule === 'BB';
@@ -520,10 +654,7 @@ function renderPanier() {
     html += `<div class="ch-item ${l.open?'open':''}" id="ch-item-${l.id}">
       <div class="ch-item-header" onclick="toggleItem(${l.id})">
         <div class="ch-item-icon">${cfg.icon}</div>
-        <div style="flex:1">
-          <div class="ch-item-label">${cfg.label} × ${l.qty}</div>
-          <div class="ch-item-summary">${pax} voy. · ${hotelDisplay} · ${nuitsSummary}</div>
-        </div>
+        <div style="flex:1"><div class="ch-item-label">${cfg.label} × ${l.qty}</div><div class="ch-item-summary">${pax} voy. · ${hotelDisplay} · ${nuitsSummary}</div></div>
         <div class="ch-item-badges">${villeBadge}<span class="badge-qty">${l.qty} ch.</span></div>
         <i class="fas fa-chevron-down ch-chevron"></i>
         <button class="btn-remove-ch" onclick="event.stopPropagation();supprimerChambre(${l.id})" title="Supprimer"><i class="fas fa-times"></i></button>
@@ -531,36 +662,20 @@ function renderPanier() {
       <div class="ch-item-body">
         <div style="margin-bottom:10px">
           <label>Hôtel à ${villeLabel}</label>
-          <div class="hotel-row">
-            <select id="hotel-sel-${l.id}" onchange="onHotelChange(${l.id})">${hotelOpts}</select>
-          </div>
+          <div class="hotel-row"><select id="hotel-sel-${l.id}" onchange="onHotelChange(${l.id})">${hotelOpts}</select></div>
           <div class="hotel-row" style="margin-top:6px">
             <input type="text" id="hotel-custom-${l.id}" value="${l.custom_hotel}" placeholder="Ou saisir manuellement…" oninput="onChange(${l.id})">
             <button type="button" style="height:40px;padding:0 12px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-size:12px;font-weight:600;cursor:pointer;flex-shrink:0;white-space:nowrap" onclick="ajouterHotelCustom(${l.id})">Enregistrer</button>
           </div>
         </div>
         <div class="row2" style="margin-bottom:10px">
-          <div>
-            <label>Arrivée à ${villeLabel}</label>
-            <input type="date" id="arrivee-${l.id}" value="${l.arrivee}" onchange="onDateChange(${l.id})">
-          </div>
-          <div>
-            <label>Départ de ${villeLabel}</label>
-            <input type="date" id="depart-${l.id}" value="${l.depart}" onchange="onDateChange(${l.id})">
-          </div>
+          <div><label>Arrivée à ${villeLabel}</label><input type="date" id="arrivee-${l.id}" value="${l.arrivee}" onchange="onDateChange(${l.id})"></div>
+          <div><label>Départ de ${villeLabel}</label><input type="date" id="depart-${l.id}" value="${l.depart}" onchange="onDateChange(${l.id})"></div>
         </div>
-        <div id="nuits-summary-${l.id}" class="nuits-summary">
-          <span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>
-        </div>
+        <div id="nuits-summary-${l.id}" class="nuits-summary"><span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span></div>
         <div class="tarif-inline">
-          <div class="tarif-cell weekday">
-            <label><span class="badge-weekday">SEMAINE</span> du samedi au jeudi midi</label>
-            <input type="number" id="prix-wd-${l.id}" value="${l.prixWd}" min="0" onchange="onChange(${l.id})">
-          </div>
-          <div class="tarif-cell weekend">
-            <label><span class="badge-weekend">WEEK-END</span> du jeudi soir au samedi</label>
-            <input type="number" id="prix-we-${l.id}" value="${l.prixWe}" min="0" onchange="onChange(${l.id})">
-          </div>
+          <div class="tarif-cell weekday"><label><span class="badge-weekday">SEMAINE</span> du samedi au jeudi midi</label><input type="number" id="prix-wd-${l.id}" value="${l.prixWd}" min="0" onchange="onChange(${l.id})"></div>
+          <div class="tarif-cell weekend"><label><span class="badge-weekend">WEEK-END</span> du jeudi soir au samedi</label><input type="number" id="prix-we-${l.id}" value="${l.prixWe}" min="0" onchange="onChange(${l.id})"></div>
         </div>
         ${pdjVisible
           ? `<div class="tarif-cell weekday" style="margin-bottom:10px"><label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label><input type="number" id="prix-pdj-${l.id}" value="${l.prixPdj}" min="0" onchange="onChange(${l.id})"></div>`
@@ -570,9 +685,7 @@ function renderPanier() {
           <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
           <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-${l.id}"></i>
         </div>
-        <div id="frais-body-${l.id}" style="display:none">
-          <div class="frais-grid">${fraisHtml}</div>
-        </div>
+        <div id="frais-body-${l.id}" style="display:none"><div class="frais-grid">${fraisHtml}</div></div>
       </div>
     </div>`;
   });
@@ -599,10 +712,7 @@ function ajouterHotelCustom(id) {
   syncFromDOM(id);
   const nom = l.custom_hotel.trim();
   if (!nom) { alert("Saisissez un nom d'hôtel."); return; }
-  if (!HOTELS[l.ville].includes(nom)) {
-    HOTELS[l.ville].push(nom);
-    localStorage.setItem("hotels", JSON.stringify(HOTELS));
-  }
+  if (!HOTELS[l.ville].includes(nom)) { HOTELS[l.ville].push(nom); localStorage.setItem("hotels", JSON.stringify(HOTELS)); }
   l.hotel = nom;
   renderPanier();
   updateDevis();
@@ -619,16 +729,13 @@ function toggleFraisItem(id) {
 
 function getFormule() { return document.querySelector('input[name=formule]:checked').value; }
 
-function isWeekend(date) {
-  const d = date.getUTCDay();
-  return d === 4 || d === 5;
-}
+function isWeekend(date) { const d = date.getUTCDay(); return d === 4 || d === 5; }
 
 function compterNuits(arrStr, depStr) {
-  if (!arrStr || !depStr) return { weekday: 0, weekend: 0, total: 0 };
+  if (!arrStr || !depStr) return { weekday:0, weekend:0, total:0 };
   const arr = new Date(arrStr+'T00:00:00Z');
   const dep = new Date(depStr+'T00:00:00Z');
-  if (dep <= arr) return { weekday: 0, weekend: 0, total: 0 };
+  if (dep <= arr) return { weekday:0, weekend:0, total:0 };
   let weekday = 0, weekend = 0;
   const cur = new Date(arr);
   while (cur < dep) {
@@ -642,28 +749,16 @@ function updateNuitsSummary(id) {
   const l = panier.find(x => x.id === id);
   const el = document.getElementById('nuits-summary-'+id);
   if (!l || !el) return;
-  if (!l.arrivee || !l.depart) {
-    el.innerHTML = '<span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>';
-    return;
-  }
+  if (!l.arrivee || !l.depart) { el.innerHTML = '<span style="color:var(--text-muted);font-size:11px">Saisissez les dates pour calculer les nuits</span>'; return; }
   const n = compterNuits(l.arrivee, l.depart);
-  if (n.total <= 0) {
-    el.innerHTML = '<span style="color:#C0392B;font-size:11px"><i class="fas fa-exclamation-circle"></i> Date de départ antérieure ou égale à l\'arrivée</span>';
-    return;
-  }
+  if (n.total <= 0) { el.innerHTML = '<span style="color:#C0392B;font-size:11px"><i class="fas fa-exclamation-circle"></i> Date de départ antérieure ou égale à l\'arrivée</span>'; return; }
   el.innerHTML = '<div class="ns-item"><div class="ns-dot-weekday"></div><span><strong>'+n.weekday+'</strong> nuit'+(n.weekday>1?'s':'')+' semaine</span></div>'
     +'<div class="ns-item"><div class="ns-dot-weekend"></div><span><strong>'+n.weekend+'</strong> nuit'+(n.weekend>1?'s':'')+' week-end</span></div>'
     +'<div class="ns-total"><i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>'+n.total+' nuit'+(n.total>1?'s':'')+' au total</div>';
 }
 
-function fmt(n) {
-  return n.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
-}
-
-function fmtDate2(str) {
-  if (!str) return '—';
-  return new Date(str+'T00:00:00Z').toLocaleDateString('fr-FR', { day:'2-digit', month:'short' });
-}
+function fmt(n) { return n.toLocaleString('fr-FR', { style:'currency', currency:'EUR', maximumFractionDigits:0 }); }
+function fmtDate2(str) { if (!str) return '—'; return new Date(str+'T00:00:00Z').toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }); }
 
 function calcLigne(l) {
   const cfg = CHAMBRE_CONFIG[l.type];
@@ -677,63 +772,53 @@ function calcLigne(l) {
   let coutFrais = 0;
   const fraisItems = [];
   const f = l.frais;
-  if (f.transfertOn) { const v=f.transfertVal*pax; coutFrais+=v; fraisItems.push({ label: l.ville==='medine'?'Transfert aéroport':'Transfert retour', montant:v, detail: f.transfertVal+' SAR × '+pax+' pers.' }); }
-  if (l.ville==='medine' && f.transportOn) { const v=f.transportVal*pax; coutFrais+=v; fraisItems.push({ label:'Transport Médine → Mekkah', montant:v, detail: f.transportVal+' SAR × '+pax+' pers.' }); }
-  if (f.taxeOn) { const v=f.taxeVal*nuits.total; coutFrais+=v; fraisItems.push({ label:'Taxe de séjour', montant:v, detail: f.taxeVal+' SAR/nuit × '+nuits.total+' nuits' }); }
-  if (l.ville==='medine' && f.visaOn) { const v=f.visaVal*pax; coutFrais+=v; fraisItems.push({ label:'Visa / Prestation', montant:v, detail: f.visaVal+' SAR × '+pax+' pers.' }); }
-  if (l.ville==='mekkah' && f.guideOn) { const v=f.guideVal*pax; coutFrais+=v; fraisItems.push({ label:'Guide / Accompagnateur', montant:v, detail: f.guideVal+' SAR × '+pax+' pers.' }); }
-  if (l.ville==='mekkah' && f.diversOn) { const v=f.diversVal*pax; coutFrais+=v; fraisItems.push({ label:'Frais divers', montant:v, detail: f.diversVal+' SAR × '+pax+' pers.' }); }
+  if (f.transfertOn) { const v=f.transfertVal*pax; coutFrais+=v; fraisItems.push({ label:l.ville==='medine'?'Transfert aéroport':'Transfert retour', montant:v, detail:f.transfertVal+' SAR × '+pax+' pers.' }); }
+  if (l.ville==='medine' && f.transportOn) { const v=f.transportVal*pax; coutFrais+=v; fraisItems.push({ label:'Transport Médine → Mekkah', montant:v, detail:f.transportVal+' SAR × '+pax+' pers.' }); }
+  if (f.taxeOn) { const v=f.taxeVal*nuits.total; coutFrais+=v; fraisItems.push({ label:'Taxe de séjour', montant:v, detail:f.taxeVal+' SAR/nuit × '+nuits.total+' nuits' }); }
+  if (l.ville==='medine' && f.visaOn) { const v=f.visaVal*pax; coutFrais+=v; fraisItems.push({ label:'Visa / Prestation', montant:v, detail:f.visaVal+' SAR × '+pax+' pers.' }); }
+  if (l.ville==='mekkah' && f.guideOn) { const v=f.guideVal*pax; coutFrais+=v; fraisItems.push({ label:'Guide / Accompagnateur', montant:v, detail:f.guideVal+' SAR × '+pax+' pers.' }); }
+  if (l.ville==='mekkah' && f.diversOn) { const v=f.diversVal*pax; coutFrais+=v; fraisItems.push({ label:'Frais divers', montant:v, detail:f.diversVal+' SAR × '+pax+' pers.' }); }
   return { pax, nuits, coutWd, coutWe, coutHeb, coutPdj, coutFrais, fraisItems, total: coutHeb+coutPdj+coutFrais };
 }
 
 function buildHebDetail(l, cfg, calc) {
   const hotelNom = l.hotel || l.custom_hotel || 'hôtel non précisé';
-  const dateArr = fmtDate2(l.arrivee);
-  const dateDep = fmtDate2(l.depart);
-  return hotelNom+' · '+l.qty+' ch. '+cfg.label+' · '+dateArr+' → '+dateDep+' · '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'');
+  return hotelNom+' · '+l.qty+' ch. '+cfg.label+' · '+fmtDate2(l.arrivee)+' → '+fmtDate2(l.depart)+' · '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'');
 }
 
-function updateDevis(afficher = false) {
+function updateDevis(afficher=false) {
   syncAllFromDOM();
   const formule = getFormule();
   document.getElementById('fo-ro').classList.toggle('active', formule==='RO');
   document.getElementById('fo-bb').classList.toggle('active', formule==='BB');
-
   const validite = parseInt(document.getElementById('validite').value) || 1;
   const today = new Date();
   const expiry = new Date(today.getTime()+validite*86400000);
   const fmtD = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
 
-  document.getElementById('d-ref').textContent      = 'ST-'+today.getFullYear()+'-'+String(devisCounter).padStart(3,'0');
-  document.getElementById('d-today').textContent    = 'Émis le '+fmtD(today);
+  document.getElementById('d-ref').textContent = 'ST-'+today.getFullYear()+'-'+String(devisCounter).padStart(3,'0');
+  document.getElementById('d-today').textContent = 'Émis le '+fmtD(today);
   document.getElementById('d-validity').textContent = "Valable jusqu'au "+fmtD(expiry);
 
   const prenom = document.getElementById('client-prenom').value.trim();
   const nom    = document.getElementById('client-nom').value.trim();
   document.getElementById('d-client-name').textContent = (prenom||nom) ? "À l'attention de : "+prenom+' '+nom : '';
 
-  let html = '';
-  let grandTotal = 0;
+  let html = '', grandTotal = 0;
   const villesPresentes = [];
 
   ['medine','mekkah'].forEach(ville => {
     const lignes = panier.filter(l => l.ville === ville);
     if (lignes.length === 0) return;
-    const villeIcon = ville==='medine'
-      ? '<i class="fas fa-mosque" style="margin-right:5px"></i>'
-      : '<i class="fas fa-star-and-crescent" style="margin-right:5px"></i>';
+    const villeIcon = ville==='medine' ? '<i class="fas fa-mosque" style="margin-right:5px"></i>' : '<i class="fas fa-star-and-crescent" style="margin-right:5px"></i>';
     const villeLabel = ville==='medine' ? 'Médine' : 'Mekkah';
     html += '<div class="line-city-header">'+villeIcon+' Hébergement '+villeLabel+'</div>';
-
     lignes.forEach(l => {
       const cfg = CHAMBRE_CONFIG[l.type];
       const calc = calcLigne(l);
       if (calc.nuits.total === 0) return;
-      const hebDetail = buildHebDetail(l, cfg, calc);
-      html += lineHTML('Hébergement '+villeLabel, hebDetail, fmt(calc.coutHeb));
-      if (formule==='BB' && calc.coutPdj>0) {
-        html += lineHTML('Petit-déjeuner', calc.pax+' pers. × '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+' × '+l.prixPdj+' SAR', fmt(calc.coutPdj));
-      }
+      html += lineHTML('Hébergement '+villeLabel, buildHebDetail(l,cfg,calc), fmt(calc.coutHeb));
+      if (formule==='BB' && calc.coutPdj>0) html += lineHTML('Petit-déjeuner', calc.pax+' pers. × '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+' × '+l.prixPdj+' SAR', fmt(calc.coutPdj));
       calc.fraisItems.forEach(fi => html += lineHTML(fi.label, fi.detail, fmt(fi.montant)));
       grandTotal += calc.total;
     });
@@ -755,18 +840,188 @@ function lineHTML(label, detail, price) {
   return '<div class="line-item"><div><div class="line-desc">'+label+'</div>'+(detail?'<div class="line-detail">'+detail+'</div>':'')+'</div><div class="line-price">'+price+'</div></div>';
 }
 
-function getDevisData() {
+// ===== SAUVEGARDE =====
+function sauvegarderDevis() {
   syncAllFromDOM();
-  const today = new Date();
+  const ref    = document.getElementById('d-ref').textContent.trim();
+  const total  = document.getElementById('d-total').textContent.trim();
+  const prenom = document.getElementById('client-prenom').value.trim();
+  const nom    = document.getElementById('client-nom').value.trim();
+  const client = (prenom+' '+nom).trim() || 'Client non précisé';
   const validite = parseInt(document.getElementById('validite').value) || 1;
-  const expiry = new Date(today.getTime()+validite*86400000);
+  const formule  = getFormule();
+
+  const doc = {
+    id: Date.now(),
+    type: 'devis',
+    ref, total, client,
+    validite, formule,
+    dateCreation: new Date().toISOString(),
+    panier: JSON.parse(JSON.stringify(panier)),
+    // infos facture (vide par défaut)
+    facNum: '', facDate: '', facMode: ''
+  };
+
+  const docs = getDocuments();
+  // Remplacer si même ref existe déjà
+  const idx = docs.findIndex(d => d.ref === ref && d.type === 'devis');
+  if (idx >= 0) { docs[idx] = doc; } else { docs.unshift(doc); }
+  saveDocuments(docs);
+  showToast('✅ Devis sauvegardé avec succès !');
+}
+
+// ===== LISTE =====
+function filtrerListe(type, btn) {
+  currentFilterType = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderListe();
+}
+
+function renderListe() {
+  const docs = getDocuments();
+  const el = document.getElementById('liste-documents');
+  const filtered = currentFilterType === 'tous' ? docs : docs.filter(d => d.type === currentFilterType);
+
+  if (filtered.length === 0) {
+    el.innerHTML = '<div class="liste-empty"><i class="fas fa-folder-open"></i>Aucun document sauvegardé.<br><small>Créez un devis et cliquez sur "Sauvegarder".</small></div>';
+    return;
+  }
+
+  const fmtD = str => new Date(str).toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' });
+
+  el.innerHTML = filtered.map(doc => {
+    const isFacture = doc.type === 'facture';
+    const typeLabel = isFacture ? 'Facture' : 'Devis';
+    const typeBg = isFacture ? 'background:#FFF0D0;color:#7A5800' : 'background:#EEF3F8;color:#1A3A5C';
+    const iconBg = isFacture ? 'dli-icon-facture' : 'dli-icon-devis';
+    const iconEl = isFacture ? '🧾' : '📋';
+    const ref    = isFacture && doc.facNum ? doc.facNum : doc.ref;
+
+    return `<div class="devis-list-item" style="flex-wrap:wrap;gap:10px;cursor:default">
+      <div class="dli-icon ${iconBg}">${iconEl}</div>
+      <div class="dli-body">
+        <div class="dli-ref">${ref}</div>
+        <div class="dli-client">${doc.client}</div>
+        <div class="dli-date">${fmtD(doc.dateCreation)}</div>
+      </div>
+      <div class="dli-right">
+        <div class="dli-total">${doc.total}</div>
+        <span class="dli-type" style="${typeBg}">${typeLabel}</span>
+      </div>
+      <div class="dli-actions" style="width:100%;padding-top:8px;border-top:1px solid var(--border)">
+        <button class="btn-action" onclick="chargerDocument(${doc.id})" title="Ouvrir et regénérer">
+          <i class="fas fa-eye"></i> Ouvrir
+        </button>
+        <button class="btn-action" onclick="telechargerPDFSauvegarde(${doc.id})" title="Télécharger PDF">
+          <i class="fas fa-file-pdf"></i> PDF
+        </button>
+        ${!isFacture ? `<button class="btn-action btn-convert" onclick="ouvrirModalConvert(${doc.id})"><i class="fas fa-file-invoice-dollar"></i> → Facture</button>` : `<button class="btn-action" style="color:#2E6A4E" onclick="voirFacture(${doc.id})"><i class="fas fa-stamp"></i> Voir facture</button>`}
+        <button class="btn-action danger" onclick="supprimerDocument(${doc.id})" title="Supprimer">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function chargerDocument(id) {
+  const docs = getDocuments();
+  const doc  = docs.find(d => d.id === id);
+  if (!doc) return;
+
+  // Recharger le panier
+  panier = doc.panier.map(l => ({ ...l }));
+  nextId = panier.length > 0 ? Math.max(...panier.map(l => l.id)) + 1 : 1;
+
+  // Recharger le client
+  const parts = doc.client.split(' ');
+  document.getElementById('client-prenom').value = parts[0] || '';
+  document.getElementById('client-nom').value = parts.slice(1).join(' ') || '';
+
+  // Recharger formule
+  document.querySelectorAll('input[name=formule]').forEach(r => { r.checked = r.value === doc.formule; });
+
+  // Recharger validité
+  document.getElementById('validite').value = doc.validite || 1;
+
+  switchTab('nouveau');
+  renderPanier();
+  updateDevis(true);
+
+  showToast('📋 Document chargé dans l\'éditeur');
+}
+
+// ===== CONVERSION EN FACTURE =====
+function ouvrirModalConvert(id) {
+  convertingId = id;
+  document.getElementById('modal-fac-num').value = getNextFacNum();
+  document.getElementById('modal-fac-date').value = new Date().toISOString().split('T')[0];
+  document.getElementById('modal-fac-mode').value = '';
+  document.getElementById('modal-convert').classList.remove('hidden');
+}
+
+function fermerModal() {
+  document.getElementById('modal-convert').classList.add('hidden');
+  convertingId = null;
+}
+
+function confirmerConversion() {
+  if (!convertingId) return;
+  const facNum  = document.getElementById('modal-fac-num').value.trim() || getNextFacNum();
+  const facDate = document.getElementById('modal-fac-date').value;
+  const facMode = document.getElementById('modal-fac-mode').value;
+
+  const docs = getDocuments();
+  const idx  = docs.findIndex(d => d.id === convertingId);
+  if (idx < 0) { fermerModal(); return; }
+
+  docs[idx].type    = 'facture';
+  docs[idx].facNum  = facNum;
+  docs[idx].facDate = facDate;
+  docs[idx].facMode = facMode;
+
+  saveDocuments(docs);
+  fermerModal();
+  renderListe();
+  showToast('🧾 Converti en facture '+facNum, 'success');
+}
+
+function voirFacture(id) {
+  chargerDocument(id);
+}
+
+function supprimerDocument(id) {
+  if (!confirm('Supprimer ce document ?')) return;
+  const docs = getDocuments().filter(d => d.id !== id);
+  saveDocuments(docs);
+  renderListe();
+  showToast('Document supprimé', 'error');
+}
+
+function viderListe() {
+  if (!confirm('Supprimer TOUS les documents sauvegardés ?')) return;
+  saveDocuments([]);
+  renderListe();
+  showToast('Liste vidée', 'error');
+}
+
+// ===== PDF =====
+function getDevisData(doc) {
+  syncAllFromDOM();
+  const today    = new Date();
+  const validite = parseInt(document.getElementById('validite').value) || 1;
+  const expiry   = new Date(today.getTime()+validite*86400000);
   const fmtD = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
-  const formule = getFormule();
+  const formule  = getFormule();
   const sections = [];
   let grandTotal = 0;
 
+  // Si on passe un doc sauvegardé, on utilise son panier
+  const panierSource = doc ? doc.panier : panier;
+
   ['medine','mekkah'].forEach(ville => {
-    const lignes = panier.filter(l => l.ville === ville);
+    const lignes = panierSource.filter(l => l.ville === ville);
     if (lignes.length === 0) return;
     const villeLabel = ville==='medine' ? 'MÉDINE' : 'MEKKAH';
     const villeRow   = ville==='medine' ? 'Médine' : 'Mekkah';
@@ -777,11 +1032,8 @@ function getDevisData() {
       const cfg = CHAMBRE_CONFIG[l.type];
       const calc = calcLigne(l);
       if (calc.nuits.total === 0) return;
-      const hebDetail = buildHebDetail(l, cfg, calc);
-      rows.push({ label:'Hébergement '+villeRow, detail: hebDetail, price: fmt(calc.coutHeb) });
-      if (formule==='BB' && calc.coutPdj>0) {
-        rows.push({ label:'Petit-déjeuner', detail: calc.pax+' pers. × '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+' × '+l.prixPdj+' SAR', price: fmt(calc.coutPdj) });
-      }
+      rows.push({ label:'Hébergement '+villeRow, detail: buildHebDetail(l,cfg,calc), price: fmt(calc.coutHeb) });
+      if (formule==='BB' && calc.coutPdj>0) rows.push({ label:'Petit-déjeuner', detail: calc.pax+' pers. × '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+' × '+l.prixPdj+' SAR', price: fmt(calc.coutPdj) });
       calc.fraisItems.forEach(fi => rows.push({ label:fi.label, detail:fi.detail, price:fmt(fi.montant) }));
       sousTotalNum += calc.total;
     });
@@ -791,15 +1043,20 @@ function getDevisData() {
     sections.push({ title:villeLabel, rows, subtotal:fmt(sousTotalNum), subtotalLabel:'Sous-total '+(ville==='medine'?'Médine':'Mekkah') });
   });
 
+  const isFacture = doc && doc.type === 'facture';
+  const ref       = isFacture && doc.facNum ? doc.facNum : document.getElementById('d-ref').textContent.trim();
+
   return {
-    ref: document.getElementById('d-ref').textContent.trim(),
-    hotel: document.getElementById('d-hotel-name').textContent.trim(),
-    client: document.getElementById('d-client-name').textContent.trim(),
+    ref,
+    hotel:    document.getElementById('d-hotel-name').textContent.trim(),
+    client:   document.getElementById('d-client-name').textContent.trim(),
     dateEmis: 'Émis le '+fmtD(today),
-    dateVal: "Valable jusqu'au "+fmtD(expiry),
-    total: fmt(grandTotal),
+    dateVal:  isFacture ? (doc.facDate ? 'Réglé le '+new Date(doc.facDate+'T00:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}) : '') : "Valable jusqu'au "+fmtD(expiry),
+    total:    fmt(grandTotal),
     validTxt: document.getElementById('d-valid-text').textContent.trim(),
-    sections
+    sections,
+    isFacture,
+    facMode:  doc ? doc.facMode : '',
   };
 }
 
@@ -812,7 +1069,9 @@ function genererPDF(data) {
   const setDraw = h => doc.setDrawColor(...hex2rgb(h));
   const setTxt  = h => doc.setTextColor(...hex2rgb(h));
 
-  setFill('#1A3A5C'); doc.rect(0,0,W,56,'F');
+  // En-tête
+  const headerBg = data.isFacture ? '#7A5800' : '#1A3A5C';
+  setFill(headerBg); doc.rect(0,0,W,56,'F');
   setDraw('#C9A84C'); doc.setLineWidth(0.8); doc.line(0,56,W,56);
 
   const logoSrc = LOGO_BASE64 || document.querySelector('.logo-img')?.src;
@@ -822,16 +1081,25 @@ function genererPDF(data) {
   doc.text('SAMY TRAVEL', M+30, 16);
   doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#C9A84C');
   doc.text('OMRA & PÈLERINAGE — AGENCE DE VOYAGES', M+30, 22);
-  doc.setFont('helvetica','normal'); doc.setFontSize(8); setTxt('#AAAAAA');
-  doc.text('DEVIS N°', W-M, 14, { align:'right' });
-  doc.setFont('helvetica','bold'); doc.setFontSize(16); setTxt('#C9A84C');
+
+  // Type doc badge
+  const typeLabel = data.isFacture ? 'FACTURE' : 'DEVIS';
+  doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#AAAAAA');
+  doc.text(typeLabel+' N°', W-M, 14, { align:'right' });
+  doc.setFontSize(16); setTxt('#C9A84C');
   doc.text(data.ref, W-M, 22, { align:'right' });
   doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#AAAAAA');
   doc.text(data.hotel, W-M, 28, { align:'right' });
   if (data.client) { doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#FFFFFF'); doc.text(data.client, W-M, 34, { align:'right' }); }
   doc.setFontSize(8); setTxt('#AAAAAA');
   doc.text(data.dateEmis, M+30, 40);
-  doc.text(data.dateVal, W-M, 40, { align:'right' });
+  if (data.dateVal) doc.text(data.dateVal, W-M, 40, { align:'right' });
+
+  // Mode de paiement (si facture)
+  if (data.isFacture && data.facMode) {
+    doc.setFontSize(7.5); setTxt('#C9A84C');
+    doc.text('Mode : '+data.facMode, M+30, 47);
+  }
 
   let y = 66;
   (data.sections||[]).forEach(section => {
@@ -864,7 +1132,8 @@ function genererPDF(data) {
   });
 
   if (y>255) { doc.addPage(); y=20; }
-  setFill('#1A3A5C'); setDraw('#1A3A5C'); doc.setLineWidth(0.5);
+  const totalBg = data.isFacture ? '#7A5800' : '#1A3A5C';
+  setFill(totalBg); setDraw(totalBg); doc.setLineWidth(0.5);
   doc.roundedRect(M,y,CW,16,3,3,'FD');
   doc.setFont('helvetica','bold'); doc.setFontSize(11); setTxt('#FFFFFF');
   doc.text('Total TTC', M+6, y+10);
@@ -872,17 +1141,44 @@ function genererPDF(data) {
   doc.text(data.total, W-M-6, y+11, { align:'right' });
   y += 22;
 
-  setFill('#F6F6F0'); setDraw('#E8E8E0'); doc.setLineWidth(0.3);
-  doc.roundedRect(M,y,CW,9,2,2,'FD');
-  doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#888888');
-  doc.text('  ⏱  '+data.validTxt, M+4, y+6);
-  y += 15;
+  if (!data.isFacture) {
+    setFill('#F6F6F0'); setDraw('#E8E8E0'); doc.setLineWidth(0.3);
+    doc.roundedRect(M,y,CW,9,2,2,'FD');
+    doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#888888');
+    doc.text('  ⏱  '+data.validTxt, M+4, y+6);
+    y += 15;
+  } else {
+    // Tampon PAYÉ
+    setFill('#FFF3D0'); setDraw('#C9A84C'); doc.setLineWidth(1.5);
+    doc.roundedRect(M,y,CW,12,3,3,'FD');
+    doc.setFont('helvetica','bold'); doc.setFontSize(13); setTxt('#7A5800');
+    doc.text('✓ FACTURE RÉGLÉE', W/2, y+8.5, { align:'center' });
+    y += 18;
+  }
 
   setDraw('#E8E8E0'); doc.line(M,y,W-M,y); y+=6;
   doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt('#AAAAAA');
-  doc.text("Ce devis est établi sous réserve de disponibilité hôtelière. Samy Travel se réserve le droit de proposer\nun hébergement équivalent en cas d'indisponibilité. Tous les frais annexes sont inclus dans le total.", M, y);
+  doc.text("Ce document est établi par Samy Travel — Agence de voyages Omra & Pèlerinage.\nTous les frais annexes sont inclus dans le montant total ci-dessus.", M, y);
 
   return doc;
+}
+
+async function telechargerPDFSauvegarde(id) {
+  const docs = getDocuments();
+  const doc  = docs.find(d => d.id === id);
+  if (!doc) return;
+
+  // Charger temporairement ce doc dans le form pour calcul
+  const tmpPanier = panier;
+  panier = doc.panier.map(l => ({ ...l }));
+
+  const data = getDevisData(doc);
+  const pdf  = genererPDF(data);
+  const filename = (doc.type==='facture' ? doc.facNum || 'FAC' : doc.ref) + '_SamyTravel.pdf';
+  pdf.save(filename);
+
+  panier = tmpPanier;
+  showToast('📄 PDF téléchargé');
 }
 
 async function envoyerWhatsappPDF() {
@@ -894,8 +1190,8 @@ async function envoyerWhatsappPDF() {
   statusEl.style.display = 'block';
   statusEl.innerHTML = '⏳ Création du PDF…';
   try {
-    const data = getDevisData();
-    const doc = genererPDF(data);
+    const data = getDevisData(null);
+    const doc  = genererPDF(data);
     const filename = 'Devis_SamyTravel_'+data.ref+'.pdf';
     const msg = 'Voici le devis ci-joint.\n\nSamy Travel';
     const pdfBlob = doc.output('blob');
@@ -937,10 +1233,12 @@ function chargerLogoBase64() {
   img.src = logoEl.src;
 }
 
+// Init
 loadHotels();
 chargerLogoBase64();
 renderPanier();
 updateDevis();
+updateBadge();
 </script>
 
 <script>
