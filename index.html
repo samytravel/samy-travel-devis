@@ -647,9 +647,6 @@ function renderPanier() {
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span></div><div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div></div>
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-divers-on-${l.id}" ${l.frais.diversOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-ellipsis-h" style="color:var(--gold);margin-right:4px"></i> Frais divers</span></div><div class="frais-input-wrap"><input type="number" id="f-divers-v-${l.id}" value="${l.frais.diversVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>`;
 
-    const formule = getFormule();
-    const pdjVisible = formule === 'BB';
-
     html += `<div class="ch-item ${l.open?'open':''}" id="ch-item-${l.id}">
       <div class="ch-item-header" onclick="toggleItem(${l.id})">
         <div class="ch-item-icon">${cfg.icon}</div>
@@ -676,10 +673,6 @@ function renderPanier() {
           <div class="tarif-cell weekday"><label><span class="badge-weekday">SEMAINE</span> du samedi au jeudi midi</label><input type="number" id="prix-wd-${l.id}" value="${l.prixWd}" min="0" onchange="onChange(${l.id})"></div>
           <div class="tarif-cell weekend"><label><span class="badge-weekend">WEEK-END</span> du jeudi soir au samedi</label><input type="number" id="prix-we-${l.id}" value="${l.prixWe}" min="0" onchange="onChange(${l.id})"></div>
         </div>
-        ${pdjVisible
-          ? `<div class="tarif-cell weekday" style="margin-bottom:10px"><label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label><input type="number" id="prix-pdj-${l.id}" value="${l.prixPdj}" min="0" onchange="onChange(${l.id})"></div>`
-          : `<div style="display:none"><div class="tarif-cell weekday" style="margin-bottom:10px"><label><span class="badge-weekday">PDJ</span> SAR/pers./nuit</label><input type="number" id="prix-pdj-${l.id}" value="${l.prixPdj}" min="0" onchange="onChange(${l.id})"></div></div>`
-        }
         <div class="frais-section-toggle" onclick="toggleFraisItem(${l.id})">
           <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
           <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-${l.id}"></i>
@@ -767,7 +760,7 @@ function calcLigne(l) {
   const coutWd = l.prixWd * nuits.weekday * l.qty;
   const coutWe = l.prixWe * nuits.weekend * l.qty;
   const coutHeb = coutWd + coutWe;
-  const coutPdj = formule === 'BB' ? l.prixPdj * nuits.total * pax : 0;
+  const coutPdj = 0;
   let coutFrais = 0;
   const fraisItems = [];
   const f = l.frais;
@@ -1042,6 +1035,7 @@ function getDevisData(doc) {
   const expiry   = new Date(today.getTime()+validite*86400000);
   const fmtD = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
   const formule  = getFormule();
+  const isFacture = doc && doc.type === 'facture';
   const sections = [];
   let grandTotal = 0;
 
@@ -1061,18 +1055,16 @@ function getDevisData(doc) {
       const calc = calcLigne(l);
       if (calc.nuits.total === 0) return;
       rows.push({ label:'Hébergement '+villeRow, detail: buildHebDetail(l,cfg,calc), price: fmt(calc.coutHeb) });
-      if (formule==='BB' && calc.coutPdj>0) rows.push({ label:'Petit-déjeuner', detail: calc.pax+' pers. × '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+' × '+l.prixPdj+' SAR', price: fmt(calc.coutPdj) });
       calc.fraisItems.forEach(fi => rows.push({ label:fi.label, detail:fi.detail, price:fmt(fi.montant) }));
       sousTotalNum += calc.total;
     });
 
     if (sousTotalNum===0) return;
     grandTotal += sousTotalNum;
-    sections.push({ title:villeLabel, rows, subtotal:fmt(sousTotalNum), subtotalLabel:'Sous-total '+(ville==='medine'?'Médine':'Mekkah') });
+    sections.push({ title:villeLabel, rows, subtotal:fmt(sousTotalNum), subtotalLabel:(isFacture ? 'Total payé ' : 'Sous-total ')+(ville==='medine'?'Médine':'Mekkah') });
   });
 
-  const isFacture = doc && doc.type === 'facture';
-  const ref       = isFacture && doc.facNum ? doc.facNum : document.getElementById('d-ref').textContent.trim();
+  const ref = isFacture && doc.facNum ? doc.facNum : document.getElementById('d-ref').textContent.trim();
 
   return {
     ref,
@@ -1123,12 +1115,6 @@ function genererPDF(data) {
   doc.text(data.dateEmis, M+30, 40);
   if (data.dateVal) doc.text(data.dateVal, W-M, 40, { align:'right' });
 
-  // Mode de paiement (si facture)
-  if (data.isFacture && data.facMode) {
-    doc.setFontSize(7.5); setTxt('#C9A84C');
-    doc.text('Mode : '+data.facMode, M+30, 47);
-  }
-
   let y = 66;
   (data.sections||[]).forEach(section => {
     if (y>250) { doc.addPage(); y=20; }
@@ -1164,7 +1150,7 @@ function genererPDF(data) {
   setFill(totalBg); setDraw(totalBg); doc.setLineWidth(0.5);
   doc.roundedRect(M,y,CW,16,3,3,'FD');
   doc.setFont('helvetica','bold'); doc.setFontSize(11); setTxt('#FFFFFF');
-  doc.text('Total TTC', M+6, y+10);
+  doc.text(data.isFacture ? 'Total payé' : 'Total TTC', M+6, y+10);
   doc.setFontSize(14); setTxt('#C9A84C');
   doc.text(data.total, W-M-6, y+11, { align:'right' });
   y += 22;
@@ -1183,10 +1169,6 @@ function genererPDF(data) {
     doc.text('✓ FACTURE RÉGLÉE', W/2, y+8.5, { align:'center' });
     y += 18;
   }
-
-  setDraw('#E8E8E0'); doc.line(M,y,W-M,y); y+=6;
-  doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt('#AAAAAA');
-  doc.text("Ce document est établi par Samy Travel — Agence de voyages Omra & Pèlerinage.\nTous les frais annexes sont inclus dans le montant total ci-dessus.", M, y);
 
   return doc;
 }
@@ -1219,17 +1201,39 @@ async function envoyerWhatsappPDF() {
   statusEl.innerHTML = '⏳ Création du PDF…';
   try {
     const data = getDevisData(null);
-    const doc  = genererPDF(data);
-    const filename = 'Devis_SamyTravel_' + data.ref + '.pdf';
+    const pdf  = genererPDF(data);
+    const docLabel = data.isFacture ? 'Facture' : 'Devis';
+    const filename = docLabel + '_SamyTravel_' + data.ref + '.pdf';
+    const msg = 'Bonjour, veuillez trouver ci-joint votre '+(data.isFacture?'facture':'devis')+' Samy Travel.\n\nCordialement,\nSamy Travel';
 
-    // Toujours télécharger le PDF d'abord
-    doc.save(filename);
+    // 1) Partage natif (mobile) : le PDF est joint automatiquement, WhatsApp apparaît dans le menu de partage
+    let pdfFile = null;
+    try {
+      const pdfBlob = pdf.output('blob');
+      pdfFile = new File([pdfBlob], filename, { type: 'application/pdf' });
+    } catch(e) { pdfFile = null; }
+
+    if (pdfFile && navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+      statusEl.innerHTML = '📤 Ouverture du menu de partage…';
+      try {
+        await navigator.share({ files: [pdfFile], title: filename, text: msg });
+        statusEl.innerHTML = '✅ Partagé avec succès !';
+        return;
+      } catch (shareErr) {
+        if (shareErr && shareErr.name === 'AbortError') {
+          statusEl.innerHTML = '↩️ Partage annulé.';
+          return;
+        }
+        // Sinon : on continue vers la méthode de repli ci-dessous
+      }
+    }
+
+    // 2) Repli (desktop / navigateurs non compatibles) : téléchargement + ouverture WhatsApp Web
+    pdf.save(filename);
     statusEl.innerHTML = '✅ PDF téléchargé !';
 
     await new Promise(r => setTimeout(r, 800));
 
-    // Ouvrir WhatsApp avec ou sans numéro
-    const msg = 'Bonjour, veuillez trouver ci-joint votre devis Samy Travel.\n\nCordialement,\nSamy Travel';
     const encoded = encodeURIComponent(msg);
     const base = numero
       ? 'https://wa.me/' + numero.replace(/^\+/, '') + '?text=' + encoded
