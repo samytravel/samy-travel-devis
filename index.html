@@ -289,12 +289,12 @@ input:focus, select:focus { border-color: var(--gold); }
       <label class="formule-option active" id="fo-ro">
         <input type="radio" name="formule" value="RO" checked onchange="renderPanier(); updateDevis()">
         <div class="fo-label"><i class="fas fa-home" style="color:var(--gold)"></i> Room Only</div>
-        <div class="fo-sub">Sans petit-déjeuner</div>
+        <div class="fo-sub">Sans petit-déj</div>
       </label>
       <label class="formule-option" id="fo-bb">
         <input type="radio" name="formule" value="BB"  onchange="renderPanier(); updateDevis()">
         <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed &amp; Breakfast</div>
-        <div class="fo-sub">Petit-déjeuner inclus</div>
+        <div class="fo-sub">Petit-déj inclus</div>
       </label>
     </div>
   </div>
@@ -823,7 +823,7 @@ document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' 
       // Type chambre
       prestHtml += dotLine(l.qty+' chambre '+(l.qty>1?'s':'')+cfg.label+' — '+cfg.pax*l.qty+' personne'+(cfg.pax*l.qty>1?'s':''));
       // Formule
-      prestHtml += dotLine(formule === 'BB' ? 'Bed & Breakfast (petit-déjeuner inclus)' : 'Room Only (sans petit-déjeuner)');
+      prestHtml += dotLine(formule === 'BB' ? 'Bed & Breakfast (petit-déj inclus)' : 'Room Only (sans petit-déj)');
       // Frais activés
       const f = l.frais;
       if (f.transfertOn) prestHtml += dotLine(ville === 'medine' ? 'Transfert aéroport' : 'Transfert retour aéroport');
