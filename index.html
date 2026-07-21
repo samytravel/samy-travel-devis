@@ -287,12 +287,12 @@ input:focus, select:focus { border-color: var(--gold); }
     </div>
     <div class="formule-group">
       <label class="formule-option active" id="fo-ro">
-        <input type="radio" name="formule" value="RO" checked onchange="updateDevis()">
+        <input type="radio" name="formule" value="RO" checked onchange="renderPanier(); updateDevis()"">
         <div class="fo-label"><i class="fas fa-home" style="color:var(--gold)"></i> Room Only</div>
         <div class="fo-sub">Sans petit-déjeuner</div>
       </label>
       <label class="formule-option" id="fo-bb">
-        <input type="radio" name="formule" value="BB" onchange="updateDevis()">
+        <input type="radio" name="formule" value="BB"  onchange="renderPanier(); updateDevis()">">
         <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed &amp; Breakfast</div>
         <div class="fo-sub">Petit-déjeuner inclus</div>
       </label>
@@ -1192,25 +1192,24 @@ async function envoyerWhatsappPDF() {
   try {
     const data = getDevisData(null);
     const doc  = genererPDF(data);
-    const filename = 'Devis_SamyTravel_'+data.ref+'.pdf';
-    const msg = 'Voici le devis ci-joint.\n\nSamy Travel';
-    const pdfBlob = doc.output('blob');
-    const pdfFile = new File([pdfBlob], filename, { type:'application/pdf' });
-    if (navigator.canShare && navigator.canShare({ files:[pdfFile] })) {
-      statusEl.innerHTML = '📤 Ouverture du partage…';
-      await navigator.share({ files:[pdfFile], text:msg });
-      statusEl.innerHTML = '✅ PDF partagé avec succès !';
-    } else {
-      doc.save(filename);
-      statusEl.innerHTML = '✅ PDF téléchargé ! Ouverture de WhatsApp…';
-      await new Promise(r => setTimeout(r,1000));
-      const encoded = encodeURIComponent(msg);
-      const waUrl = numero ? 'https://wa.me/'+numero.replace(/^\+/,'')+' ?text='+encoded : 'https://wa.me/?text='+encoded;
-      window.open(waUrl,'_blank');
-      statusEl.innerHTML = '📤 WhatsApp ouvert — joignez le PDF depuis vos téléchargements !';
-    }
-  } catch(err) {
-    statusEl.innerHTML = err.name!=='AbortError' ? '❌ Erreur : '+err.message : '↩️ Partage annulé.';
+    const filename = 'Devis_SamyTravel_' + data.ref + '.pdf';
+
+    // Toujours télécharger le PDF d'abord
+    doc.save(filename);
+    statusEl.innerHTML = '✅ PDF téléchargé !';
+
+    await new Promise(r => setTimeout(r, 800));
+
+    // Ouvrir WhatsApp avec ou sans numéro
+    const msg = 'Bonjour, veuillez trouver ci-joint votre devis Samy Travel.\n\nCordialement,\nSamy Travel';
+    const encoded = encodeURIComponent(msg);
+    const base = numero
+      ? 'https://wa.me/' + numero.replace(/^\+/, '') + '?text=' + encoded
+      : 'https://wa.me/?text=' + encoded;
+    window.open(base, '_blank');
+    statusEl.innerHTML = '📤 WhatsApp ouvert — joignez le PDF depuis vos téléchargements.';
+  } catch (err) {
+    statusEl.innerHTML = '❌ Erreur : ' + err.message;
   } finally {
     btn.disabled = false;
     btn.innerHTML = '<i class="fab fa-whatsapp"></i> Envoyer le PDF WhatsApp';
