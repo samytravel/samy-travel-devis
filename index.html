@@ -840,7 +840,6 @@ document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' 
     villesPresentes.push(villeLabel);
   });
 
-  document.getElementById('d-hotel-name').textContent = '';
   document.getElementById('d-lines').innerHTML = html || '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:12px">Ajoutez des chambres avec leurs dates pour voir le détail du devis</div>';
   document.getElementById('d-total').textContent = fmt(grandTotal);
   document.getElementById('d-valid-text').textContent = 'Offre valable '+validite+' jour'+(validite>1?'s':'')+' — expire le '+fmtD(expiry);
@@ -1068,7 +1067,6 @@ function getDevisData(doc) {
 
   return {
     ref,
-    hotel:    document.getElementById('d-hotel-name').textContent.trim(),
     client:   document.getElementById('d-client-name').textContent.trim(),
     dateEmis: 'Émis le '+fmtD(today),
     dateVal:  isFacture ? (doc.facDate ? 'Réglé le '+new Date(doc.facDate+'T00:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}) : '') : "Valable jusqu'au "+fmtD(expiry),
