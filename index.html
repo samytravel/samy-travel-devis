@@ -369,23 +369,22 @@ input:focus, select:focus { border-color: var(--gold); }
     <div class="devis-card">
       <div class="devis-top">
         <div class="devis-top-row">
-          <div style="display:flex;align-items:center;gap:16px;">
-            <div style="background:#fff;border-radius:12px;padding:6px;border:1px solid rgba(255,255,255,0.2);flex-shrink:0;">
-              <img class="devis-logo" src="" id="devis-logo-img" alt="Samy Travel">
-            </div>
-            <div>
-              <span class="doc-type-badge badge-devis-type" id="d-type-badge">DEVIS</span>
-              <div class="devis-num-label">Référence</div>
-              <div class="devis-ref" id="d-ref">ST-2026-001</div>
-              <div class="devis-hotel" id="d-hotel-name"></div>
-              <div class="devis-hotel" id="d-client-name" style="margin-top:4px;font-weight:600;color:#fff"></div>
-            </div>
-          </div>
-          <div class="devis-dates-col">
-            <div class="devis-date" id="d-today"></div>
-            <div class="devis-date" id="d-validity"></div>
-          </div>
-        </div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div style="background:#fff;border-radius:12px;padding:6px;border:1px solid rgba(255,255,255,0.2);flex-shrink:0;">
+      <img class="devis-logo" src="" id="devis-logo-img" alt="Samy Travel">
+    </div>
+    <div>
+      <span class="doc-type-badge badge-devis-type" id="d-type-badge" style="font-size:16px;padding:6px 16px;letter-spacing:2px">DEVIS</span>
+      <div class="devis-num-label" style="margin-top:6px">Référence</div>
+      <div class="devis-ref" id="d-ref">ST-2026-001</div>
+    </div>
+  </div>
+  <div class="devis-dates-col">
+    <div class="devis-date" id="d-client-name" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:6px"></div>
+    <div class="devis-date" id="d-today"></div>
+    <div class="devis-date" id="d-validity"></div>
+  </div>
+</div>
       </div>
       <div class="devis-body">
         <div class="devis-section-label">Détail du séjour</div>
@@ -802,8 +801,7 @@ function updateDevis(afficher=false) {
 
   const prenom = document.getElementById('client-prenom').value.trim();
   const nom    = document.getElementById('client-nom').value.trim();
-  document.getElementById('d-client-name').textContent = (prenom||nom) ? "À l'attention de : "+prenom+' '+nom : '';
-
+document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' '+nom : '';
   let html = '', grandTotal = 0;
   const villesPresentes = [];
 
@@ -1119,7 +1117,7 @@ function genererPDF(data) {
   doc.setFontSize(16); setTxt('#C9A84C');
   doc.text(data.ref, W-M, 22, { align:'right' });
   doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#AAAAAA');
-  doc.text(data.hotel, W-M, 28, { align:'right' });
+  //doc.text(data.hotel, W-M, 28, { align:'right' });
   if (data.client) { doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#FFFFFF'); doc.text(data.client, W-M, 34, { align:'right' }); }
   doc.setFontSize(8); setTxt('#AAAAAA');
   doc.text(data.dateEmis, M+30, 40);
