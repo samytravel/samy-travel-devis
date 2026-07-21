@@ -757,7 +757,7 @@ function updateNuitsSummary(id) {
     +'<div class="ns-total"><i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>'+n.total+' nuit'+(n.total>1?'s':'')+' au total</div>';
 }
 
-function fmt(n) { return n.toLocaleString('fr-FR', { style:'currency', currency:'EUR', maximumFractionDigits:0 }); }
+function fmt(n) { return n.toLocaleString('fr-FR', { maximumFractionDigits:0 }) + ' SAR'; }
 function fmtDate2(str) { if (!str) return '—'; return new Date(str+'T00:00:00Z').toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }); }
 
 function calcLigne(l) {
@@ -810,22 +810,46 @@ function updateDevis(afficher=false) {
   ['medine','mekkah'].forEach(ville => {
     const lignes = panier.filter(l => l.ville === ville);
     if (lignes.length === 0) return;
-    const villeIcon = ville==='medine' ? '<i class="fas fa-mosque" style="margin-right:5px"></i>' : '<i class="fas fa-star-and-crescent" style="margin-right:5px"></i>';
-    const villeLabel = ville==='medine' ? 'Médine' : 'Mekkah';
-    html += '<div class="line-city-header">'+villeIcon+' Hébergement '+villeLabel+'</div>';
+    const villeIcon = ville === 'medine'
+      ? '<i class="fas fa-mosque" style="margin-right:5px"></i>'
+      : '<i class="fas fa-star-and-crescent" style="margin-right:5px"></i>';
+    const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
+    html += '<div class="line-city-header">'+villeIcon+villeLabel+'</div>';
+
     lignes.forEach(l => {
       const cfg = CHAMBRE_CONFIG[l.type];
       const calc = calcLigne(l);
       if (calc.nuits.total === 0) return;
-      html += lineHTML('Hébergement '+villeLabel, buildHebDetail(l,cfg,calc), fmt(calc.coutHeb));
-      if (formule==='BB' && calc.coutPdj>0) html += lineHTML('Petit-déjeuner', calc.pax+' pers. × '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+' × '+l.prixPdj+' SAR', fmt(calc.coutPdj));
-      calc.fraisItems.forEach(fi => html += lineHTML(fi.label, fi.detail, fmt(fi.montant)));
+      const formule = getFormule();
+      const hotelNom = l.hotel || l.custom_hotel || 'Hôtel non précisé';
+      const arrivee = fmtDate2(l.arrivee);
+      const depart  = fmtDate2(l.depart);
+
+      let prestHtml = '';
+      // Hôtel + dates
+      prestHtml += '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">'+hotelNom+'</div>';
+      prestHtml += '<div style="font-size:12px;color:var(--accent);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:5px"><i class="fas fa-calendar-alt" style="color:#C9A84C;font-size:11px"></i>'+arrivee+' → '+depart+' &nbsp;·&nbsp; '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+'</div>';
+      // Type chambre
+      prestHtml += dotLine(l.qty+' chambre '+(l.qty>1?'s':'')+cfg.label+' — '+cfg.pax*l.qty+' personne'+(cfg.pax*l.qty>1?'s':''));
+      // Formule
+      prestHtml += dotLine(formule === 'BB' ? 'Bed & Breakfast (petit-déjeuner inclus)' : 'Room Only (sans petit-déjeuner)');
+      // Frais activés
+      const f = l.frais;
+      if (f.transfertOn) prestHtml += dotLine(ville === 'medine' ? 'Transfert aéroport' : 'Transfert retour aéroport');
+      if (ville === 'medine' && f.transportOn) prestHtml += dotLine('Transport Médine → Mekkah');
+      if (f.taxeOn) prestHtml += dotLine('Taxe de séjour incluse');
+      if (ville === 'medine' && f.visaOn) prestHtml += dotLine('Visa / Prestation');
+      if (ville === 'mekkah' && f.guideOn) prestHtml += dotLine('Guide / Accompagnateur');
+      if (ville === 'mekkah' && f.diversOn) prestHtml += dotLine('Frais divers inclus');
+
+      html += '<div style="padding:12px 0;border-bottom:1px solid var(--border)">'+prestHtml+'</div>';
       grandTotal += calc.total;
     });
+
     villesPresentes.push(villeLabel);
   });
 
-  document.getElementById('d-hotel-name').textContent = villesPresentes.join(' & ') || 'Médine & Mekkah';
+  document.getElementById('d-hotel-name').textContent = '';
   document.getElementById('d-lines').innerHTML = html || '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:12px">Ajoutez des chambres avec leurs dates pour voir le détail du devis</div>';
   document.getElementById('d-total').textContent = fmt(grandTotal);
   document.getElementById('d-valid-text').textContent = 'Offre valable '+validite+' jour'+(validite>1?'s':'')+' — expire le '+fmtD(expiry);
@@ -840,6 +864,12 @@ function lineHTML(label, detail, price) {
   return '<div class="line-item"><div><div class="line-desc">'+label+'</div>'+(detail?'<div class="line-detail">'+detail+'</div>':'')+'</div><div class="line-price">'+price+'</div></div>';
 }
 
+  function dotLine(texte) {
+  return '<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted);padding:2px 0">'
+    +'<div style="width:5px;height:5px;border-radius:50%;background:#C9A84C;flex-shrink:0"></div>'
+    +texte+'</div>';
+}
+  
 // ===== SAUVEGARDE =====
 function sauvegarderDevis() {
   syncAllFromDOM();
