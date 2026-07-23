@@ -41,7 +41,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .brand-sub { font-size: 11px; color: rgba(255,255,255,0.65); margin-top: 1px; }
 .header-badge { background: var(--gold); color: #1A1A1A; font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
 
-/* NAV TABS */
 .nav-tabs { background: #0F2840; display: flex; max-width: 760px; margin: 0 auto; }
 .nav-tab { flex: 1; padding: 10px 6px; text-align: center; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.55); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 5px; }
 .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
@@ -103,6 +102,15 @@ input:focus, select:focus { border-color: var(--gold); }
 .badge-weekday { background: #EEF3F8; color: var(--weekday); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px; }
 .badge-weekend { background: #FFF3E0; color: var(--weekend); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px; }
 
+/* TARIF PDJ (Room Only optionnel) */
+.tarif-pdj-row { background: #F0FBF5; border: 1.5px solid #B8DFC8; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tarif-pdj-row .pdj-toggle-wrap { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 160px; }
+.tarif-pdj-row .pdj-price-wrap { display: flex; align-items: center; gap: 6px; }
+.tarif-pdj-row .pdj-price-wrap input { width: 80px; height: 34px; text-align: center; }
+.tarif-pdj-row .pdj-price-wrap .unit { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+.pdj-toggle-label { font-size: 12px; font-weight: 600; color: #1E4E36; }
+
+
 .nuits-summary { background: #F0F4F8; border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; font-size: 11px; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ns-dot-weekday { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 .ns-dot-weekend { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
@@ -137,6 +145,19 @@ input:focus, select:focus { border-color: var(--gold); }
 .frais-input-wrap input { flex: 1; }
 .frais-input-wrap .unit { font-size: 11px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
 
+/* MARGE INTERNE PAR VILLE */
+.marge-interne-section { margin-top: 10px; border-top: 1.5px dashed #E0C87A; padding-top: 10px; }
+.marge-interne-label { font-size: 10px; font-weight: 800; color: #A07A2A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+.marge-interne-label i { color: var(--gold); }
+.marge-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.marge-chip { padding: 6px 14px; border: 2px solid var(--border-strong); border-radius: 20px; font-size: 12px; font-weight: 700; cursor: pointer; background: #fff; color: var(--text-muted); transition: all 0.15s; user-select: none; }
+.marge-chip:hover { border-color: var(--gold); color: #7A5800; }
+.marge-chip.active { background: #7A5800; border-color: #7A5800; color: #fff; }
+.marge-chip.active.p1 { background: #2E6A4E; border-color: #2E6A4E; }
+.marge-chip.active.p15 { background: #A07A2A; border-color: #A07A2A; }
+.marge-chip.active.p4 { background: #8B2020; border-color: #8B2020; }
+.marge-result { margin-top: 8px; font-size: 11px; color: #7A5800; font-weight: 600; background: #FFFBEF; border: 1px solid #F0DFA0; border-radius: 6px; padding: 5px 10px; display: none; }
+
 .panier-total { display: flex; align-items: center; justify-content: space-between; background: #EEF3F8; border-radius: 9px; padding: 9px 14px; margin-bottom: 14px; }
 .panier-total-label { font-size: 12px; font-weight: 700; color: var(--accent); }
 .panier-total-value { font-size: 13px; font-weight: 700; color: var(--accent); }
@@ -154,7 +175,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .devis-logo { width: 40px; height: 40px; object-fit: contain; }
 .devis-num-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
 .devis-ref { font-size: 20px; font-weight: 800; color: var(--gold); }
-.devis-hotel { font-size: 12px; color: rgba(255,255,255,0.75); margin-top: 3px; }
 .devis-dates-col { text-align: right; }
 .devis-date { font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 3px; }
 .devis-body { padding: 18px 20px; }
@@ -164,6 +184,12 @@ input:focus, select:focus { border-color: var(--gold); }
 .line-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
 .line-price { font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; padding-top: 1px; }
 .line-city-header { padding: 10px 0 4px; font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 2px solid var(--gold-light); margin-top: 6px; }
+
+/* Sous-total par ville dans le devis */
+.city-subtotal-row { display: flex; justify-content: space-between; align-items: center; background: #EEF3F8; border-radius: 8px; padding: 8px 12px; margin: 10px 0 4px; border-left: 3px solid var(--accent); }
+.city-subtotal-label { font-size: 11px; font-weight: 700; color: var(--accent); }
+.city-subtotal-value { font-size: 13px; font-weight: 800; color: var(--accent); }
+
 .total-row { display: flex; justify-content: space-between; align-items: center; background: #F6F6F0; border-radius: 10px; padding: 14px 16px; margin-top: 14px; border: 1px solid var(--border); }
 .total-label { font-size: 14px; font-weight: 700; }
 .total-amount { font-size: 22px; font-weight: 800; color: var(--accent); }
@@ -172,12 +198,10 @@ input:focus, select:focus { border-color: var(--gold); }
 .devis-mention { font-size: 10px; color: var(--text-muted); line-height: 1.5; }
 .btn-whatsapp { background: #25D366; color: #fff; border: none; border-radius: 9px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
-/* TYPE BADGE */
 .doc-type-badge { display: inline-block; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
 .badge-devis-type { background: #EEF3F8; color: var(--accent); }
 .badge-facture-type { background: #FFF0D0; color: #7A5800; border: 1.5px solid var(--gold); }
 
-/* LISTE DEVIS */
 .liste-empty { text-align: center; padding: 32px 20px; color: var(--text-muted); }
 .liste-empty i { font-size: 36px; opacity: 0.25; display: block; margin-bottom: 12px; }
 .devis-list-item { background: #fff; border: 1.5px solid var(--border-strong); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
@@ -200,7 +224,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .btn-convert { background: var(--gold); color: #fff; border-color: var(--gold); }
 .btn-convert:hover { background: #A07A2A; border-color: #A07A2A; }
 
-/* MODAL */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 999; display: flex; align-items: center; justify-content: center; padding: 20px; }
 .modal-overlay.hidden { display: none; }
 .modal-box { background: #fff; border-radius: 16px; padding: 24px; max-width: 480px; width: 100%; box-shadow: 0 8px 40px rgba(0,0,0,0.25); }
@@ -215,19 +238,16 @@ input:focus, select:focus { border-color: var(--gold); }
 .modal-btn-ok { background: var(--gold); color: #fff; }
 .modal-btn-ok:hover { background: #A07A2A; }
 
-/* FACTURE STAMP */
 .facture-stamp { background: linear-gradient(135deg, #FFF3D0 0%, #FFF0C0 100%); border: 2px solid var(--gold); border-radius: 10px; padding: 10px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
 .facture-stamp i { color: var(--gold); font-size: 18px; }
 .facture-stamp-text { font-size: 12px; font-weight: 700; color: #7A5800; }
 .facture-stamp-sub { font-size: 11px; color: #A07A2A; margin-top: 2px; }
 
-/* SECTION FILTER */
 .liste-filter-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 .filter-btn { padding: 7px 14px; border: 1.5px solid var(--border-strong); border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; background: #fff; color: var(--text); transition: all 0.15s; }
 .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .filter-btn.active.gold { background: var(--gold); border-color: var(--gold); color: #fff; }
 
-/* TOAST */
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #1A1A1A; color: #fff; padding: 11px 22px; border-radius: 24px; font-size: 13px; font-weight: 600; z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 8px; opacity: 0; transition: opacity 0.25s; pointer-events: none; }
 .toast.show { opacity: 1; }
 .toast.success { background: #2E6A4E; }
@@ -289,12 +309,12 @@ input:focus, select:focus { border-color: var(--gold); }
       <label class="formule-option active" id="fo-ro">
         <input type="radio" name="formule" value="RO" checked onchange="renderPanier(); updateDevis()">
         <div class="fo-label"><i class="fas fa-home" style="color:var(--gold)"></i> Room Only</div>
-        <div class="fo-sub">Sans petit-déj</div>
+        <div class="fo-sub">Sans petit-déj (option dispo)</div>
       </label>
       <label class="formule-option" id="fo-bb">
-        <input type="radio" name="formule" value="BB"  onchange="renderPanier(); updateDevis()">
+        <input type="radio" name="formule" value="BB" onchange="renderPanier(); updateDevis()">
         <div class="fo-label"><i class="fas fa-coffee" style="color:var(--gold)"></i> Bed &amp; Breakfast</div>
-        <div class="fo-sub">Petit-déj inclus</div>
+        <div class="fo-sub">Petit-déj inclus partout</div>
       </label>
     </div>
   </div>
@@ -369,22 +389,22 @@ input:focus, select:focus { border-color: var(--gold); }
     <div class="devis-card">
       <div class="devis-top">
         <div class="devis-top-row">
-  <div style="display:flex;align-items:center;gap:16px;">
-    <div style="background:#fff;border-radius:12px;padding:6px;border:1px solid rgba(255,255,255,0.2);flex-shrink:0;">
-      <img class="devis-logo" src="" id="devis-logo-img" alt="Samy Travel">
-    </div>
-    <div>
-      <span class="doc-type-badge badge-devis-type" id="d-type-badge" style="font-size:16px;padding:6px 16px;letter-spacing:2px">DEVIS</span>
-      <div class="devis-num-label" style="margin-top:6px">Référence</div>
-      <div class="devis-ref" id="d-ref">ST-2026-001</div>
-    </div>
-  </div>
-  <div class="devis-dates-col">
-    <div class="devis-date" id="d-client-name" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:6px"></div>
-    <div class="devis-date" id="d-today"></div>
-    <div class="devis-date" id="d-validity"></div>
-  </div>
-</div>
+          <div style="display:flex;align-items:center;gap:16px;">
+            <div style="background:#fff;border-radius:12px;padding:6px;border:1px solid rgba(255,255,255,0.2);flex-shrink:0;">
+              <img class="devis-logo" src="" id="devis-logo-img" alt="Samy Travel">
+            </div>
+            <div>
+              <span class="doc-type-badge badge-devis-type" id="d-type-badge" style="font-size:16px;padding:6px 16px;letter-spacing:2px">DEVIS</span>
+              <div class="devis-num-label" style="margin-top:6px">Référence</div>
+              <div class="devis-ref" id="d-ref">ST-2026-001</div>
+            </div>
+          </div>
+          <div class="devis-dates-col">
+            <div class="devis-date" id="d-client-name" style="font-size:14px;font-weight:700;color:#fff;margin-bottom:6px"></div>
+            <div class="devis-date" id="d-today"></div>
+            <div class="devis-date" id="d-validity"></div>
+          </div>
+        </div>
       </div>
       <div class="devis-body">
         <div class="devis-section-label">Détail du séjour</div>
@@ -420,7 +440,6 @@ input:focus, select:focus { border-color: var(--gold); }
 
 <!-- ======================== ONGLET LISTE ======================== -->
 <div class="tab-content" id="content-liste">
-
   <div class="card" style="padding:14px 18px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <div style="font-size:14px;font-weight:700">Documents sauvegardés</div>
@@ -435,7 +454,6 @@ input:focus, select:focus { border-color: var(--gold); }
     </div>
     <div id="liste-documents"></div>
   </div>
-
 </div>
 
 </div><!-- .page -->
@@ -444,9 +462,7 @@ input:focus, select:focus { border-color: var(--gold); }
 <div class="modal-overlay hidden" id="modal-convert">
   <div class="modal-box">
     <div class="modal-title"><i class="fas fa-file-invoice-dollar"></i> Convertir en facture</div>
-    <div class="modal-body">
-      Ce devis sera converti en <strong>FACTURE</strong>. Vous pouvez modifier les informations ci-dessous avant de confirmer.
-    </div>
+    <div class="modal-body">Ce devis sera converti en <strong>FACTURE</strong>. Vous pouvez modifier les informations ci-dessous avant de confirmer.</div>
     <div class="modal-input-wrap">
       <label>Numéro de facture</label>
       <input type="text" id="modal-fac-num" placeholder="FAC-2026-001">
@@ -491,6 +507,13 @@ const CHAMBRE_CONFIG = {
   junior:    { label: 'Suite Junior', pax: 2, icon: '✨' },
   senior:    { label: 'Suite Senior', pax: 2, icon: '✨' },
 };
+
+// Marges disponibles par ville (invisibles client)
+const MARGES_OPTIONS = [
+  { val: 0.01,  label: '1%',   cls: 'p1'  },
+  { val: 0.015, label: '1,5%', cls: 'p15' },
+  { val: 0.04,  label: '4%',   cls: 'p4'  },
+];
 
 let HOTELS = {};
 const HOTELS_VERSION = "3";
@@ -562,6 +585,8 @@ function ajouterChambre() {
     hotel: '', custom_hotel: '',
     arrivee: '', depart: '',
     prixWd: d.prixWd, prixWe: d.prixWe, prixPdj: d.prixPdj,
+    pdjActif: false,   // Petit-déj optionnel en Room Only
+    marge: 0,          // marge interne (non visible client) — stockée par chambre, appliquée par ville dans devis
     frais: { transfertOn:false,transfertVal:30,transportOn:false,transportVal:25,taxeOn:false,taxeVal:5,visaOn:false,visaVal:50,guideOn:false,guideVal:40,diversOn:false,diversVal:20 },
     open: true
   });
@@ -593,6 +618,7 @@ function syncFromDOM(id) {
   l.prixWd       = gn('prix-wd', 80);
   l.prixWe       = gn('prix-we', 100);
   l.prixPdj      = gn('prix-pdj', 15);
+  l.pdjActif     = gc('pdj-on');
   l.frais.transfertOn  = gc('f-transfert-on');
   l.frais.transfertVal = gn('f-transfert-v', 30);
   l.frais.transportOn  = gc('f-transport-on');
@@ -605,14 +631,39 @@ function syncFromDOM(id) {
   l.frais.guideVal     = gn('f-guide-v', 40);
   l.frais.diversOn     = gc('f-divers-on');
   l.frais.diversVal    = gn('f-divers-v', 20);
+  // marge interne : lue depuis le chip actif
+  const margeEl = document.querySelector(`#marge-chips-${id} .marge-chip.active`);
+  l.marge = margeEl ? parseFloat(margeEl.dataset.val) : 0;
 }
 
 function syncAllFromDOM() { panier.forEach(l => syncFromDOM(l.id)); }
+
+function setMargeChip(id, val) {
+  const l = panier.find(x => x.id === id);
+  if (!l) return;
+  // Toggle
+  l.marge = (l.marge === val) ? 0 : val;
+  // Mettre à jour les chips sans re-render complet
+  const container = document.getElementById('marge-chips-'+id);
+  if (container) {
+    container.querySelectorAll('.marge-chip').forEach(chip => {
+      chip.classList.toggle('active', parseFloat(chip.dataset.val) === l.marge);
+      MARGES_OPTIONS.forEach(m => { if(parseFloat(chip.dataset.val)===m.val) chip.classList.toggle(m.cls, parseFloat(chip.dataset.val) === l.marge); });
+    });
+    updateMargeResult(id);
+  }
+  updateDevis();
+}
+
+function updateMargeResult(id) {
+  // Marge transparente — aucun affichage, intégrée silencieusement dans calcLigne
+}
 
 function renderPanier() {
   const el = document.getElementById('panier-liste');
   const totalEl = document.getElementById('panier-total');
   const totalValEl = document.getElementById('panier-total-value');
+  const formule = getFormule();
 
   if (panier.length === 0) {
     el.innerHTML = '<div class="panier-empty"><i class="fas fa-bed" style="font-size:22px;opacity:0.3;display:block;margin-bottom:8px"></i>Aucune chambre ajoutée — utilisez le sélecteur ci-dessus</div>';
@@ -637,6 +688,23 @@ function renderPanier() {
       ...[...HOTELS[l.ville]].sort().map(h => '<option value="'+h+'"'+(l.hotel===h?' selected':'')+'>'+h+'</option>')
     ].join('');
 
+    // PDJ optionnel (visible uniquement en Room Only)
+    const showPdj = formule === 'RO';
+    const pdjHtml = showPdj ? `
+      <div class="tarif-pdj-row">
+        <div class="pdj-toggle-wrap">
+          <label class="toggle-switch">
+            <input type="checkbox" id="pdj-on-${l.id}" ${l.pdjActif?'checked':''} onchange="onChange(${l.id})">
+            <span class="toggle-slider"></span>
+          </label>
+          <span class="pdj-toggle-label"><i class="fas fa-coffee" style="color:#2E6A4E;margin-right:4px"></i>Ajouter le petit-déjeuner</span>
+        </div>
+        <div class="pdj-price-wrap">
+          <input type="number" id="prix-pdj-${l.id}" value="${l.prixPdj}" min="0" onchange="onChange(${l.id})" style="width:80px">
+          <span class="unit">SAR/pers./nuit</span>
+        </div>
+      </div>` : '';
+
     const fraisHtml = l.ville === 'medine' ? `
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-transfert-on-${l.id}" ${l.frais.transfertOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-bus" style="color:var(--gold);margin-right:4px"></i> Transfert aéroport</span></div><div class="frais-input-wrap"><input type="number" id="f-transfert-v-${l.id}" value="${l.frais.transfertVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-transport-on-${l.id}" ${l.frais.transportOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-road" style="color:var(--gold);margin-right:4px"></i> Transport Méd.→Mek.</span></div><div class="frais-input-wrap"><input type="number" id="f-transport-v-${l.id}" value="${l.frais.transportVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>
@@ -647,6 +715,11 @@ function renderPanier() {
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span></div><div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div></div>
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-divers-on-${l.id}" ${l.frais.diversOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-ellipsis-h" style="color:var(--gold);margin-right:4px"></i> Frais divers</span></div><div class="frais-input-wrap"><input type="number" id="f-divers-v-${l.id}" value="${l.frais.diversVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>`;
 
+    // Marges internes
+    const margeChipsHtml = MARGES_OPTIONS.map(m =>
+      `<div class="marge-chip ${l.marge===m.val?'active '+m.cls:''}" data-val="${m.val}" onclick="setMargeChip(${l.id},${m.val})">${m.label}</div>`
+    ).join('');
+
     html += `<div class="ch-item ${l.open?'open':''}" id="ch-item-${l.id}">
       <div class="ch-item-header" onclick="toggleItem(${l.id})">
         <div class="ch-item-icon">${cfg.icon}</div>
@@ -656,6 +729,7 @@ function renderPanier() {
         <button class="btn-remove-ch" onclick="event.stopPropagation();supprimerChambre(${l.id})" title="Supprimer"><i class="fas fa-times"></i></button>
       </div>
       <div class="ch-item-body">
+
         <div style="margin-bottom:10px">
           <label>Hôtel à ${villeLabel}</label>
           <div class="hotel-row"><select id="hotel-sel-${l.id}" onchange="onHotelChange(${l.id})">${hotelOpts}</select></div>
@@ -673,23 +747,32 @@ function renderPanier() {
           <div class="tarif-cell weekday"><label><span class="badge-weekday">SEMAINE</span> du samedi au jeudi midi</label><input type="number" id="prix-wd-${l.id}" value="${l.prixWd}" min="0" onchange="onChange(${l.id})"></div>
           <div class="tarif-cell weekend"><label><span class="badge-weekend">WEEK-END</span> du jeudi soir au samedi</label><input type="number" id="prix-we-${l.id}" value="${l.prixWe}" min="0" onchange="onChange(${l.id})"></div>
         </div>
+
+        ${pdjHtml}
+
         <div class="frais-section-toggle" onclick="toggleFraisItem(${l.id})">
           <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
           <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-${l.id}"></i>
         </div>
         <div id="frais-body-${l.id}" style="display:none"><div class="frais-grid">${fraisHtml}</div></div>
+
+        <div class="marge-interne-section">
+          <div class="marge-interne-label"><i class="fas fa-lock"></i> Marge interne (non visible client)</div>
+          <div class="marge-chips" id="marge-chips-${l.id}">${margeChipsHtml}</div>
+        </div>
+
       </div>
     </div>`;
   });
 
   el.innerHTML = html;
-  panier.forEach(l => updateNuitsSummary(l.id));
+  panier.forEach(l => { updateNuitsSummary(l.id); if(l.marge) updateMargeResult(l.id); });
   totalEl.style.display = totalCh > 0 ? 'flex' : 'none';
   totalValEl.textContent = totalCh+' chambre'+(totalCh>1?'s':'')+' · '+totalPax+' voyageur'+(totalPax>1?'s':'');
 }
 
-function onChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateDevis(); }
-function onDateChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateDevis(); }
+function onChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateMargeResult(id); updateDevis(); }
+function onDateChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateMargeResult(id); updateDevis(); }
 
 function onHotelChange(id) {
   const sel = document.getElementById('hotel-sel-'+id);
@@ -757,10 +840,16 @@ function calcLigne(l) {
   const pax = cfg.pax * l.qty;
   const nuits = compterNuits(l.arrivee, l.depart);
   const formule = getFormule();
-  const coutWd = l.prixWd * nuits.weekday * l.qty;
-  const coutWe = l.prixWe * nuits.weekend * l.qty;
+  // Marge intégrée dans le prix par nuit (transparente, non affichée)
+  const margeCoeff = l.marge ? (1 + l.marge) : 1;
+  const prixWdM = Math.round(l.prixWd * margeCoeff);
+  const prixWeM = Math.round(l.prixWe * margeCoeff);
+  const coutWd = prixWdM * nuits.weekday * l.qty;
+  const coutWe = prixWeM * nuits.weekend * l.qty;
   const coutHeb = coutWd + coutWe;
-  const coutPdj = 0;
+  // PDJ : obligatoire en BB, optionnel en RO si pdjActif
+  const pdjInclu = formule === 'BB' || (formule === 'RO' && l.pdjActif);
+  const coutPdj = pdjInclu ? l.prixPdj * pax * nuits.total : 0;
   let coutFrais = 0;
   const fraisItems = [];
   const f = l.frais;
@@ -770,12 +859,20 @@ function calcLigne(l) {
   if (l.ville==='medine' && f.visaOn) { const v=f.visaVal*pax; coutFrais+=v; fraisItems.push({ label:'Visa / Prestation', montant:v, detail:f.visaVal+' SAR × '+pax+' pers.' }); }
   if (l.ville==='mekkah' && f.guideOn) { const v=f.guideVal*pax; coutFrais+=v; fraisItems.push({ label:'Guide / Accompagnateur', montant:v, detail:f.guideVal+' SAR × '+pax+' pers.' }); }
   if (l.ville==='mekkah' && f.diversOn) { const v=f.diversVal*pax; coutFrais+=v; fraisItems.push({ label:'Frais divers', montant:v, detail:f.diversVal+' SAR × '+pax+' pers.' }); }
-  return { pax, nuits, coutWd, coutWe, coutHeb, coutPdj, coutFrais, fraisItems, total: coutHeb+coutPdj+coutFrais };
+  const total = coutHeb + coutPdj + coutFrais;
+  // prixWdM / prixWeM = prix majorés affichés dans le devis (nuit/chambre)
+  return { pax, nuits, prixWdM, prixWeM, coutWd, coutWe, coutHeb, coutPdj, pdjInclu, coutFrais, fraisItems, total };
 }
 
 function buildHebDetail(l, cfg, calc) {
   const hotelNom = l.hotel || l.custom_hotel || 'hôtel non précisé';
   return hotelNom+' · '+l.qty+' ch. '+cfg.label+' · '+fmtDate2(l.arrivee)+' → '+fmtDate2(l.depart)+' · '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'');
+}
+
+function dotLine(texte) {
+  return '<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted);padding:2px 0">'
+    +'<div style="width:5px;height:5px;border-radius:50%;background:#C9A84C;flex-shrink:0"></div>'
+    +texte+'</div>';
 }
 
 function updateDevis(afficher=false) {
@@ -794,9 +891,9 @@ function updateDevis(afficher=false) {
 
   const prenom = document.getElementById('client-prenom').value.trim();
   const nom    = document.getElementById('client-nom').value.trim();
-document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' '+nom : '';
+  document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' '+nom : '';
+
   let html = '', grandTotal = 0;
-  const villesPresentes = [];
 
   ['medine','mekkah'].forEach(ville => {
     const lignes = panier.filter(l => l.ville === ville);
@@ -807,24 +904,36 @@ document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' 
     const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
     html += '<div class="line-city-header">'+villeIcon+villeLabel+'</div>';
 
+    let villeSousTotal = 0;
+    let hasData = false;
+
     lignes.forEach(l => {
       const cfg = CHAMBRE_CONFIG[l.type];
       const calc = calcLigne(l);
       if (calc.nuits.total === 0) return;
-      const formule = getFormule();
+      hasData = true;
       const hotelNom = l.hotel || l.custom_hotel || 'Hôtel non précisé';
       const arrivee = fmtDate2(l.arrivee);
       const depart  = fmtDate2(l.depart);
 
+      // Prix par nuit/chambre — déjà majoré de la marge, affiché en bout de ligne
+      const prixParNuitLabel = calc.nuits.weekday > 0 && calc.nuits.weekend > 0
+        ? `${calc.prixWdM} / ${calc.prixWeM} SAR`
+        : calc.nuits.weekend > 0 ? `${calc.prixWeM} SAR` : `${calc.prixWdM} SAR`;
+      const prixUnitRight = `<span style="font-size:10px;font-weight:700;color:#7A5800;background:#FFFBEF;border:1px solid #F0DFA0;border-radius:5px;padding:2px 7px;white-space:nowrap;margin-left:auto;flex-shrink:0"><i class="fas fa-tag" style="font-size:9px;color:#C9A84C;margin-right:3px"></i>${prixParNuitLabel}/nuit/ch.</span>`;
+
+      // Ligne hôtel + dates + prix unitaire en bout de ligne
+      const ligneDatesPrix = `<div style="font-size:12px;color:var(--accent);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:6px;flex-wrap:wrap"><i class="fas fa-calendar-alt" style="color:#C9A84C;font-size:11px"></i>${arrivee} → ${depart} &nbsp;·&nbsp; ${calc.nuits.total} nuit${calc.nuits.total>1?'s':''}${prixUnitRight}</div>`;
+
       let prestHtml = '';
-      // Hôtel + dates
       prestHtml += '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">'+hotelNom+'</div>';
-      prestHtml += '<div style="font-size:12px;color:var(--accent);font-weight:600;margin-bottom:6px;display:flex;align-items:center;gap:5px"><i class="fas fa-calendar-alt" style="color:#C9A84C;font-size:11px"></i>'+arrivee+' → '+depart+' &nbsp;·&nbsp; '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'')+'</div>';
-      // Type chambre
-      prestHtml += dotLine(l.qty+' chambre '+(l.qty>1?'s':'')+cfg.label+' — '+cfg.pax*l.qty+' personne'+(cfg.pax*l.qty>1?'s':''));
-      // Formule
-      prestHtml += dotLine(formule === 'BB' ? 'Bed & Breakfast (petit-déj inclus)' : 'Room Only (sans petit-déj)');
-      // Frais activés
+      prestHtml += ligneDatesPrix;
+      prestHtml += dotLine(l.qty+' chambre'+(l.qty>1?'s':'')+' '+cfg.label+' — '+cfg.pax*l.qty+' personne'+(cfg.pax*l.qty>1?'s':''));
+      if (calc.pdjInclu) {
+        prestHtml += dotLine(formule === 'BB' ? 'Bed & Breakfast (petit-déj inclus)' : 'Petit-déjeuner inclus');
+      } else {
+        prestHtml += dotLine('Room Only (sans petit-déj)');
+      }
       const f = l.frais;
       if (f.transfertOn) prestHtml += dotLine(ville === 'medine' ? 'Transfert aéroport' : 'Transfert retour aéroport');
       if (ville === 'medine' && f.transportOn) prestHtml += dotLine('Transport Médine → Mekkah');
@@ -834,10 +943,16 @@ document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' 
       if (ville === 'mekkah' && f.diversOn) prestHtml += dotLine('Frais divers inclus');
 
       html += '<div style="padding:12px 0;border-bottom:1px solid var(--border)">'+prestHtml+'</div>';
-      grandTotal += calc.total;
+      villeSousTotal += calc.total;
     });
 
-    villesPresentes.push(villeLabel);
+    if (hasData && villeSousTotal > 0) {
+      html += `<div class="city-subtotal-row">
+        <span class="city-subtotal-label">${villeIcon} Sous-total ${villeLabel}</span>
+        <span class="city-subtotal-value">${fmt(villeSousTotal)}</span>
+      </div>`;
+      grandTotal += villeSousTotal;
+    }
   });
 
   document.getElementById('d-lines').innerHTML = html || '<div style="text-align:center;padding:20px;color:var(--text-muted);font-size:12px">Ajoutez des chambres avec leurs dates pour voir le détail du devis</div>';
@@ -850,16 +965,6 @@ document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' 
   }
 }
 
-function lineHTML(label, detail, price) {
-  return '<div class="line-item"><div><div class="line-desc">'+label+'</div>'+(detail?'<div class="line-detail">'+detail+'</div>':'')+'</div><div class="line-price">'+price+'</div></div>';
-}
-
-  function dotLine(texte) {
-  return '<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted);padding:2px 0">'
-    +'<div style="width:5px;height:5px;border-radius:50%;background:#C9A84C;flex-shrink:0"></div>'
-    +texte+'</div>';
-}
-  
 // ===== SAUVEGARDE =====
 function sauvegarderDevis() {
   syncAllFromDOM();
@@ -878,12 +983,10 @@ function sauvegarderDevis() {
     validite, formule,
     dateCreation: new Date().toISOString(),
     panier: JSON.parse(JSON.stringify(panier)),
-    // infos facture (vide par défaut)
     facNum: '', facDate: '', facMode: ''
   };
 
   const docs = getDocuments();
-  // Remplacer si même ref existe déjà
   const idx = docs.findIndex(d => d.ref === ref && d.type === 'devis');
   if (idx >= 0) { docs[idx] = doc; } else { docs.unshift(doc); }
   saveDocuments(docs);
@@ -912,7 +1015,6 @@ function renderListe() {
 
   el.innerHTML = filtered.map(doc => {
     const isFacture = doc.type === 'facture';
-    const typeLabel = isFacture ? 'Facture' : 'Devis';
     const typeBg = isFacture ? 'background:#FFF0D0;color:#7A5800' : 'background:#EEF3F8;color:#1A3A5C';
     const iconBg = isFacture ? 'dli-icon-facture' : 'dli-icon-devis';
     const iconEl = isFacture ? '🧾' : '📋';
@@ -927,19 +1029,13 @@ function renderListe() {
       </div>
       <div class="dli-right">
         <div class="dli-total">${doc.total}</div>
-        <span class="dli-type" style="${typeBg}">${typeLabel}</span>
+        <span class="dli-type" style="${typeBg}">${isFacture?'Facture':'Devis'}</span>
       </div>
       <div class="dli-actions" style="width:100%;padding-top:8px;border-top:1px solid var(--border)">
-        <button class="btn-action" onclick="chargerDocument(${doc.id})" title="Ouvrir et regénérer">
-          <i class="fas fa-eye"></i> Ouvrir
-        </button>
-        <button class="btn-action" onclick="telechargerPDFSauvegarde(${doc.id})" title="Télécharger PDF">
-          <i class="fas fa-file-pdf"></i> PDF
-        </button>
+        <button class="btn-action" onclick="chargerDocument(${doc.id})"><i class="fas fa-eye"></i> Ouvrir</button>
+        <button class="btn-action" onclick="telechargerPDFSauvegarde(${doc.id})"><i class="fas fa-file-pdf"></i> PDF</button>
         ${!isFacture ? `<button class="btn-action btn-convert" onclick="ouvrirModalConvert(${doc.id})"><i class="fas fa-file-invoice-dollar"></i> → Facture</button>` : `<button class="btn-action" style="color:#2E6A4E" onclick="voirFacture(${doc.id})"><i class="fas fa-stamp"></i> Voir facture</button>`}
-        <button class="btn-action danger" onclick="supprimerDocument(${doc.id})" title="Supprimer">
-          <i class="fas fa-trash-alt"></i>
-        </button>
+        <button class="btn-action danger" onclick="supprimerDocument(${doc.id})"><i class="fas fa-trash-alt"></i></button>
       </div>
     </div>`;
   }).join('');
@@ -949,26 +1045,16 @@ function chargerDocument(id) {
   const docs = getDocuments();
   const doc  = docs.find(d => d.id === id);
   if (!doc) return;
-
-  // Recharger le panier
   panier = doc.panier.map(l => ({ ...l }));
   nextId = panier.length > 0 ? Math.max(...panier.map(l => l.id)) + 1 : 1;
-
-  // Recharger le client
   const parts = doc.client.split(' ');
   document.getElementById('client-prenom').value = parts[0] || '';
   document.getElementById('client-nom').value = parts.slice(1).join(' ') || '';
-
-  // Recharger formule
   document.querySelectorAll('input[name=formule]').forEach(r => { r.checked = r.value === doc.formule; });
-
-  // Recharger validité
   document.getElementById('validite').value = doc.validite || 1;
-
   switchTab('nouveau');
   renderPanier();
   updateDevis(true);
-
   showToast('📋 Document chargé dans l\'éditeur');
 }
 
@@ -991,25 +1077,20 @@ function confirmerConversion() {
   const facNum  = document.getElementById('modal-fac-num').value.trim() || getNextFacNum();
   const facDate = document.getElementById('modal-fac-date').value;
   const facMode = document.getElementById('modal-fac-mode').value;
-
   const docs = getDocuments();
   const idx  = docs.findIndex(d => d.id === convertingId);
   if (idx < 0) { fermerModal(); return; }
-
   docs[idx].type    = 'facture';
   docs[idx].facNum  = facNum;
   docs[idx].facDate = facDate;
   docs[idx].facMode = facMode;
-
   saveDocuments(docs);
   fermerModal();
   renderListe();
   showToast('🧾 Converti en facture '+facNum, 'success');
 }
 
-function voirFacture(id) {
-  chargerDocument(id);
-}
+function voirFacture(id) { chargerDocument(id); }
 
 function supprimerDocument(id) {
   if (!confirm('Supprimer ce document ?')) return;
@@ -1037,8 +1118,6 @@ function getDevisData(doc) {
   const isFacture = doc && doc.type === 'facture';
   const sections = [];
   let grandTotal = 0;
-
-  // Si on passe un doc sauvegardé, on utilise son panier
   const panierSource = doc ? doc.panier : panier;
 
   ['medine','mekkah'].forEach(ville => {
@@ -1054,6 +1133,7 @@ function getDevisData(doc) {
       const calc = calcLigne(l);
       if (calc.nuits.total === 0) return;
       rows.push({ label:'Hébergement '+villeRow, detail: buildHebDetail(l,cfg,calc), price: fmt(calc.coutHeb) });
+      if (calc.coutPdj > 0) rows.push({ label:'Petit-déjeuner', detail: l.prixPdj+' SAR × '+calc.pax+' pers. × '+calc.nuits.total+' nuits', price: fmt(calc.coutPdj) });
       calc.fraisItems.forEach(fi => rows.push({ label:fi.label, detail:fi.detail, price:fmt(fi.montant) }));
       sousTotalNum += calc.total;
     });
@@ -1087,7 +1167,6 @@ function genererPDF(data) {
   const setDraw = h => doc.setDrawColor(...hex2rgb(h));
   const setTxt  = h => doc.setTextColor(...hex2rgb(h));
 
-  // En-tête
   const headerBg = data.isFacture ? '#7A5800' : '#1A3A5C';
   setFill(headerBg); doc.rect(0,0,W,56,'F');
   setDraw('#C9A84C'); doc.setLineWidth(0.8); doc.line(0,56,W,56);
@@ -1100,14 +1179,11 @@ function genererPDF(data) {
   doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#C9A84C');
   doc.text('OMRA & PÈLERINAGE — AGENCE DE VOYAGES', M+30, 22);
 
-  // Type doc badge
   const typeLabel = data.isFacture ? 'FACTURE' : 'DEVIS';
   doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#AAAAAA');
   doc.text(typeLabel+' N°', W-M, 14, { align:'right' });
   doc.setFontSize(16); setTxt('#C9A84C');
   doc.text(data.ref, W-M, 22, { align:'right' });
-  doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#AAAAAA');
-  //doc.text(data.hotel, W-M, 28, { align:'right' });
   if (data.client) { doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#FFFFFF'); doc.text(data.client, W-M, 34, { align:'right' }); }
   doc.setFontSize(8); setTxt('#AAAAAA');
   doc.text(data.dateEmis, M+30, 40);
@@ -1160,7 +1236,6 @@ function genererPDF(data) {
     doc.text('  ⏱  '+data.validTxt, M+4, y+6);
     y += 15;
   } else {
-    // Tampon PAYÉ
     setFill('#FFF3D0'); setDraw('#C9A84C'); doc.setLineWidth(1.5);
     doc.roundedRect(M,y,CW,12,3,3,'FD');
     doc.setFont('helvetica','bold'); doc.setFontSize(13); setTxt('#7A5800');
@@ -1175,16 +1250,12 @@ async function telechargerPDFSauvegarde(id) {
   const docs = getDocuments();
   const doc  = docs.find(d => d.id === id);
   if (!doc) return;
-
-  // Charger temporairement ce doc dans le form pour calcul
   const tmpPanier = panier;
   panier = doc.panier.map(l => ({ ...l }));
-
   const data = getDevisData(doc);
   const pdf  = genererPDF(data);
   const filename = (doc.type==='facture' ? doc.facNum || 'FAC' : doc.ref) + '_SamyTravel.pdf';
   pdf.save(filename);
-
   panier = tmpPanier;
   showToast('📄 PDF téléchargé');
 }
@@ -1204,7 +1275,6 @@ async function envoyerWhatsappPDF() {
     const filename = docLabel + '_SamyTravel_' + data.ref + '.pdf';
     const msg = 'Bonjour, veuillez trouver ci-joint votre '+(data.isFacture?'facture':'devis')+' Samy Travel.\n\nCordialement,\nSamy Travel';
 
-    // 1) Partage natif (mobile) : le PDF est joint automatiquement, WhatsApp apparaît dans le menu de partage
     let pdfFile = null;
     try {
       const pdfBlob = pdf.output('blob');
@@ -1218,24 +1288,15 @@ async function envoyerWhatsappPDF() {
         statusEl.innerHTML = '✅ Partagé avec succès !';
         return;
       } catch (shareErr) {
-        if (shareErr && shareErr.name === 'AbortError') {
-          statusEl.innerHTML = '↩️ Partage annulé.';
-          return;
-        }
-        // Sinon : on continue vers la méthode de repli ci-dessous
+        if (shareErr && shareErr.name === 'AbortError') { statusEl.innerHTML = '↩️ Partage annulé.'; return; }
       }
     }
 
-    // 2) Repli (desktop / navigateurs non compatibles) : téléchargement + ouverture WhatsApp Web
     pdf.save(filename);
     statusEl.innerHTML = '✅ PDF téléchargé !';
-
     await new Promise(r => setTimeout(r, 800));
-
     const encoded = encodeURIComponent(msg);
-    const base = numero
-      ? 'https://wa.me/' + numero.replace(/^\+/, '') + '?text=' + encoded
-      : 'https://wa.me/?text=' + encoded;
+    const base = numero ? 'https://wa.me/'+numero.replace(/^\+/,'')+('?text='+encoded) : 'https://wa.me/?text='+encoded;
     window.open(base, '_blank');
     statusEl.innerHTML = '📤 WhatsApp ouvert — joignez le PDF depuis vos téléchargements.';
   } catch (err) {
