@@ -860,7 +860,8 @@ function updateNuitsSummary(id) {
     +'<div class="ns-total"><i class="fas fa-moon" style="font-size:10px;margin-right:4px"></i>'+n.total+' nuit'+(n.total>1?'s':'')+' au total</div>';
 }
 
-function fmt(n) { return n.toLocaleString('fr-FR', { maximumFractionDigits:0 }) + ' SAR'; }
+function fmt(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0') + ' SAR'; }
+function fmtPDF(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' SAR'; }
 function fmtDate2(str) { if (!str) return '—'; return new Date(str+'T00:00:00Z').toLocaleDateString('fr-FR', { day:'2-digit', month:'short' }); }
 
 function calcLigne(l) {
@@ -870,14 +871,16 @@ function calcLigne(l) {
   const formule = getFormule();
   // Marge intégrée dans le prix par nuit (transparente, non affichée)
   const margeCoeff = l.marge ? (1 + l.marge) : 1;
-  const prixWdM = Math.round(l.prixWd * margeCoeff);
-  const prixWeM = Math.round(l.prixWe * margeCoeff);
-  const coutWd = prixWdM * nuits.weekday * l.qty;
-  const coutWe = prixWeM * nuits.weekend * l.qty;
+  // Coûts bruts sans marge
+  const coutWd = l.prixWd * nuits.weekday * l.qty;
+  const coutWe = l.prixWe * nuits.weekend * l.qty;
   const coutHeb = coutWd + coutWe;
   // PDJ : obligatoire en BB, optionnel en RO si pdjActif
   const pdjInclu = formule === 'BB' || (formule === 'RO' && l.pdjActif);
   const coutPdj = pdjInclu ? l.prixPdj * pax * nuits.total : 0;
+  // Prix affichés avec marge (pour colonne Prix/nuit/ch.)
+  const prixWdM = Math.round(l.prixWd * margeCoeff);
+  const prixWeM = Math.round(l.prixWe * margeCoeff);
   let coutFrais = 0;
   const fraisItems = [];
   const f = l.frais;
@@ -887,9 +890,11 @@ function calcLigne(l) {
   if (l.ville==='medine' && f.visaOn) { const v=f.visaVal*pax; coutFrais+=v; fraisItems.push({ label:'Visa / Prestation', montant:v, detail:f.visaVal+' SAR × '+pax+' pers.' }); }
   if (l.ville==='mekkah' && f.guideOn) { const v=f.guideVal*pax; coutFrais+=v; fraisItems.push({ label:'Guide / Accompagnateur', montant:v, detail:f.guideVal+' SAR × '+pax+' pers.' }); }
   if (l.ville==='mekkah' && f.diversOn) { const v=f.diversVal*pax; coutFrais+=v; fraisItems.push({ label:'Frais divers', montant:v, detail:f.diversVal+' SAR × '+pax+' pers.' }); }
-  const total = coutHeb + coutPdj + coutFrais;
-  // prixWdM / prixWeM = prix majorés affichés dans le devis (nuit/chambre)
-  return { pax, nuits, prixWdM, prixWeM, coutWd, coutWe, coutHeb, coutPdj, pdjInclu, coutFrais, fraisItems, total };
+  // Marge appliquée UNE SEULE FOIS sur hébergement + PDJ (pas sur les frais)
+  const totalAvecMarge = Math.round((coutHeb + coutPdj) * margeCoeff);
+  const total = totalAvecMarge + coutFrais;
+  // prixWdM / prixWeM = prix affichés dans la colonne Prix/nuit/ch. (avec marge)
+  return { pax, nuits, prixWdM, prixWeM, coutHeb, coutPdj, pdjInclu, coutFrais, fraisItems, total };
 }
 
 function buildHebDetail(l, cfg, calc) {
@@ -950,8 +955,9 @@ function updateDevis(afficher=false) {
 
       // Prix/nuit/ch. — majoré si marge
       const prixNuitDisplay = calc.nuits.weekday > 0 && calc.nuits.weekend > 0
+        && calc.prixWdM !== calc.prixWeM
         ? `${calc.prixWdM} SAR<br><span style="font-size:10px;color:var(--text-muted)">${calc.prixWeM} SAR WE</span>`
-        : calc.nuits.weekend > 0 ? `${calc.prixWeM} SAR` : `${calc.prixWdM} SAR`;
+        : calc.nuits.weekend > 0 && calc.nuits.weekday === 0 ? `${calc.prixWeM} SAR` : `${calc.prixWdM} SAR`;
 
       // Description : hôtel + type chambre + formule + frais
       let desc = `<div style="font-weight:700;color:var(--text);margin-bottom:3px">${hotelNom}</div>`;
@@ -990,10 +996,10 @@ function updateDevis(afficher=false) {
 
   // Total général
   totauxHtml = `<div style="display:flex;justify-content:flex-end">
-    <table style="font-size:13px;border-collapse:collapse;min-width:220px">
+    <table style="font-size:13px;border-collapse:collapse;min-width:220px;border-top:2px solid var(--accent)">
       <tr>
         <td style="padding:10px 14px;font-weight:800;font-size:15px;color:var(--text)">Total TTC</td>
-        <td style="padding:10px 14px;font-weight:800;font-size:18px;color:var(--accent);text-align:right;border-top:2px solid var(--accent)" id="d-total">${fmt(grandTotal)}</td>
+        <td style="padding:10px 14px;font-weight:800;font-size:18px;color:var(--accent);text-align:right" id="d-total">${fmt(grandTotal)}</td>
       </tr>
     </table>
   </div>`;
@@ -1178,8 +1184,9 @@ function getDevisData(doc) {
       const hotelNom = l.hotel || l.custom_hotel || 'Hôtel non précisé';
       const formuleLabel = calc.pdjInclu ? (isFacture||formule==='BB'?'Bed & Breakfast':'+ Petit-déjeuner') : 'Room Only';
       const prixNuitStr = calc.nuits.weekday > 0 && calc.nuits.weekend > 0
+        && calc.prixWdM !== calc.prixWeM
         ? `${calc.prixWdM} / ${calc.prixWeM} SAR`
-        : calc.nuits.weekend > 0 ? `${calc.prixWeM} SAR` : `${calc.prixWdM} SAR`;
+        : calc.nuits.weekend > 0 && calc.nuits.weekday === 0 ? `${calc.prixWeM} SAR` : `${calc.prixWdM} SAR`;
       const fraisLabels = [];
       const f = l.frais;
       if (f.transfertOn) fraisLabels.push(l.ville==='medine'?'Transfert aéroport':'Transfert retour');
@@ -1198,14 +1205,14 @@ function getDevisData(doc) {
         dates:    fmtDate2(l.arrivee)+' au '+fmtDate2(l.depart),
         nuits:    calc.nuits.total,
         prixNuit: prixNuitStr,
-        price:    fmt(calc.total)
+        price:    fmtPDF(calc.total)
       });
       sousTotalNum += calc.total;
     });
 
     if (sousTotalNum===0) return;
     grandTotal += sousTotalNum;
-    sections.push({ title:villeLabel, rows, subtotal:fmt(sousTotalNum), subtotalLabel:(isFacture ? 'Total payé ' : 'Sous-total ')+(ville==='medine'?'Médine':'Mekkah') });
+    sections.push({ title:villeLabel, rows, subtotal:fmtPDF(sousTotalNum), subtotalLabel:(isFacture ? 'Total payé ' : 'Sous-total ')+(ville==='medine'?'Médine':'Mekkah') });
   });
 
   const ref = isFacture && doc.facNum ? doc.facNum : document.getElementById('d-ref').textContent.trim();
@@ -1215,7 +1222,7 @@ function getDevisData(doc) {
     client:   document.getElementById('d-client-name').textContent.trim(),
     dateEmis: 'Émis le '+fmtD(today),
     dateVal:  isFacture ? (doc.facDate ? 'Réglé le '+new Date(doc.facDate+'T00:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}) : '') : "Valable jusqu'au "+fmtD(expiry),
-    total:    fmt(grandTotal),
+    total:    fmtPDF(grandTotal),
     validTxt: document.getElementById('d-valid-text').textContent.trim(),
     sections,
     isFacture,
