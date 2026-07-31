@@ -369,28 +369,6 @@ input:focus, select:focus { border-color: var(--gold); }
     <div>
       <label>Le devis est valable</label>
       <select id="validite" onchange="updateDevis()" style="max-width:220px">
-        <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
-  <label>Devise du devis</label>
-  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px">
-    <div style="display:flex;border:1.5px solid var(--border-strong);border-radius:9px;overflow:hidden">
-      <button type="button" id="btn-sar" onclick="setDevise('SAR')"
-        style="padding:8px 18px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:var(--accent);color:#fff">
-        SAR
-      </button>
-      <button type="button" id="btn-eur" onclick="setDevise('EUR')"
-        style="padding:8px 18px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:#fff;color:var(--text-muted)">
-        EUR
-      </button>
-    </div>
-    <div id="taux-wrap" style="display:none;align-items:center;gap:8px">
-      <span style="font-size:12px;color:var(--text-muted)">1 SAR =</span>
-      <input type="number" id="taux-input" value="0.25" min="0.001" step="0.001"
-        style="width:80px;height:36px;text-align:center;font-size:13px;font-weight:700"
-        oninput="devisTaux=parseFloat(this.value)||0.25;updateDevis()">
-      <span style="font-size:12px;color:var(--text-muted)">EUR</span>
-    </div>
-  </div>
-</div>
         <option value="1" selected>1 jour</option>
         <option value="2">2 jours</option>
         <option value="3">3 jours</option>
@@ -398,6 +376,28 @@ input:focus, select:focus { border-color: var(--gold); }
         <option value="14">14 jours</option>
         <option value="30">30 jours</option>
       </select>
+    </div>
+    <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+      <label>Devise du devis</label>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px">
+        <div style="display:flex;border:1.5px solid var(--border-strong);border-radius:9px;overflow:hidden">
+          <button type="button" id="btn-sar" onclick="setDevise('SAR')"
+            style="padding:8px 18px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:var(--accent);color:#fff">
+            SAR
+          </button>
+          <button type="button" id="btn-eur" onclick="setDevise('EUR')"
+            style="padding:8px 18px;font-size:13px;font-weight:700;border:none;cursor:pointer;background:#fff;color:var(--text-muted)">
+            EUR
+          </button>
+        </div>
+        <div id="taux-wrap" style="display:none;align-items:center;gap:8px">
+          <span style="font-size:12px;color:var(--text-muted)">1 SAR =</span>
+          <input type="number" id="taux-input" value="0.25" min="0.001" step="0.001"
+            style="width:80px;height:36px;text-align:center;font-size:13px;font-weight:700"
+            oninput="devisTaux=parseFloat(this.value)||0.25;updateDevis()">
+          <span style="font-size:12px;color:var(--text-muted)">EUR</span>
+        </div>
+      </div>
     </div>
   </div>
 
