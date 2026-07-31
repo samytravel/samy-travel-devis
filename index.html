@@ -1055,67 +1055,7 @@ function updateDevis(afficher=false) {
 
   tbodyHtml += `</div>`;
 });
-    if (lignes.length === 0) return;
-    const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
-    const villeColor = ville === 'medine' ? '#1A3A5C' : '#7A3A00';
-    const villeBg    = ville === 'medine' ? '#EEF3F8' : '#FFF0E0';
-
-    // Ligne section ville
-    tbodyHtml += `<tr><td colspan="5" style="padding:8px 10px 4px;font-size:10px;font-weight:800;color:${villeColor};background:${villeBg};text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border)">${villeLabel}</td></tr>`;
-
-    let villeSousTotal = 0;
-    let hasData = false;
-
-    lignes.forEach(l => {
-      const cfg = CHAMBRE_CONFIG[l.type];
-      const calc = calcLigne(l);
-      if (calc.nuits.total === 0) return;
-      hasData = true;
-      const hotelNom = l.hotel || l.custom_hotel || 'Hôtel non précisé';
-      const arrivee  = fmtDate2(l.arrivee);
-      const depart   = fmtDate2(l.depart);
-
-      // Prix/nuit/ch. — majoré si marge
-      const prixNuitDisplay = calc.nuits.weekday > 0 && calc.nuits.weekend > 0
-        && calc.prixWdM !== calc.prixWeM
-        ? `${calc.prixWdM} SAR<br><span style="font-size:10px;color:var(--text-muted)">${calc.prixWeM} SAR WE</span>`
-        : calc.nuits.weekend > 0 && calc.nuits.weekday === 0 ? `${calc.prixWeM} SAR` : `${calc.prixWdM} SAR`;
-
-      // Description : hôtel + type chambre + formule + frais
-      let desc = `<div style="font-weight:700;color:var(--text);margin-bottom:3px">${hotelNom}</div>`;
-      desc += `<div style="font-size:11px;color:var(--text-muted)">${l.qty} ch. ${cfg.label} · ${cfg.pax*l.qty} pers.</div>`;
-      const formuleLabel = calc.pdjInclu ? (formule==='BB'?'Bed & Breakfast':'+ Petit-déjeuner') : 'Room Only';
-      desc += `<div style="font-size:11px;color:var(--text-muted)">${formuleLabel}</div>`;
-      // frais activés
-      const f = l.frais;
-      const fraisLabels = [];
-      if (f.transfertOn) fraisLabels.push(ville==='medine'?'Transfert aéroport':'Transfert retour');
-      if (ville==='medine' && f.transportOn) fraisLabels.push('Transport Méd.→Mek.');
-      if (f.taxeOn) fraisLabels.push('Taxe de séjour');
-      if (ville==='medine' && f.visaOn) fraisLabels.push('Visa/Prestation');
-      if (ville==='mekkah' && f.guideOn) fraisLabels.push('Guide/Accomp.');
-      if (ville==='mekkah' && f.diversOn) fraisLabels.push('Frais divers');
-      if (fraisLabels.length) desc += `<div style="font-size:10px;color:#888;margin-top:2px">${fraisLabels.join(' · ')}</div>`;
-
-      tbodyHtml += `<tr>
-        <td style="${tdBase}">${desc}</td>
-        <td style="${tdC}font-size:11px;white-space:nowrap;line-height:1.6">${arrivee}<br><span style="color:var(--text-muted);font-size:10px">au</span><br>${depart}</td>
-        <td style="${tdC}font-size:12px;font-weight:700">${calc.nuits.total}</td>
-        <td style="${tdR}font-size:11px">${prixNuitDisplay}</td>
-        <td style="${tdR}font-weight:700;color:var(--accent);white-space:nowrap">${fmt(calc.total)}</td>
-      </tr>`;
-      villeSousTotal += calc.total;
-    });
-
-    if (hasData && villeSousTotal > 0) {
-      tbodyHtml += `<tr style="background:#F8F8F4">
-        <td colspan="4" style="${tdBase}font-size:11px;font-weight:700;color:${villeColor};text-align:right;padding-right:12px">Sous-total ${villeLabel}</td>
-        <td style="${tdR}font-weight:800;color:${villeColor}">${fmt(villeSousTotal)}</td>
-      </tr>`;
-      grandTotal += villeSousTotal;
-    }
-  });
-
+   
   // Total général
   totauxHtml = `<div style="margin-top:16px;background:linear-gradient(135deg,#1A3A5C 0%,#0A2540 100%);border-radius:14px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center">
     <div>
