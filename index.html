@@ -102,14 +102,12 @@ input:focus, select:focus { border-color: var(--gold); }
 .badge-weekday { background: #EEF3F8; color: var(--weekday); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px; }
 .badge-weekend { background: #FFF3E0; color: var(--weekend); font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 10px; letter-spacing: 0.3px; }
 
-/* TARIF PDJ (Room Only optionnel) */
 .tarif-pdj-row { background: #F0FBF5; border: 1.5px solid #B8DFC8; border-radius: 8px; padding: 10px 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .tarif-pdj-row .pdj-toggle-wrap { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 160px; }
 .tarif-pdj-row .pdj-price-wrap { display: flex; align-items: center; gap: 6px; }
 .tarif-pdj-row .pdj-price-wrap input { width: 80px; height: 34px; text-align: center; }
 .tarif-pdj-row .pdj-price-wrap .unit { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
 .pdj-toggle-label { font-size: 12px; font-weight: 600; color: #1E4E36; }
-
 
 .nuits-summary { background: #F0F4F8; border-radius: 8px; padding: 8px 12px; margin-bottom: 10px; font-size: 11px; color: var(--text); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ns-dot-weekday { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
@@ -145,7 +143,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .frais-input-wrap input { flex: 1; }
 .frais-input-wrap .unit { font-size: 11px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
 
-/* MARGE INTERNE PAR VILLE */
 .marge-interne-section { margin-top: 10px; border-top: 1.5px dashed #E0C87A; padding-top: 10px; }
 .marge-interne-label { font-size: 10px; font-weight: 800; color: #A07A2A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
 .marge-interne-label i { color: var(--gold); }
@@ -156,7 +153,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .marge-chip.active.p1 { background: #2E6A4E; border-color: #2E6A4E; }
 .marge-chip.active.p15 { background: #A07A2A; border-color: #A07A2A; }
 .marge-chip.active.p4 { background: #8B2020; border-color: #8B2020; }
-.marge-result { margin-top: 8px; font-size: 11px; color: #7A5800; font-weight: 600; background: #FFFBEF; border: 1px solid #F0DFA0; border-radius: 6px; padding: 5px 10px; display: none; }
 
 .panier-total { display: flex; align-items: center; justify-content: space-between; background: #EEF3F8; border-radius: 9px; padding: 9px 14px; margin-bottom: 14px; }
 .panier-total-label { font-size: 12px; font-weight: 700; color: var(--accent); }
@@ -168,39 +164,14 @@ input:focus, select:focus { border-color: var(--gold); }
 .btn-save { background: var(--accent2); color: #fff; border: none; border-radius: 12px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s; }
 .btn-save:hover { background: #1E4E36; }
 
-/* DEVIS OUTPUT */
 .devis-card { background: #fff; border-radius: var(--radius); box-shadow: 0 4px 24px rgba(0,0,0,0.10); overflow: hidden; border: 1px solid var(--border); }
-.devis-top { background: linear-gradient(135deg, var(--accent) 0%, #0A2540 100%); padding: 20px 20px 18px; }
-.devis-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.devis-logo { width: 40px; height: 40px; object-fit: contain; }
-.devis-num-label { font-size: 10px; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
-.devis-ref { font-size: 20px; font-weight: 800; color: var(--gold); }
-.devis-dates-col { text-align: right; }
-.devis-date { font-size: 11px; color: rgba(255,255,255,0.65); margin-bottom: 3px; }
-.devis-body { padding: 18px 20px; }
-.devis-section-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-.line-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); gap: 12px; }
-.line-desc { font-size: 13px; font-weight: 600; }
-.line-detail { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-.line-price { font-size: 13px; font-weight: 700; color: var(--accent); white-space: nowrap; padding-top: 1px; }
-.line-city-header { padding: 10px 0 4px; font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 2px solid var(--gold-light); margin-top: 6px; }
-
-/* Sous-total par ville dans le devis */
-.city-subtotal-row { display: flex; justify-content: space-between; align-items: center; background: #EEF3F8; border-radius: 8px; padding: 8px 12px; margin: 10px 0 4px; border-left: 3px solid var(--accent); }
-.city-subtotal-label { font-size: 11px; font-weight: 700; color: var(--accent); }
-.city-subtotal-value { font-size: 13px; font-weight: 800; color: var(--accent); }
 
 .total-row { display: flex; justify-content: space-between; align-items: center; background: #F6F6F0; border-radius: 10px; padding: 14px 16px; margin-top: 14px; border: 1px solid var(--border); }
 .total-label { font-size: 14px; font-weight: 700; }
 .total-amount { font-size: 22px; font-weight: 800; color: var(--accent); }
 .validity-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 10px; background: #F6F6F0; padding: 8px 12px; border-radius: 8px; }
 .devis-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; }
-.devis-mention { font-size: 10px; color: var(--text-muted); line-height: 1.5; }
 .btn-whatsapp { background: #25D366; color: #fff; border: none; border-radius: 9px; padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-.doc-type-badge { display: inline-block; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
-.badge-devis-type { background: #EEF3F8; color: var(--accent); }
-.badge-facture-type { background: #FFF0D0; color: #7A5800; border: 1.5px solid var(--gold); }
 
 .liste-empty { text-align: center; padding: 32px 20px; color: var(--text-muted); }
 .liste-empty i { font-size: 36px; opacity: 0.25; display: block; margin-bottom: 12px; }
@@ -237,11 +208,6 @@ input:focus, select:focus { border-color: var(--gold); }
 .modal-btn-cancel:hover { background: #E0E0DC; }
 .modal-btn-ok { background: var(--gold); color: #fff; }
 .modal-btn-ok:hover { background: #A07A2A; }
-
-.facture-stamp { background: linear-gradient(135deg, #FFF3D0 0%, #FFF0C0 100%); border: 2px solid var(--gold); border-radius: 10px; padding: 10px 16px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-.facture-stamp i { color: var(--gold); font-size: 18px; }
-.facture-stamp-text { font-size: 12px; font-weight: 700; color: #7A5800; }
-.facture-stamp-sub { font-size: 11px; color: #A07A2A; margin-top: 2px; }
 
 .liste-filter-bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
 .filter-btn { padding: 7px 14px; border: 1.5px solid var(--border-strong); border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; background: #fff; color: var(--text); transition: all 0.15s; }
@@ -410,54 +376,42 @@ input:focus, select:focus { border-color: var(--gold); }
   <div id="devis-output" style="display:none">
     <div class="devis-card">
 
-      <!-- EN-TÊTE : logo + infos doc -->
       <div style="background:linear-gradient(135deg,#1A3A5C 0%,#0A2540 100%);border-radius:14px 14px 0 0;padding:24px 20px 20px">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-    <!-- Logo + agence -->
-    <div>
-      <img src="" id="devis-logo-img" alt="Samy Travel" style="height:56px;width:auto;object-fit:contain;display:block;margin-bottom:10px">
-      <div style="font-size:13px;font-weight:700;color:#fff">Samy Travel</div>
-      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">Omra &amp; Pèlerinage</div>
-    </div>
-    <!-- Type + ref -->
-    <div style="text-align:right">
-      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px" id="d-type-label">Devis</div>
-      <div style="font-size:22px;font-weight:800;color:#C9A84C;letter-spacing:-0.5px" id="d-ref">ST-2026-001</div>
-    </div>
-  </div>
-  <!-- Dates + client sur une ligne -->
-  <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px">
-    <div>
-      <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Client</div>
-      <div style="font-size:14px;font-weight:700;color:#fff" id="d-client-name">—</div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:11px;color:rgba(255,255,255,0.5)" id="d-today"></div>
-      <div style="font-size:11px;color:#C9A84C;margin-top:3px;font-weight:600" id="d-validity"></div>
-    </div>
-  </div>
-</div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+          <div>
+            <img src="" id="devis-logo-img" alt="Samy Travel" style="height:56px;width:auto;object-fit:contain;display:block;margin-bottom:10px">
+            <div style="font-size:13px;font-weight:700;color:#fff">Samy Travel</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">Omra &amp; Pèlerinage</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px" id="d-type-label">Devis</div>
+            <div style="font-size:22px;font-weight:800;color:#C9A84C;letter-spacing:-0.5px" id="d-ref">ST-2026-001</div>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.12);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px">
+          <div>
+            <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Client</div>
+            <div style="font-size:14px;font-weight:700;color:#fff" id="d-client-name">—</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:11px;color:rgba(255,255,255,0.5)" id="d-today"></div>
+            <div style="font-size:11px;color:#C9A84C;margin-top:3px;font-weight:600" id="d-validity"></div>
+          </div>
+        </div>
+      </div>
 
-     <!-- TABLEAU -->
       <div style="padding:0 24px 20px">
         <div id="d-lines"></div>
-
-        <!-- TOTAUX -->
         <div id="d-totaux" style="margin-top:12px"></div>
-
-        <!-- VALIDITÉ -->
         <div class="validity-row" style="margin-top:10px">
           <i class="fas fa-clock" style="font-size:11px"></i>
           <span id="d-valid-text" style="font-size:11px"></span>
         </div>
-
-        <!-- MENTION LÉGALE -->
         <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:10px;color:var(--text-muted);line-height:1.6">
           Les tarifs sont garantis à l'émission et sujets aux fluctuations du marché. Réservation confirmée dès réception du paiement. Toute modification ou annulation est soumise aux conditions de nos prestataires.
         </div>
       </div>
 
-      <!-- ACTIONS -->
       <div class="devis-footer">
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn-save" style="flex:1" onclick="sauvegarderDevis()">
@@ -495,7 +449,7 @@ input:focus, select:focus { border-color: var(--gold); }
   </div>
 </div>
 
-</div><!-- .page -->
+</div>
 
 <!-- MODAL CONVERSION -->
 <div class="modal-overlay hidden" id="modal-convert">
@@ -537,7 +491,7 @@ let LOGO_BASE64 = null;
 let currentFilterType = 'tous';
 let convertingId = null;
 let devisDevise = 'SAR';
-let devisTaux   = 0.25; // 1 SAR = 0.25 EUR par défaut
+let devisTaux   = 0.25;
 
 const CHAMBRE_CONFIG = {
   single:    { label: 'Single',       pax: 1, icon: '🛏️' },
@@ -549,7 +503,6 @@ const CHAMBRE_CONFIG = {
   senior:    { label: 'Suite Senior', pax: 2, icon: '✨' },
 };
 
-// Marges disponibles par ville (invisibles client)
 const MARGES_OPTIONS = [
   { val: 0.01,  label: '1%',   cls: 'p1'  },
   { val: 0.015, label: '1,5%', cls: 'p15' },
@@ -572,6 +525,7 @@ function loadHotels() {
     localStorage.setItem("hotels_version", HOTELS_VERSION);
   }
 }
+
 function setDevise(devise) {
   devisDevise = devise;
   document.getElementById('btn-sar').style.background = devise==='SAR' ? 'var(--accent)' : '#fff';
@@ -581,7 +535,7 @@ function setDevise(devise) {
   document.getElementById('taux-wrap').style.display  = devise==='EUR' ? 'flex' : 'none';
   updateDevis();
 }
-// ===== DOCUMENTS STORAGE =====
+
 function getDocuments() {
   try { return JSON.parse(localStorage.getItem('st_documents') || '[]'); } catch(e) { return []; }
 }
@@ -601,7 +555,6 @@ function getNextFacNum() {
   return 'FAC-'+year+'-'+String(num).padStart(3,'0');
 }
 
-// ===== TABS =====
 function switchTab(tab) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
@@ -610,7 +563,6 @@ function switchTab(tab) {
   if (tab === 'liste') renderListe();
 }
 
-// ===== TOAST =====
 function showToast(msg, type='success') {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -618,7 +570,6 @@ function showToast(msg, type='success') {
   setTimeout(() => { t.className = 'toast'; }, 3000);
 }
 
-// ===== PANIER =====
 let panier = [];
 let nextId = 1;
 
@@ -634,8 +585,8 @@ function ajouterChambre() {
     hotel: '', custom_hotel: '',
     arrivee: '', depart: '',
     prixWd: d.prixWd, prixWe: d.prixWe, prixPdj: d.prixPdj,
-    pdjActif: false,   // Petit-déj optionnel en Room Only
-    marge: 0,          // marge interne (non visible client) — stockée par chambre, appliquée par ville dans devis
+    pdjActif: false,
+    marge: 0,
     frais: { transfertOn:false,transfertVal:30,transportOn:false,transportVal:25,taxeOn:false,taxeVal:5,visaOn:false,visaVal:50,guideOn:false,guideVal:40,diversOn:false,diversVal:20 },
     open: true
   });
@@ -680,7 +631,6 @@ function syncFromDOM(id) {
   l.frais.guideVal     = gn('f-guide-v', 40);
   l.frais.diversOn     = gc('f-divers-on');
   l.frais.diversVal    = gn('f-divers-v', 20);
-  // marge interne : lue depuis le chip actif
   const margeEl = document.querySelector(`#marge-chips-${id} .marge-chip.active`);
   l.marge = margeEl ? parseFloat(margeEl.dataset.val) : 0;
 }
@@ -690,22 +640,15 @@ function syncAllFromDOM() { panier.forEach(l => syncFromDOM(l.id)); }
 function setMargeChip(id, val) {
   const l = panier.find(x => x.id === id);
   if (!l) return;
-  // Toggle
   l.marge = (l.marge === val) ? 0 : val;
-  // Mettre à jour les chips sans re-render complet
   const container = document.getElementById('marge-chips-'+id);
   if (container) {
     container.querySelectorAll('.marge-chip').forEach(chip => {
       chip.classList.toggle('active', parseFloat(chip.dataset.val) === l.marge);
       MARGES_OPTIONS.forEach(m => { if(parseFloat(chip.dataset.val)===m.val) chip.classList.toggle(m.cls, parseFloat(chip.dataset.val) === l.marge); });
     });
-    updateMargeResult(id);
   }
   updateDevis();
-}
-
-function updateMargeResult(id) {
-  // Marge transparente — aucun affichage, intégrée silencieusement dans calcLigne
 }
 
 function renderPanier() {
@@ -737,7 +680,6 @@ function renderPanier() {
       ...[...HOTELS[l.ville]].sort().map(h => '<option value="'+h+'"'+(l.hotel===h?' selected':'')+'>'+h+'</option>')
     ].join('');
 
-    // PDJ optionnel (visible uniquement en Room Only)
     const showPdj = formule === 'RO';
     const pdjHtml = showPdj ? `
       <div class="tarif-pdj-row">
@@ -764,7 +706,6 @@ function renderPanier() {
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-taxe-on-${l.id}" ${l.frais.taxeOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-receipt" style="color:var(--gold);margin-right:4px"></i> Taxe de séjour</span></div><div class="frais-input-wrap"><input type="number" id="f-taxe-v-${l.id}" value="${l.frais.taxeVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/nuit</span></div></div>
       <div class="frais-item"><div class="frais-toggle"><label class="toggle-switch"><input type="checkbox" id="f-divers-on-${l.id}" ${l.frais.diversOn?'checked':''} onchange="onChange(${l.id})"><span class="toggle-slider"></span></label><span class="toggle-label"><i class="fas fa-ellipsis-h" style="color:var(--gold);margin-right:4px"></i> Frais divers</span></div><div class="frais-input-wrap"><input type="number" id="f-divers-v-${l.id}" value="${l.frais.diversVal}" min="0" onchange="onChange(${l.id})"><span class="unit">SAR/pers.</span></div></div>`;
 
-    // Marges internes
     const margeChipsHtml = MARGES_OPTIONS.map(m =>
       `<div class="marge-chip ${l.marge===m.val?'active '+m.cls:''}" data-val="${m.val}" onclick="setMargeChip(${l.id},${m.val})">${m.label}</div>`
     ).join('');
@@ -778,7 +719,6 @@ function renderPanier() {
         <button class="btn-remove-ch" onclick="event.stopPropagation();supprimerChambre(${l.id})" title="Supprimer"><i class="fas fa-times"></i></button>
       </div>
       <div class="ch-item-body">
-
         <div style="margin-bottom:10px">
           <label>Hôtel à ${villeLabel}</label>
           <div class="hotel-row"><select id="hotel-sel-${l.id}" onchange="onHotelChange(${l.id})">${hotelOpts}</select></div>
@@ -796,32 +736,28 @@ function renderPanier() {
           <div class="tarif-cell weekday"><label><span class="badge-weekday">SEMAINE</span> du samedi au jeudi midi</label><input type="number" id="prix-wd-${l.id}" value="${l.prixWd}" min="0" onchange="onChange(${l.id})"></div>
           <div class="tarif-cell weekend"><label><span class="badge-weekend">WEEK-END</span> du jeudi soir au samedi</label><input type="number" id="prix-we-${l.id}" value="${l.prixWe}" min="0" onchange="onChange(${l.id})"></div>
         </div>
-
         ${pdjHtml}
-
         <div class="frais-section-toggle" onclick="toggleFraisItem(${l.id})">
           <div class="ftitle"><i class="fas fa-plus-circle"></i> Frais inclus dans ce séjour</div>
           <i class="fas fa-chevron-down frais-chevron" id="frais-chevron-${l.id}"></i>
         </div>
         <div id="frais-body-${l.id}" style="display:none"><div class="frais-grid">${fraisHtml}</div></div>
-
         <div class="marge-interne-section">
           <div class="marge-interne-label"><i class="fas fa-lock"></i> Marge interne (non visible client)</div>
           <div class="marge-chips" id="marge-chips-${l.id}">${margeChipsHtml}</div>
         </div>
-
       </div>
     </div>`;
   });
 
   el.innerHTML = html;
-  panier.forEach(l => { updateNuitsSummary(l.id); if(l.marge) updateMargeResult(l.id); });
+  panier.forEach(l => { updateNuitsSummary(l.id); });
   totalEl.style.display = totalCh > 0 ? 'flex' : 'none';
   totalValEl.textContent = totalCh+' chambre'+(totalCh>1?'s':'')+' · '+totalPax+' voyageur'+(totalPax>1?'s':'');
 }
 
-function onChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateMargeResult(id); updateDevis(); }
-function onDateChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateMargeResult(id); updateDevis(); }
+function onChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateDevis(); }
+function onDateChange(id) { syncFromDOM(id); updateNuitsSummary(id); updateDevis(); }
 
 function onHotelChange(id) {
   const sel = document.getElementById('hotel-sel-'+id);
@@ -902,16 +838,12 @@ function calcLigne(l) {
   const pax = cfg.pax * l.qty;
   const nuits = compterNuits(l.arrivee, l.depart);
   const formule = getFormule();
-  // Marge intégrée dans le prix par nuit (transparente, non affichée)
   const margeCoeff = l.marge ? (1 + l.marge) : 1;
-  // Coûts bruts sans marge
   const coutWd = l.prixWd * nuits.weekday * l.qty;
   const coutWe = l.prixWe * nuits.weekend * l.qty;
   const coutHeb = coutWd + coutWe;
-  // PDJ : obligatoire en BB, optionnel en RO si pdjActif
   const pdjInclu = formule === 'BB' || (formule === 'RO' && l.pdjActif);
   const coutPdj = pdjInclu ? l.prixPdj * pax * nuits.total : 0;
-  // Prix affichés avec marge (pour colonne Prix/nuit/ch.)
   const prixWdM = Math.round(l.prixWd * margeCoeff);
   const prixWeM = Math.round(l.prixWe * margeCoeff);
   let coutFrais = 0;
@@ -923,22 +855,9 @@ function calcLigne(l) {
   if (l.ville==='medine' && f.visaOn) { const v=f.visaVal*pax; coutFrais+=v; fraisItems.push({ label:'Visa / Prestation', montant:v, detail:f.visaVal+' SAR × '+pax+' pers.' }); }
   if (l.ville==='mekkah' && f.guideOn) { const v=f.guideVal*pax; coutFrais+=v; fraisItems.push({ label:'Guide / Accompagnateur', montant:v, detail:f.guideVal+' SAR × '+pax+' pers.' }); }
   if (l.ville==='mekkah' && f.diversOn) { const v=f.diversVal*pax; coutFrais+=v; fraisItems.push({ label:'Frais divers', montant:v, detail:f.diversVal+' SAR × '+pax+' pers.' }); }
-  // Marge appliquée UNE SEULE FOIS sur hébergement + PDJ (pas sur les frais)
   const totalAvecMarge = Math.round((coutHeb + coutPdj) * margeCoeff);
   const total = totalAvecMarge + coutFrais;
-  // prixWdM / prixWeM = prix affichés dans la colonne Prix/nuit/ch. (avec marge)
   return { pax, nuits, prixWdM, prixWeM, coutHeb, coutPdj, pdjInclu, coutFrais, fraisItems, total };
-}
-
-function buildHebDetail(l, cfg, calc) {
-  const hotelNom = l.hotel || l.custom_hotel || 'hôtel non précisé';
-  return hotelNom+' · '+l.qty+' ch. '+cfg.label+' · '+fmtDate2(l.arrivee)+' → '+fmtDate2(l.depart)+' · '+calc.nuits.total+' nuit'+(calc.nuits.total>1?'s':'');
-}
-
-function dotLine(texte) {
-  return '<div style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-muted);padding:2px 0">'
-    +'<div style="width:5px;height:5px;border-radius:50%;background:#C9A84C;flex-shrink:0"></div>'
-    +texte+'</div>';
 }
 
 function updateDevis(afficher=false) {
@@ -960,93 +879,66 @@ function updateDevis(afficher=false) {
   document.getElementById('d-client-name').textContent = (prenom||nom) ? prenom+' '+nom : '';
 
   let tbodyHtml = '', totauxHtml = '', grandTotal = 0;
-  const tdBase = 'padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;';
-  const tdC    = tdBase+'text-align:center;';
-  const tdR    = tdBase+'text-align:right;';
 
- ['medine','mekkah'].forEach(ville => {
-  const lignes = panier.filter(l => l.ville === ville);
-  if (lignes.length === 0) return;
-  const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
-  const villeColor = ville === 'medine' ? '#1A3A5C' : '#7A3A00';
-  const villeBg    = ville === 'medine' ? '#EEF3F8' : '#FFF0E0';
+  ['medine','mekkah'].forEach(ville => {
+    const lignes = panier.filter(l => l.ville === ville);
+    if (lignes.length === 0) return;
+    const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
+    const villeColor = ville === 'medine' ? '#1A3A5C' : '#7A3A00';
+    const villeBg    = ville === 'medine' ? '#EEF3F8' : '#FFF0E0';
 
-  tbodyHtml += `<div style="margin-bottom:8px">
-    <div style="padding:7px 12px;background:${villeBg};border-radius:8px 8px 0 0;font-size:10px;font-weight:800;color:${villeColor};text-transform:uppercase;letter-spacing:1.2px">
-      ${villeLabel}
-    </div>`;
+    tbodyHtml += `<div style="margin-bottom:8px">
+      <div style="padding:7px 12px;background:${villeBg};border-radius:8px 8px 0 0;font-size:10px;font-weight:800;color:${villeColor};text-transform:uppercase;letter-spacing:1.2px">${villeLabel}</div>`;
 
-  let villeSousTotal = 0;
-  let hasData = false;
+    let villeSousTotal = 0;
+    let hasData = false;
 
-  lignes.forEach(l => {
-    const cfg  = CHAMBRE_CONFIG[l.type];
-    const calc = calcLigne(l);
-    if (calc.nuits.total === 0) return;
-    hasData = true;
-    const hotelNom     = l.hotel || l.custom_hotel || 'Hôtel non précisé';
-    const formuleLabel = calc.pdjInclu ? (getFormule()==='BB' ? 'Bed & Breakfast' : '+ Petit-déjeuner') : 'Room Only';
-    const prixWdStr    = calc.prixWdM + ' SAR';
-    const prixWeStr    = calc.prixWeM + ' SAR WE';
-    const showWE       = calc.nuits.weekend > 0;
-    const showWD       = calc.nuits.weekday > 0;
+    lignes.forEach(l => {
+      const cfg  = CHAMBRE_CONFIG[l.type];
+      const calc = calcLigne(l);
+      if (calc.nuits.total === 0) return;
+      hasData = true;
+      const hotelNom = l.hotel || l.custom_hotel || 'Hôtel non précisé';
 
-    const fraisLabels = [];
-    const f = l.frais;
-    if (f.transfertOn) fraisLabels.push(ville==='medine' ? 'Transfert aéroport' : 'Transfert retour');
-    if (ville==='medine' && f.transportOn) fraisLabels.push('Transport Méd.→Mek.');
-    if (f.taxeOn) fraisLabels.push('Taxe de séjour');
-    if (ville==='medine' && f.visaOn) fraisLabels.push('Visa/Prestation');
-    if (ville==='mekkah' && f.guideOn) fraisLabels.push('Guide/Accomp.');
-    if (ville==='mekkah' && f.diversOn) fraisLabels.push('Frais divers');
+      const detailLines = [];
+      const qtyLabel = l.qty > 1 ? `${l.qty} chambres ${cfg.label}` : `1 chambre ${cfg.label}`;
+      const paxLabel = `${cfg.pax * l.qty} personne${cfg.pax * l.qty > 1 ? 's' : ''}`;
+      detailLines.push(`${qtyLabel} — ${paxLabel}`);
+      if (l.arrivee && l.depart) {
+        detailLines.push(`Du ${fmtDate2(l.arrivee)} au ${fmtDate2(l.depart)} — ${calc.nuits.total} nuit${calc.nuits.total > 1 ? 's' : ''}`);
+      }
+      if (calc.pdjInclu) {
+        detailLines.push(`Avec petit-déjeuner`);
+      } else {
+        detailLines.push(`Sans petit-déjeuner (Room Only)`);
+      }
+      calc.fraisItems.forEach(fi => detailLines.push(fi.label));
 
-    // Construire les lignes de détail texte
-    const detailLines = [];
-    // Ligne chambre
-    const qtyLabel = l.qty > 1 ? `${l.qty} chambres ${cfg.label}` : `1 chambre ${cfg.label}`;
-    const paxLabel = `${cfg.pax * l.qty} personne${cfg.pax * l.qty > 1 ? 's' : ''}`;
-    detailLines.push(`${qtyLabel} — ${paxLabel}`);
-    // Dates + nuits
-    if (l.arrivee && l.depart) {
-      detailLines.push(`Du ${fmtDate2(l.arrivee)} au ${fmtDate2(l.depart)} — ${calc.nuits.total} nuit${calc.nuits.total > 1 ? 's' : ''}`);
+      tbodyHtml += `
+      <div style="border:1px solid #E8E8E0;border-top:none;padding:14px 16px 14px;background:#fff;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:14px;font-weight:700;color:#1A1A1A;margin-bottom:7px;line-height:1.3">${hotelNom}</div>
+          ${detailLines.map(line => `<div style="font-size:12px;color:#555;line-height:1.7;padding-left:2px">${line}</div>`).join('')}
+        </div>
+        <div style="text-align:right;flex-shrink:0;padding-top:1px">
+          <div style="font-size:18px;font-weight:800;color:${villeColor}">${fmt(calc.total)}</div>
+        </div>
+      </div>`;
+
+      villeSousTotal += calc.total;
+    });
+
+    if (hasData && villeSousTotal > 0) {
+      tbodyHtml += `<div style="display:flex;justify-content:space-between;align-items:center;background:${villeBg};border:1px solid #E8E8E0;border-top:none;border-radius:0 0 8px 8px;padding:10px 14px">
+        <span style="font-size:11px;font-weight:700;color:${villeColor}">Sous-total ${villeLabel}</span>
+        <span style="font-size:15px;font-weight:800;color:${villeColor}">${fmt(villeSousTotal)}</span>
+      </div>`;
+      grandTotal += villeSousTotal;
     }
-    // Formule
-    if (calc.pdjInclu) {
-      detailLines.push(`Avec petit-déjeuner`);
-    } else {
-      detailLines.push(`Sans petit-déjeuner (Room Only)`);
-    }
-    // Frais actifs
-    calc.fraisItems.forEach(fi => detailLines.push(fi.label));
 
-    tbodyHtml += `
-    <div style="border:1px solid #E8E8E0;border-top:none;padding:14px 16px 14px;background:#fff;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
-      <!-- Descriptif -->
-      <div style="flex:1;min-width:0">
-        <div style="font-size:14px;font-weight:700;color:#1A1A1A;margin-bottom:7px;line-height:1.3">${hotelNom}</div>
-        ${detailLines.map(line => `<div style="font-size:12px;color:#555;line-height:1.7;padding-left:2px">${line}</div>`).join('')}
-      </div>
-      <!-- Montant à droite -->
-      <div style="text-align:right;flex-shrink:0;padding-top:1px">
-        <div style="font-size:18px;font-weight:800;color:${villeColor}">${fmt(calc.total)}</div>
-      </div>
-    </div>`;
-
-    villeSousTotal += calc.total;
+    tbodyHtml += `</div>`;
   });
 
-  if (hasData && villeSousTotal > 0) {
-    tbodyHtml += `<div style="display:flex;justify-content:space-between;align-items:center;background:${villeBg};border:1px solid #E8E8E0;border-top:none;border-radius:0 0 8px 8px;padding:10px 14px">
-      <span style="font-size:11px;font-weight:700;color:${villeColor}">Sous-total ${villeLabel}</span>
-      <span style="font-size:15px;font-weight:800;color:${villeColor}">${fmt(villeSousTotal)}</span>
-    </div>`;
-    grandTotal += villeSousTotal;
-  }
-
-  tbodyHtml += `</div>`;
-});
-   
-  // Total général
   totauxHtml = `<div style="margin-top:16px;background:linear-gradient(135deg,#1A3A5C 0%,#0A2540 100%);border-radius:14px;padding:18px 20px;display:flex;justify-content:space-between;align-items:center">
     <div>
       <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">Total TTC</div>
@@ -1210,243 +1102,288 @@ function viderListe() {
 }
 
 // ===== PDF =====
+// Construit les données pour le PDF — même structure que l'écran
 function getDevisData(doc) {
   syncAllFromDOM();
   const today    = new Date();
   const validite = parseInt(document.getElementById('validite').value) || 1;
-  const expiry   = new Date(today.getTime()+validite*86400000);
+  const expiry   = new Date(today.getTime() + validite * 86400000);
   const fmtD = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
-  const formule  = getFormule();
   const isFacture = doc && doc.type === 'facture';
-  const sections = [];
-  let grandTotal = 0;
   const panierSource = doc ? doc.panier : panier;
 
-  ['medine','mekkah'].forEach(ville => {
+  // Récupération de la formule depuis le doc sauvegardé ou le formulaire
+  const formuleDoc = doc ? doc.formule : getFormule();
+
+  // Helper : calcul d'une ligne avec la formule du document
+  function calcLigneDoc(l) {
+    const cfg = CHAMBRE_CONFIG[l.type];
+    const pax = cfg.pax * l.qty;
+    const nuits = compterNuits(l.arrivee, l.depart);
+    const margeCoeff = l.marge ? (1 + l.marge) : 1;
+    const coutWd = l.prixWd * nuits.weekday * l.qty;
+    const coutWe = l.prixWe * nuits.weekend * l.qty;
+    const coutHeb = coutWd + coutWe;
+    const pdjInclu = formuleDoc === 'BB' || (formuleDoc === 'RO' && l.pdjActif);
+    const coutPdj = pdjInclu ? l.prixPdj * pax * nuits.total : 0;
+    let coutFrais = 0;
+    const fraisItems = [];
+    const f = l.frais;
+    if (f.transfertOn) { const v=f.transfertVal*pax; coutFrais+=v; fraisItems.push({ label:l.ville==='medine'?'Transfert aéroport':'Transfert retour' }); }
+    if (l.ville==='medine' && f.transportOn) { const v=f.transportVal*pax; coutFrais+=v; fraisItems.push({ label:'Transport Médine → Mekkah' }); }
+    if (f.taxeOn) { const v=f.taxeVal*nuits.total; coutFrais+=v; fraisItems.push({ label:'Taxe de séjour' }); }
+    if (l.ville==='medine' && f.visaOn) { const v=f.visaVal*pax; coutFrais+=v; fraisItems.push({ label:'Visa / Prestation' }); }
+    if (l.ville==='mekkah' && f.guideOn) { const v=f.guideVal*pax; coutFrais+=v; fraisItems.push({ label:'Guide / Accompagnateur' }); }
+    if (l.ville==='mekkah' && f.diversOn) { const v=f.diversVal*pax; coutFrais+=v; fraisItems.push({ label:'Frais divers' }); }
+    const totalAvecMarge = Math.round((coutHeb + coutPdj) * margeCoeff);
+    const total = totalAvecMarge + coutFrais;
+    return { pax, nuits, pdjInclu, fraisItems, total };
+  }
+
+  const sections = [];
+  let grandTotal = 0;
+
+  ['medine', 'mekkah'].forEach(ville => {
     const lignes = panierSource.filter(l => l.ville === ville);
     if (lignes.length === 0) return;
-    const villeLabel = ville==='medine' ? 'MÉDINE' : 'MEKKAH';
-    const villeRow   = ville==='medine' ? 'Médine' : 'Mekkah';
+
+    const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
     const rows = [];
     let sousTotalNum = 0;
 
     lignes.forEach(l => {
-      const cfg = CHAMBRE_CONFIG[l.type];
-      const calc = calcLigne(l);
+      const cfg  = CHAMBRE_CONFIG[l.type];
+      const calc = calcLigneDoc(l);
       if (calc.nuits.total === 0) return;
+
       const hotelNom = l.hotel || l.custom_hotel || 'Hôtel non précisé';
-      const formuleLabel = calc.pdjInclu ? (isFacture||formule==='BB'?'Bed & Breakfast':'+ Petit-déjeuner') : 'Room Only';
-      const prixNuitStr = calc.nuits.weekday > 0 && calc.nuits.weekend > 0
-        && calc.prixWdM !== calc.prixWeM
-        ? `${calc.prixWdM} / ${calc.prixWeM} SAR`
-        : calc.nuits.weekend > 0 && calc.nuits.weekday === 0 ? `${calc.prixWeM} SAR` : `${calc.prixWdM} SAR`;
-      const fraisLabels = [];
-      const f = l.frais;
-      if (f.transfertOn) fraisLabels.push(l.ville==='medine'?'Transfert aéroport':'Transfert retour');
-      if (l.ville==='medine' && f.transportOn) fraisLabels.push('Transport Méd.→Mek.');
-      if (f.taxeOn) fraisLabels.push('Taxe séjour');
-      if (l.ville==='medine' && f.visaOn) fraisLabels.push('Visa');
-      if (l.ville==='mekkah' && f.guideOn) fraisLabels.push('Guide');
-      if (l.ville==='mekkah' && f.diversOn) fraisLabels.push('Frais divers');
-      const detailStr = [
-        `${l.qty} ch. ${cfg.label} · ${cfg.pax*l.qty} pers. · ${formuleLabel}`,
-        ...(fraisLabels.length ? [fraisLabels.join(', ')] : [])
-      ].join(' | ');
+
+      // Lignes de détail — identiques à l'écran
+      const detailLines = [];
+      const qtyLabel = l.qty > 1 ? `${l.qty} chambres ${cfg.label}` : `1 chambre ${cfg.label}`;
+      const paxLabel = `${cfg.pax * l.qty} personne${cfg.pax * l.qty > 1 ? 's' : ''}`;
+      detailLines.push(`${qtyLabel} — ${paxLabel}`);
+      if (l.arrivee && l.depart) {
+        detailLines.push(`Du ${fmtDate2(l.arrivee)} au ${fmtDate2(l.depart)} — ${calc.nuits.total} nuit${calc.nuits.total > 1 ? 's' : ''}`);
+      }
+      detailLines.push(calc.pdjInclu ? 'Avec petit-déjeuner' : 'Sans petit-déjeuner (Room Only)');
+      calc.fraisItems.forEach(fi => detailLines.push(fi.label));
+
       rows.push({
-        label:    hotelNom,
-        detail:   detailStr,
-        dates:    fmtDate2(l.arrivee)+' au '+fmtDate2(l.depart),
-        nuits:    calc.nuits.total,
-        prixNuit: prixNuitStr,
-        price:    fmtPDF(calc.total)
+        hotel:       hotelNom,
+        detailLines: detailLines,
+        price:       fmtPDF(calc.total),
+        priceNum:    calc.total,
       });
       sousTotalNum += calc.total;
     });
 
-    if (sousTotalNum===0) return;
+    if (sousTotalNum === 0) return;
     grandTotal += sousTotalNum;
-    sections.push({ title:villeLabel, rows, subtotal:fmtPDF(sousTotalNum), subtotalLabel:(isFacture ? 'Total payé ' : 'Sous-total ')+(ville==='medine'?'Médine':'Mekkah') });
+
+    sections.push({
+      title:         villeLabel.toUpperCase(),
+      villeLabel:    villeLabel,
+      isMediane:     ville === 'medine',
+      rows,
+      subtotal:      fmtPDF(sousTotalNum),
+      subtotalNum:   sousTotalNum,
+    });
   });
 
   const ref = isFacture && doc.facNum ? doc.facNum : document.getElementById('d-ref').textContent.trim();
+  const client = document.getElementById('d-client-name').textContent.trim()
+    || (doc ? doc.client : '');
 
   return {
     ref,
-    client:   document.getElementById('d-client-name').textContent.trim(),
-    dateEmis: 'Émis le '+fmtD(today),
-    dateVal:  isFacture ? (doc.facDate ? 'Réglé le '+new Date(doc.facDate+'T00:00:00').toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'}) : '') : "Valable jusqu'au "+fmtD(expiry),
+    client,
+    dateEmis: 'Émis le ' + fmtD(today),
+    dateVal:  isFacture
+      ? (doc.facDate ? 'Réglé le ' + new Date(doc.facDate + 'T00:00:00').toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' }) : '')
+      : "Valable jusqu'au " + fmtD(expiry),
     total:    fmtPDF(grandTotal),
-    validTxt: document.getElementById('d-valid-text').textContent.trim(),
+    validTxt: 'Offre valable ' + validite + ' jour' + (validite > 1 ? 's' : '') + ' — expire le ' + fmtD(expiry),
     sections,
     isFacture,
     facMode:  doc ? doc.facMode : '',
   };
 }
 
+// Génère le PDF en miroir exact de l'écran : hôtel gras + lignes de détail + montant à droite
 function genererPDF(data) {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit:'mm', format:'a4', orientation:'portrait' });
-  const W=210, M=14, CW=W-M*2;
+  const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+  const W = 210, M = 14, CW = W - M * 2;
+
   const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
   const setFill = h => doc.setFillColor(...hex2rgb(h));
   const setDraw = h => doc.setDrawColor(...hex2rgb(h));
   const setTxt  = h => doc.setTextColor(...hex2rgb(h));
 
+  // ── En-tête ──────────────────────────────────────────────────────────────
   const headerBg = data.isFacture ? '#7A5800' : '#1A3A5C';
-  setFill(headerBg); doc.rect(0,0,W,56,'F');
-  setDraw('#C9A84C'); doc.setLineWidth(0.8); doc.line(0,56,W,56);
+  setFill(headerBg); doc.rect(0, 0, W, 58, 'F');
+  setDraw('#C9A84C'); doc.setLineWidth(0.8); doc.line(0, 58, W, 58);
 
   const logoSrc = LOGO_BASE64 || document.querySelector('.logo-img')?.src;
-  if (logoSrc) { try { doc.addImage(logoSrc,'PNG',M,6,26,26); } catch(e){} }
+  if (logoSrc) { try { doc.addImage(logoSrc, 'PNG', M, 7, 26, 26); } catch(e) {} }
 
-  doc.setFont('helvetica','bold'); doc.setFontSize(16); setTxt('#FFFFFF');
-  doc.text('SAMY TRAVEL', M+30, 16);
-  doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#C9A84C');
-  doc.text('Organisateur de voyage', M+30, 22);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(16); setTxt('#FFFFFF');
+  doc.text('SAMY TRAVEL', M + 30, 18);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#C9A84C');
+  doc.text('Omra & Pèlerinage', M + 30, 24);
 
+  // Type + ref (droite)
   const typeLabel = data.isFacture ? 'FACTURE' : 'DEVIS';
-  doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#AAAAAA');
-  doc.text(typeLabel+' N°', W-M, 14, { align:'right' });
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(8); setTxt('rgba(255,255,255,0.6)');
+  setTxt('#AAAAAA');
+  doc.text(typeLabel + ' N°', W - M, 14, { align: 'right' });
   doc.setFontSize(16); setTxt('#C9A84C');
-  doc.text(data.ref, W-M, 22, { align:'right' });
-  if (data.client) { doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#FFFFFF'); doc.text(data.client, W-M, 34, { align:'right' }); }
-  doc.setFontSize(8); setTxt('#AAAAAA');
-  doc.text(data.dateEmis, M+30, 40);
-  if (data.dateVal) doc.text(data.dateVal, W-M, 40, { align:'right' });
+  doc.text(data.ref, W - M, 22, { align: 'right' });
 
-  // Colonnes tableau
-  const colDesc = M;
-  const colDates = M + 82;
-  const colNuits = M + 118;
-  const colPrix  = M + 138;
-  const colMont  = W - M;
+  // Séparateur horizontal dans l'en-tête
+  setDraw('rgba(255,255,255,0.15)');
+  doc.setLineWidth(0.3);
+  doc.line(M, 32, W - M, 32);
 
-  // En-tête tableau
-  let y = 66;
-  setFill('#F5F5F0'); doc.rect(M, y, CW, 9, 'F');
-  setDraw('#CCCCCC'); doc.setLineWidth(0.3);
-  doc.line(M, y, W-M, y); doc.line(M, y+9, W-M, y+9);
-  doc.setFont('helvetica','bold'); doc.setFontSize(7.5); setTxt('#888888');
-  doc.text('DESCRIPTION',    colDesc+2,   y+6);
-  doc.text('DATES',          colDates+2,  y+6);
-  doc.text('NUITS',          colNuits+2,  y+6);
-  doc.text('PRIX/NUIT/CH.',  colPrix+2,   y+6);
-  doc.text('MONTANT',        colMont,     y+6, { align:'right' });
-  y += 13;
+  // Client (gauche bas) + dates (droite bas)
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(8); setTxt('#AAAAAA');
+  doc.text('CLIENT', M + 30, 39);
+  if (data.client) {
+    doc.setFontSize(11); setTxt('#FFFFFF');
+    doc.text(data.client, M + 30, 46);
+  }
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#AAAAAA');
+  doc.text(data.dateEmis, W - M, 38, { align: 'right' });
+  if (data.dateVal) {
+    setTxt('#C9A84C');
+    doc.text(data.dateVal, W - M, 46, { align: 'right' });
+  }
 
-  (data.sections||[]).forEach(section => {
+  // ── Corps ────────────────────────────────────────────────────────────────
+  let y = 68;
+
+  (data.sections || []).forEach(section => {
     if (y > 250) { doc.addPage(); y = 20; }
 
-    // Ligne section ville
-    const isM = section.title.includes('DINE');
-    setFill(isM ? '#EEF3F8' : '#FFF0E0'); doc.rect(M, y, CW, 7, 'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt(isM ? '#1A3A5C' : '#7A3A00');
-    doc.text(section.title, colDesc+2, y+5);
-    y += 9;
+    const isM = section.isMediane;
+    const villeColor = isM ? '#1A3A5C' : '#7A3A00';
+    const villeBg    = isM ? '#EEF3F8' : '#FFF0E0';
+
+    // Bandeau ville (radius simulé : simple rect)
+    setFill(villeBg);
+    doc.rect(M, y, CW, 8, 'F');
+    doc.setFont('helvetica', 'extrabold'); doc.setFontSize(8); setTxt(villeColor);
+    doc.text(section.title, M + 4, y + 5.5);
+    y += 10;
 
     section.rows.forEach(row => {
-      if (y > 255) { doc.addPage(); y = 20; }
-      // séparateur ligne
-      setDraw('#EEEEEE'); doc.setLineWidth(0.2); doc.line(M, y, W-M, y);
+      if (y > 258) { doc.addPage(); y = 20; }
 
-      // Description
-      doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setTxt('#1A1A1A');
-      const descLines = doc.splitTextToSize(row.label, colDates - colDesc - 4);
-      doc.text(descLines, colDesc+2, y+5);
+      // Calcul de la hauteur de la ligne
+      const hotelLines = doc.splitTextToSize(row.hotel, CW - 38);
+      const detailLinesSized = row.detailLines.map(line => doc.splitTextToSize(line, CW - 38));
+      const totalDetailLines = detailLinesSized.reduce((acc, lines) => acc + lines.length, 0);
+      const lineH = Math.max(16, hotelLines.length * 5 + totalDetailLines * 4.2 + 6);
 
-      // Détail sous description
-      if (row.detail) {
-        doc.setFont('helvetica','normal'); doc.setFontSize(6.5); setTxt('#888888');
-        const detLines = doc.splitTextToSize(row.detail, colDates - colDesc - 4);
-        doc.text(detLines, colDesc+2, y+5+descLines.length*3.5);
-      }
+      // Fond blanc + bordure
+      setFill('#FFFFFF');
+      doc.rect(M, y, CW, lineH, 'F');
+      setDraw('#E8E8E0');
+      doc.setLineWidth(0.3);
+      doc.rect(M, y, CW, lineH, 'S');
 
-      // Dates (deux lignes : arrivée / départ)
-      if (row.dates) {
-        const [d1, d2] = row.dates.split(' au ');
-        doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#444444');
-        doc.text(d1 || '', colDates+2, y+4);
-        doc.setFontSize(6.5); setTxt('#AAAAAA');
-        doc.text('au', colDates+2, y+8);
-        doc.setFontSize(7.5); setTxt('#444444');
-        doc.text(d2 || '', colDates+2, y+12);
-      }
+      // Colonne gauche : hôtel + détails
+      let ty = y + 5.5;
 
-      // Nuits
-      if (row.nuits != null) {
-        doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setTxt('#1A1A1A');
-        doc.text(String(row.nuits), colNuits+8, y+5, { align:'center' });
-      }
+      // Hôtel en gras
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); setTxt('#1A1A1A');
+      doc.text(hotelLines, M + 4, ty);
+      ty += hotelLines.length * 5;
 
-      // Prix/nuit
-      if (row.prixNuit) {
-        doc.setFont('helvetica','normal'); doc.setFontSize(7.5); setTxt('#555555');
-        doc.text(row.prixNuit, colPrix+2, y+5);
-      }
+      // Lignes de détail
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#555555');
+      row.detailLines.forEach(line => {
+        const wrapped = doc.splitTextToSize(line, CW - 38);
+        doc.text(wrapped, M + 4, ty + 1);
+        ty += wrapped.length * 4.2;
+      });
 
-      // Montant
-      doc.setFont('helvetica','bold'); doc.setFontSize(8.5); setTxt('#1A3A5C');
-      doc.text(row.price || '', colMont, y+5, { align:'right' });
+      // Montant à droite, aligné en haut
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(11); setTxt(villeColor);
+      doc.text(row.price, W - M - 3, y + 6.5, { align: 'right' });
 
-      const lineH = Math.max(10, descLines.length * 3.8 + (row.detail ? 4 : 0));
       y += lineH;
     });
 
     // Sous-total ville
-    if (y > 258) { doc.addPage(); y = 20; }
-    setFill('#F0F4F8'); doc.rect(M, y, CW, 8, 'F');
-    doc.setFont('helvetica','bold'); doc.setFontSize(8); setTxt('#1A3A5C');
-    doc.text(section.subtotalLabel, colMont - 30, y+5.5, { align:'right' });
-    doc.text(section.subtotal, colMont, y+5.5, { align:'right' });
-    y += 12;
+    if (y > 260) { doc.addPage(); y = 20; }
+    setFill(villeBg);
+    doc.rect(M, y, CW, 9, 'F');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); setTxt(villeColor);
+    doc.text('Sous-total ' + section.villeLabel, M + 4, y + 6);
+    doc.setFontSize(10);
+    doc.text(section.subtotal, W - M - 3, y + 6, { align: 'right' });
+    y += 13;
   });
 
-  // Total TTC
+  // ── Total TTC ─────────────────────────────────────────────────────────────
   if (y > 255) { doc.addPage(); y = 20; }
-  y += 2;
-  setDraw('#1A3A5C'); doc.setLineWidth(0.5); doc.line(M, y, W-M, y);
-  y += 4;
-  doc.setFont('helvetica','bold'); doc.setFontSize(12); setTxt('#1A1A1A');
-  doc.text(data.isFacture ? 'Total payé' : 'Total TTC', colMont - 30, y+6, { align:'right' });
-  doc.setFontSize(14); setTxt('#1A3A5C');
-  doc.text(data.total, colMont, y+6, { align:'right' });
-  y += 14;
+  y += 3;
+  setFill('#1A3A5C');
+  doc.roundedRect(M, y, CW, 16, 2, 2, 'F');
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(9); setTxt('rgba(255,255,255,0.6)');
+  setTxt('#AAAAAA');
+  doc.text('TOTAL TTC', M + 5, y + 7);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(16); setTxt('#C9A84C');
+  doc.text(data.total, W - M - 3, y + 10, { align: 'right' });
+  y += 22;
 
-  // Validité ou tampon facture
+  // ── Validité / tampon facture ─────────────────────────────────────────────
   if (!data.isFacture) {
-    doc.setFont('helvetica','normal'); doc.setFontSize(7); setTxt('#888888');
-    doc.text(data.validTxt, M, y+4);
-    y += 10;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); setTxt('#888888');
+    doc.text(data.validTxt, M, y);
+    y += 8;
+    if (data.facMode) {
+      doc.text('Mode de paiement : ' + data.facMode, M, y);
+      y += 7;
+    }
   } else {
+    if (y > 265) { doc.addPage(); y = 20; }
     setFill('#FFF3D0'); setDraw('#C9A84C'); doc.setLineWidth(1.2);
-    doc.roundedRect(M, y, CW, 11, 2, 2, 'FD');
-    doc.setFont('helvetica','bold'); doc.setFontSize(11); setTxt('#7A5800');
-    doc.text('✓ FACTURE RÉGLÉE', W/2, y+7.5, { align:'center' });
-    y += 17;
+    doc.roundedRect(M, y, CW, 12, 2, 2, 'FD');
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(11); setTxt('#7A5800');
+    doc.text('FACTURE REGLEE', W / 2, y + 8, { align: 'center' });
+    y += 18;
+    if (data.facMode) {
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#888888');
+      doc.text('Mode de paiement : ' + data.facMode, M, y);
+      y += 7;
+    }
   }
 
-  // Mention légale
-  if (y > 265) { doc.addPage(); y = 20; }
+  // ── Mention légale ────────────────────────────────────────────────────────
+  if (y > 268) { doc.addPage(); y = 20; }
   y += 4;
-  setDraw('#DDDDDD'); doc.setLineWidth(0.3); doc.line(M, y, W-M, y);
+  setDraw('#DDDDDD'); doc.setLineWidth(0.3); doc.line(M, y, W - M, y);
   y += 5;
-  doc.setFont('helvetica','normal'); doc.setFontSize(6.5); setTxt('#AAAAAA');
-  const mention = 'Les tarifs sont garantis à l\'émission et sujets aux fluctuations du marché. Réservation confirmée dès réception du paiement. Toute modification ou annulation est soumise aux conditions de nos prestataires.';
-  const mentionLines = doc.splitTextToSize(mention, CW);
-  doc.text(mentionLines, M, y);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5); setTxt('#AAAAAA');
+  const mention = "Les tarifs sont garantis à l'émission et sujets aux fluctuations du marché. Réservation confirmée dès réception du paiement. Toute modification ou annulation est soumise aux conditions de nos prestataires.";
+  doc.text(doc.splitTextToSize(mention, CW), M, y);
 
   return doc;
 }
 
 async function telechargerPDFSauvegarde(id) {
   const docs = getDocuments();
-  const doc  = docs.find(d => d.id === id);
-  if (!doc) return;
+  const savedDoc = docs.find(d => d.id === id);
+  if (!savedDoc) return;
   const tmpPanier = panier;
-  panier = doc.panier.map(l => ({ ...l }));
-  const data = getDevisData(doc);
+  panier = savedDoc.panier.map(l => ({ ...l }));
+  const data = getDevisData(savedDoc);
   const pdf  = genererPDF(data);
-  const filename = (doc.type==='facture' ? doc.facNum || 'FAC' : doc.ref) + '_SamyTravel.pdf';
+  const filename = (savedDoc.type === 'facture' ? savedDoc.facNum || 'FAC' : savedDoc.ref) + '_SamyTravel.pdf';
   pdf.save(filename);
   panier = tmpPanier;
   showToast('📄 PDF téléchargé');
