@@ -385,7 +385,7 @@ input:focus, select:focus { border-color: var(--gold); }
           <div>
             <img src="" id="devis-logo-img" alt="Samy Travel" style="height:56px;width:auto;object-fit:contain;display:block;margin-bottom:10px">
             <div style="font-size:13px;font-weight:700;color:#fff">Samy Travel</div>
-            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">Omra &amp; Pèlerinage</div>
+            <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">Organisateur de voyage</div>
           </div>
           <div style="text-align:right">
             <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px" id="d-type-label">Devis</div>
@@ -1364,7 +1364,7 @@ function genererPDF(data) {
   pdf.setFont('helvetica','bold'); pdf.setFontSize(15); color('#FFFFFF');
   txt('SAMY TRAVEL', M + 28, 17);
   pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#C9A84C');
-  txt('Omra & Pelerinage', M + 28, 23);
+  txt('Organisateur de voyage', M + 28, 23);
 
   pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color('#999999');
   txt((data.isFacture ? 'FACTURE' : 'DEVIS') + ' N', W - M, 13, { align:'right' });
