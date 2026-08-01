@@ -496,7 +496,7 @@ let currentFilterType = 'tous';
 let convertingId = null;
 let devisDevise = 'SAR';
 let devisTaux   = 0.25;
-let currentDocId = null;   // id du document actuellement chargé dans l'éditeur
+let currentDocId = null;
 
 const CHAMBRE_CONFIG = {
   single:    { label: 'Single',       pax: 1, icon: '🛏️' },
@@ -993,14 +993,15 @@ function sauvegarderDevis() {
 
   const docs = getDocuments();
 
-  // Si un document est chargé dans l'éditeur, on le met à jour en préservant son type
   if (currentDocId) {
     const idx = docs.findIndex(d => d.id === currentDocId);
     if (idx >= 0) {
       const existing = docs[idx];
       docs[idx] = {
-        ...existing,           // préserve type, facNum, facDate, facMode, dateCreation
+        ...existing,
         ref, total, client, validite, formule,
+        devise: devisDevise,
+        taux: devisTaux,
         panier: JSON.parse(JSON.stringify(panier)),
       };
       saveDocuments(docs);
@@ -1010,12 +1011,13 @@ function sauvegarderDevis() {
     }
   }
 
-  // Nouveau document
   const newDoc = {
     id: Date.now(),
     type: 'devis',
     ref, total, client,
     validite, formule,
+    devise: devisDevise,
+    taux: devisTaux,
     dateCreation: new Date().toISOString(),
     panier: JSON.parse(JSON.stringify(panier)),
     facNum: '', facDate: '', facMode: ''
@@ -1081,10 +1083,8 @@ function chargerDocument(id) {
   const doc  = docs.find(d => d.id === id);
   if (!doc) return;
 
-  // 1. Basculer sur l'onglet "nouveau" EN PREMIER pour que le DOM existe
   switchTab('nouveau');
 
-  // 2. Remplir les données après que l'onglet est visible
   currentDocId = doc.id;
   panier = doc.panier.map(l => ({ ...l }));
   nextId = panier.length > 0 ? Math.max(...panier.map(l => l.id)) + 1 : 1;
@@ -1095,11 +1095,19 @@ function chargerDocument(id) {
   document.querySelectorAll('input[name=formule]').forEach(r => { r.checked = r.value === (doc.formule || 'RO'); });
   document.getElementById('validite').value = doc.validite || 1;
 
-  // 3. Render dans le même tick (DOM déjà visible)
+  // Restaurer la devise du document
+  if (doc.devise) {
+    setDevise(doc.devise);
+    if (doc.taux) {
+      devisTaux = doc.taux;
+      const tauxInput = document.getElementById('taux-input');
+      if (tauxInput) tauxInput.value = doc.taux;
+    }
+  }
+
   renderPanier();
   updateDevis(true);
 
-  // 4. Adapter le bouton "Sauvegarder" selon le type de document
   const btnSave = document.querySelector('.btn-save');
   if (btnSave) {
     if (doc.type === 'facture') {
@@ -1145,17 +1153,14 @@ function confirmerConversion() {
 }
 
 function voirFacture(id) {
-  // Affiche un aperçu inline dans la liste sans quitter l'onglet
   const docs = getDocuments();
   const doc  = docs.find(d => d.id === id);
   if (!doc) return;
 
-  // Si déjà ouvert, refermer
   const existing = document.getElementById('apercu-facture-' + id);
   if (existing) { existing.remove(); return; }
 
   const data = getDevisData(doc);
-  const fmtD = str => str; // déjà formaté dans getDevisData
 
   let lignesHtml = '';
   (data.sections || []).forEach(s => {
@@ -1201,10 +1206,8 @@ function voirFacture(id) {
     <div style="padding:8px 14px;background:#FFF3D0;text-align:center;font-size:12px;font-weight:700;color:#7A5800;border-top:1px solid #F0DFA0">✓ FACTURE RÉGLÉE</div>
   `;
 
-  // Insérer après le bloc du document dans la liste
   const docEl = document.getElementById('liste-documents');
   const items = docEl.querySelectorAll('.devis-list-item');
-  // Trouver l'item correspondant
   let targetItem = null;
   items.forEach(item => {
     if (item.querySelector('.btn-action[onclick*="voirFacture('+id+')"]')) targetItem = item;
@@ -1212,11 +1215,6 @@ function voirFacture(id) {
   if (targetItem) targetItem.after(apercuEl);
   else docEl.appendChild(apercuEl);
   apercuEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-}
-
-function resetNouveauSiNeeded() {
-  // Appelé quand on clique sur l'onglet "Nouveau" sans passer par un document
-  // Ne fait rien si un doc est déjà en édition — on garde l'état
 }
 
 function supprimerDocument(id) {
@@ -1235,14 +1233,10 @@ function viderListe() {
 }
 
 // ===== PDF =====
-// Construit les données pour le PDF.
-// Si `savedDoc` est fourni : 100% autonome, aucune lecture du DOM.
-// Si `savedDoc` est null : utilise le formulaire courant (devis en cours d'édition).
 function getDevisData(savedDoc) {
   const today = new Date();
   const fmtD  = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
 
-  // ── Sources selon mode ────────────────────────────────────────────────────
   const isFromSaved = !!savedDoc;
   const isFacture   = isFromSaved && savedDoc.type === 'facture';
   const panierSource = isFromSaved ? savedDoc.panier : (syncAllFromDOM(), panier);
@@ -1258,7 +1252,17 @@ function getDevisData(savedDoc) {
     : (document.getElementById('d-client-name').textContent.trim() || '');
   const expiry = new Date(today.getTime() + validite * 86400000);
 
-  // ── Calcul d'une ligne (autonome, pas de DOM) ─────────────────────────────
+  // CORRECTION : devise figée au moment de la création du document
+  const docDevise = isFromSaved ? (savedDoc.devise || 'SAR') : devisDevise;
+  const docTaux   = isFromSaved ? (savedDoc.taux   || 0.25)  : devisTaux;
+  function fmtPDFLocal(n) {
+    if (docDevise === 'EUR') {
+      const eur = Math.round(n * docTaux);
+      return eur.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0') + ' EUR';
+    }
+    return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0') + ' SAR';
+  }
+
   function calcLigneDoc(l) {
     const cfg  = CHAMBRE_CONFIG[l.type];
     const pax  = cfg.pax * l.qty;
@@ -1280,7 +1284,6 @@ function getDevisData(savedDoc) {
     return { pax, nuits, pdjInclu, fraisItems, total };
   }
 
-  // ── Construction des sections ─────────────────────────────────────────────
   const sections = [];
   let grandTotal = 0;
 
@@ -1305,7 +1308,7 @@ function getDevisData(savedDoc) {
       detailLines.push(calc.pdjInclu ? 'Avec petit-déjeuner' : 'Sans petit-déjeuner (Room Only)');
       calc.fraisItems.forEach(label => detailLines.push(label));
 
-      rows.push({ hotel: hotelNom, detailLines, price: fmtPDF(calc.total) });
+      rows.push({ hotel: hotelNom, detailLines, price: fmtPDFLocal(calc.total) });
       sousTotalNum += calc.total;
     });
 
@@ -1316,7 +1319,7 @@ function getDevisData(savedDoc) {
       villeLabel,
       isMediane:  ville === 'medine',
       rows,
-      subtotal:   fmtPDF(sousTotalNum),
+      subtotal:   fmtPDFLocal(sousTotalNum),
     });
   });
 
@@ -1327,7 +1330,7 @@ function getDevisData(savedDoc) {
     dateVal:  isFacture
       ? (savedDoc.facDate ? 'Réglé le ' + new Date(savedDoc.facDate + 'T00:00:00').toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' }) : '')
       : "Valable jusqu'au " + fmtD(expiry),
-    total:    fmtPDF(grandTotal),
+    total:    fmtPDFLocal(grandTotal),
     validTxt: 'Offre valable ' + validite + ' jour' + (validite > 1 ? 's' : '') + ' — expire le ' + fmtD(expiry),
     sections,
     isFacture,
@@ -1335,14 +1338,11 @@ function getDevisData(savedDoc) {
   };
 }
 
-// Génère le PDF — miroir de l'écran, sans aucun appel jsPDF invalide
 function genererPDF(data) {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
   const W = 210, M = 14, CW = W - M * 2;
 
-  // jsPDF accepte uniquement setFillColor(r,g,b) ou setFillColor('#RRGGBB')
-  // On passe toujours en RGB pour éviter tout problème de parsing
   function rgb(hex) {
     const h = hex.replace('#','');
     return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
@@ -1352,12 +1352,11 @@ function genererPDF(data) {
   const color = h => pdf.setTextColor(...rgb(h));
   const txt   = (s, x, y, opts) => { if (s) pdf.text(String(s), x, y, opts||{}); };
 
-  // ── En-tête ────────────────────────────────────────────────────────────────
+  // ── En-tête ──────────────────────────────────────────────────────────────
   fill(data.isFacture ? '#7A5800' : '#1A3A5C');
   pdf.rect(0, 0, W, 56, 'F');
   draw('#C9A84C'); pdf.setLineWidth(0.7); pdf.line(0, 56, W, 56);
 
-  // Logo
   if (LOGO_BASE64 && LOGO_BASE64.length > 100) {
     try { pdf.addImage(LOGO_BASE64, 'PNG', M, 7, 24, 24); } catch(e) {}
   }
@@ -1367,16 +1366,13 @@ function genererPDF(data) {
   pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#C9A84C');
   txt('Omra & Pelerinage', M + 28, 23);
 
-  // Ref + type (droite)
   pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color('#999999');
   txt((data.isFacture ? 'FACTURE' : 'DEVIS') + ' N', W - M, 13, { align:'right' });
   pdf.setFontSize(15); color('#C9A84C');
   txt(data.ref || '', W - M, 21, { align:'right' });
 
-  // Séparateur
   draw('#2E4E70'); pdf.setLineWidth(0.25); pdf.line(M, 30, W - M, 30);
 
-  // Client + dates
   pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color('#999999');
   txt('CLIENT', M + 28, 37);
   pdf.setFontSize(10); color('#FFFFFF');
@@ -1387,7 +1383,7 @@ function genererPDF(data) {
   color('#C9A84C');
   txt(data.dateVal || '', W - M, 44, { align:'right' });
 
-  // ── Corps ──────────────────────────────────────────────────────────────────
+  // ── Corps ─────────────────────────────────────────────────────────────────
   let y = 64;
 
   (data.sections || []).forEach(section => {
@@ -1397,11 +1393,12 @@ function genererPDF(data) {
     const vColor = isM ? '#1A3A5C' : '#7A3A00';
     const vBg    = isM ? '#EEF3F8' : '#FFF0E0';
 
-    // Bandeau ville
-    fill(vBg); pdf.rect(M, y, CW, 7, 'F');
-    pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color(vColor);
-    txt(section.title || '', M + 3, y + 5);
-    y += 9;
+    // CORRECTION : Bandeau ville plus visible (hauteur 11, police 10, bordure)
+    fill(vBg); pdf.rect(M, y, CW, 11, 'F');
+    draw(vColor); pdf.setLineWidth(0.5); pdf.rect(M, y, CW, 11, 'S');
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(10); color(vColor);
+    txt((section.villeLabel || '').toUpperCase(), M + 4, y + 7.5);
+    y += 14;
 
     section.rows.forEach(row => {
       if (y > 260) { pdf.addPage(); y = 20; }
@@ -1410,9 +1407,7 @@ function genererPDF(data) {
       const priceStr  = String(row.price || '');
       const details   = (row.detailLines || []).map(l => String(l));
 
-      // Calcul hauteur dynamique
       pdf.setFont('helvetica','bold'); pdf.setFontSize(9);
-      const hotelW = doc => doc.splitTextToSize(hotelStr, CW - 36);
       const hLines = pdf.splitTextToSize(hotelStr, CW - 36);
       pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
       let detailH = 0;
@@ -1423,30 +1418,25 @@ function genererPDF(data) {
       });
       const rowH = Math.max(14, hLines.length * 5 + detailH + 5);
 
-      // Fond + bordure
       fill('#FFFFFF'); pdf.rect(M, y, CW, rowH, 'F');
       draw('#E0E0E0'); pdf.setLineWidth(0.2); pdf.rect(M, y, CW, rowH, 'S');
 
-      // Hôtel en gras
       pdf.setFont('helvetica','bold'); pdf.setFontSize(9); color('#1A1A1A');
       pdf.text(hLines, M + 3, y + 5.5);
       let ty = y + 5.5 + hLines.length * 5;
 
-      // Détails
       pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#555555');
       detailWrapped.forEach(wrapped => {
         pdf.text(wrapped, M + 3, ty);
         ty += wrapped.length * 4;
       });
 
-      // Prix à droite
       pdf.setFont('helvetica','bold'); pdf.setFontSize(10); color(vColor);
       txt(priceStr, W - M - 2, y + 6, { align:'right' });
 
       y += rowH;
     });
 
-    // Sous-total ville
     if (y > 262) { pdf.addPage(); y = 20; }
     fill(vBg); pdf.rect(M, y, CW, 8, 'F');
     pdf.setFont('helvetica','bold'); pdf.setFontSize(8); color(vColor);
@@ -1456,17 +1446,17 @@ function genererPDF(data) {
     y += 12;
   });
 
-  // ── Total TTC ──────────────────────────────────────────────────────────────
+  // ── Total TTC (CORRECTION : police réduite 15→11) ────────────────────────
   if (y > 256) { pdf.addPage(); y = 20; }
   y += 2;
   fill('#1A3A5C'); pdf.rect(M, y, CW, 14, 'F');
   pdf.setFont('helvetica','normal'); pdf.setFontSize(8); color('#CCCCCC');
   txt('TOTAL TTC', M + 4, y + 6);
-  pdf.setFont('helvetica','bold'); pdf.setFontSize(15); color('#C9A84C');
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(11); color('#C9A84C');
   txt(data.total || '', W - M - 2, y + 10, { align:'right' });
   y += 18;
 
-  // ── Tampon / validité ──────────────────────────────────────────────────────
+  // ── Tampon / validité ─────────────────────────────────────────────────────
   if (data.isFacture) {
     if (y > 266) { pdf.addPage(); y = 20; }
     fill('#FFF3D0'); draw('#C9A84C'); pdf.setLineWidth(1);
@@ -1489,7 +1479,7 @@ function genererPDF(data) {
     }
   }
 
-  // ── Mention légale ─────────────────────────────────────────────────────────
+  // ── Mention légale ────────────────────────────────────────────────────────
   if (y > 268) { pdf.addPage(); y = 20; }
   y += 4;
   draw('#DDDDDD'); pdf.setLineWidth(0.2); pdf.line(M, y, W - M, y);
@@ -1506,7 +1496,7 @@ async function telechargerPDFSauvegarde(id) {
     const docs = getDocuments();
     const savedDoc = docs.find(d => d.id === id);
     if (!savedDoc) { showToast('Document introuvable', 'error'); return; }
-    const data = getDevisData(savedDoc);   // autonome — ne touche pas au DOM ni au panier courant
+    const data = getDevisData(savedDoc);
     const pdf  = genererPDF(data);
     const filename = (savedDoc.type === 'facture' ? savedDoc.facNum || 'FAC' : savedDoc.ref) + '_SamyTravel.pdf';
     pdf.save(filename);
