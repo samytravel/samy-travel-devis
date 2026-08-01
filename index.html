@@ -1144,7 +1144,75 @@ function confirmerConversion() {
   showToast('🧾 Converti en facture '+facNum, 'success');
 }
 
-function voirFacture(id) { chargerDocument(id); }
+function voirFacture(id) {
+  // Affiche un aperçu inline dans la liste sans quitter l'onglet
+  const docs = getDocuments();
+  const doc  = docs.find(d => d.id === id);
+  if (!doc) return;
+
+  // Si déjà ouvert, refermer
+  const existing = document.getElementById('apercu-facture-' + id);
+  if (existing) { existing.remove(); return; }
+
+  const data = getDevisData(doc);
+  const fmtD = str => str; // déjà formaté dans getDevisData
+
+  let lignesHtml = '';
+  (data.sections || []).forEach(s => {
+    const isM = s.isMediane;
+    const villeColor = isM ? '#1A3A5C' : '#7A3A00';
+    const villeBg    = isM ? '#EEF3F8' : '#FFF0E0';
+    lignesHtml += `<div style="font-size:10px;font-weight:800;color:${villeColor};background:${villeBg};padding:5px 10px;text-transform:uppercase;letter-spacing:1px">${s.villeLabel}</div>`;
+    s.rows.forEach(row => {
+      lignesHtml += `<div style="padding:10px 12px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:#1A1A1A;margin-bottom:4px">${row.hotel}</div>
+          ${row.detailLines.map(l => `<div style="font-size:11px;color:#555;line-height:1.6">${l}</div>`).join('')}
+        </div>
+        <div style="font-size:14px;font-weight:800;color:${villeColor};white-space:nowrap">${row.price}</div>
+      </div>`;
+    });
+    lignesHtml += `<div style="display:flex;justify-content:space-between;padding:7px 12px;background:${villeBg};font-size:12px;font-weight:700;color:${villeColor}">
+      <span>Sous-total ${s.villeLabel}</span><span>${s.subtotal}</span></div>`;
+  });
+
+  const apercuEl = document.createElement('div');
+  apercuEl.id = 'apercu-facture-' + id;
+  apercuEl.style.cssText = 'margin-top:10px;border:2px solid #C9A84C;border-radius:10px;overflow:hidden;background:#fff';
+  apercuEl.innerHTML = `
+    <div style="background:linear-gradient(135deg,#7A5800,#C9A84C);padding:12px 14px;display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:1px">Facture</div>
+        <div style="font-size:16px;font-weight:800;color:#fff">${data.ref}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.8);margin-top:2px">${doc.client}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:10px;color:rgba(255,255,255,0.7)">${data.dateEmis}</div>
+        ${data.dateVal ? `<div style="font-size:10px;color:#FFE08A;margin-top:2px">${data.dateVal}</div>` : ''}
+        <button onclick="document.getElementById('apercu-facture-${id}').remove()" style="margin-top:6px;background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer">✕ Fermer</button>
+      </div>
+    </div>
+    <div>${lignesHtml}</div>
+    <div style="background:linear-gradient(135deg,#1A3A5C,#0A2540);padding:12px 14px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.6)">TOTAL TTC</span>
+      <span style="font-size:20px;font-weight:800;color:#C9A84C">${data.total}</span>
+    </div>
+    ${doc.facMode ? `<div style="padding:8px 14px;font-size:11px;color:#555;background:#FAFAF8">Mode de paiement : <strong>${doc.facMode}</strong></div>` : ''}
+    <div style="padding:8px 14px;background:#FFF3D0;text-align:center;font-size:12px;font-weight:700;color:#7A5800;border-top:1px solid #F0DFA0">✓ FACTURE RÉGLÉE</div>
+  `;
+
+  // Insérer après le bloc du document dans la liste
+  const docEl = document.getElementById('liste-documents');
+  const items = docEl.querySelectorAll('.devis-list-item');
+  // Trouver l'item correspondant
+  let targetItem = null;
+  items.forEach(item => {
+    if (item.querySelector('.btn-action[onclick*="voirFacture('+id+')"]')) targetItem = item;
+  });
+  if (targetItem) targetItem.after(apercuEl);
+  else docEl.appendChild(apercuEl);
+  apercuEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
 function resetNouveauSiNeeded() {
   // Appelé quand on clique sur l'onglet "Nouveau" sans passer par un document
@@ -1267,172 +1335,170 @@ function getDevisData(savedDoc) {
   };
 }
 
-// Génère le PDF en miroir exact de l'écran : hôtel gras + lignes de détail + montant à droite
+// Génère le PDF — miroir de l'écran, sans aucun appel jsPDF invalide
 function genererPDF(data) {
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+  const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
   const W = 210, M = 14, CW = W - M * 2;
 
-  // jsPDF n'accepte que des hex #RRGGBB — pas de rgba()
-  const hex2rgb = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
-  const setFill = h => doc.setFillColor(...hex2rgb(h));
-  const setDraw = h => doc.setDrawColor(...hex2rgb(h));
-  const setTxt  = h => doc.setTextColor(...hex2rgb(h));
+  // jsPDF accepte uniquement setFillColor(r,g,b) ou setFillColor('#RRGGBB')
+  // On passe toujours en RGB pour éviter tout problème de parsing
+  function rgb(hex) {
+    const h = hex.replace('#','');
+    return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+  }
+  const fill  = h => pdf.setFillColor(...rgb(h));
+  const draw  = h => pdf.setDrawColor(...rgb(h));
+  const color = h => pdf.setTextColor(...rgb(h));
+  const txt   = (s, x, y, opts) => { if (s) pdf.text(String(s), x, y, opts||{}); };
 
-  // ── En-tête ──────────────────────────────────────────────────────────────
-  const headerBg = data.isFacture ? '#7A5800' : '#1A3A5C';
-  setFill(headerBg); doc.rect(0, 0, W, 58, 'F');
-  setDraw('#C9A84C'); doc.setLineWidth(0.8); doc.line(0, 58, W, 58);
+  // ── En-tête ────────────────────────────────────────────────────────────────
+  fill(data.isFacture ? '#7A5800' : '#1A3A5C');
+  pdf.rect(0, 0, W, 56, 'F');
+  draw('#C9A84C'); pdf.setLineWidth(0.7); pdf.line(0, 56, W, 56);
 
-  // Logo (silencieux si absent ou invalide)
-  const logoSrc = LOGO_BASE64;
-  if (logoSrc && logoSrc.startsWith('data:image')) {
-    try { doc.addImage(logoSrc, 'PNG', M, 7, 26, 26); } catch(e) {}
+  // Logo
+  if (LOGO_BASE64 && LOGO_BASE64.length > 100) {
+    try { pdf.addImage(LOGO_BASE64, 'PNG', M, 7, 24, 24); } catch(e) {}
   }
 
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(16); setTxt('#FFFFFF');
-  doc.text('SAMY TRAVEL', M + 30, 18);
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#C9A84C');
-  doc.text('Omra & Pelerinage', M + 30, 24);
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(15); color('#FFFFFF');
+  txt('SAMY TRAVEL', M + 28, 17);
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#C9A84C');
+  txt('Omra & Pelerinage', M + 28, 23);
 
-  // Type + ref (droite)
-  const typeLabel = data.isFacture ? 'FACTURE' : 'DEVIS';
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(8); setTxt('#AAAAAA');
-  doc.text(typeLabel + ' N', W - M, 14, { align: 'right' });
-  doc.setFontSize(16); setTxt('#C9A84C');
-  doc.text(data.ref || '', W - M, 22, { align: 'right' });
+  // Ref + type (droite)
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color('#999999');
+  txt((data.isFacture ? 'FACTURE' : 'DEVIS') + ' N', W - M, 13, { align:'right' });
+  pdf.setFontSize(15); color('#C9A84C');
+  txt(data.ref || '', W - M, 21, { align:'right' });
 
-  // Séparateur horizontal dans l'en-tête (gris clair opaque)
-  setDraw('#2A4A6C');
-  doc.setLineWidth(0.3);
-  doc.line(M, 32, W - M, 32);
+  // Séparateur
+  draw('#2E4E70'); pdf.setLineWidth(0.25); pdf.line(M, 30, W - M, 30);
 
-  // Client (gauche bas) + dates (droite bas)
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(8); setTxt('#AAAAAA');
-  doc.text('CLIENT', M + 30, 39);
-  if (data.client) {
-    doc.setFontSize(11); setTxt('#FFFFFF');
-    doc.text(String(data.client), M + 30, 46);
-  }
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#AAAAAA');
-  doc.text(data.dateEmis || '', W - M, 38, { align: 'right' });
-  if (data.dateVal) {
-    setTxt('#C9A84C');
-    doc.text(String(data.dateVal), W - M, 46, { align: 'right' });
-  }
+  // Client + dates
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color('#999999');
+  txt('CLIENT', M + 28, 37);
+  pdf.setFontSize(10); color('#FFFFFF');
+  txt(data.client || '', M + 28, 44);
 
-  // ── Corps ────────────────────────────────────────────────────────────────
-  let y = 68;
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#999999');
+  txt(data.dateEmis || '', W - M, 37, { align:'right' });
+  color('#C9A84C');
+  txt(data.dateVal || '', W - M, 44, { align:'right' });
+
+  // ── Corps ──────────────────────────────────────────────────────────────────
+  let y = 64;
 
   (data.sections || []).forEach(section => {
-    if (y > 250) { doc.addPage(); y = 20; }
+    if (y > 250) { pdf.addPage(); y = 20; }
 
     const isM = section.isMediane;
-    const villeColor = isM ? '#1A3A5C' : '#7A3A00';
-    const villeBg    = isM ? '#EEF3F8' : '#FFF0E0';
+    const vColor = isM ? '#1A3A5C' : '#7A3A00';
+    const vBg    = isM ? '#EEF3F8' : '#FFF0E0';
 
     // Bandeau ville
-    setFill(villeBg);
-    doc.rect(M, y, CW, 8, 'F');
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(8); setTxt(villeColor);
-    doc.text(section.title, M + 4, y + 5.5);
-    y += 10;
+    fill(vBg); pdf.rect(M, y, CW, 7, 'F');
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color(vColor);
+    txt(section.title || '', M + 3, y + 5);
+    y += 9;
 
     section.rows.forEach(row => {
-      if (y > 258) { doc.addPage(); y = 20; }
+      if (y > 260) { pdf.addPage(); y = 20; }
 
-      // Calcul de la hauteur de la ligne
-      const hotelLines = doc.splitTextToSize(row.hotel, CW - 38);
-      const detailLinesSized = row.detailLines.map(line => doc.splitTextToSize(line, CW - 38));
-      const totalDetailLines = detailLinesSized.reduce((acc, lines) => acc + lines.length, 0);
-      const lineH = Math.max(16, hotelLines.length * 5 + totalDetailLines * 4.2 + 6);
+      const hotelStr  = String(row.hotel || '');
+      const priceStr  = String(row.price || '');
+      const details   = (row.detailLines || []).map(l => String(l));
 
-      // Fond blanc + bordure
-      setFill('#FFFFFF');
-      doc.rect(M, y, CW, lineH, 'F');
-      setDraw('#E8E8E0');
-      doc.setLineWidth(0.3);
-      doc.rect(M, y, CW, lineH, 'S');
+      // Calcul hauteur dynamique
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(9);
+      const hotelW = doc => doc.splitTextToSize(hotelStr, CW - 36);
+      const hLines = pdf.splitTextToSize(hotelStr, CW - 36);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5);
+      let detailH = 0;
+      const detailWrapped = details.map(l => {
+        const w = pdf.splitTextToSize(l, CW - 36);
+        detailH += w.length * 4;
+        return w;
+      });
+      const rowH = Math.max(14, hLines.length * 5 + detailH + 5);
 
-      // Colonne gauche : hôtel + détails
-      let ty = y + 5.5;
+      // Fond + bordure
+      fill('#FFFFFF'); pdf.rect(M, y, CW, rowH, 'F');
+      draw('#E0E0E0'); pdf.setLineWidth(0.2); pdf.rect(M, y, CW, rowH, 'S');
 
       // Hôtel en gras
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); setTxt('#1A1A1A');
-      doc.text(hotelLines, M + 4, ty);
-      ty += hotelLines.length * 5;
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(9); color('#1A1A1A');
+      pdf.text(hLines, M + 3, y + 5.5);
+      let ty = y + 5.5 + hLines.length * 5;
 
-      // Lignes de détail
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#555555');
-      row.detailLines.forEach(line => {
-        const wrapped = doc.splitTextToSize(line, CW - 38);
-        doc.text(wrapped, M + 4, ty + 1);
-        ty += wrapped.length * 4.2;
+      // Détails
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#555555');
+      detailWrapped.forEach(wrapped => {
+        pdf.text(wrapped, M + 3, ty);
+        ty += wrapped.length * 4;
       });
 
-      // Montant à droite, aligné en haut
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(11); setTxt(villeColor);
-      doc.text(row.price, W - M - 3, y + 6.5, { align: 'right' });
+      // Prix à droite
+      pdf.setFont('helvetica','bold'); pdf.setFontSize(10); color(vColor);
+      txt(priceStr, W - M - 2, y + 6, { align:'right' });
 
-      y += lineH;
+      y += rowH;
     });
 
     // Sous-total ville
-    if (y > 260) { doc.addPage(); y = 20; }
-    setFill(villeBg);
-    doc.rect(M, y, CW, 9, 'F');
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(8.5); setTxt(villeColor);
-    doc.text('Sous-total ' + section.villeLabel, M + 4, y + 6);
-    doc.setFontSize(10);
-    doc.text(section.subtotal, W - M - 3, y + 6, { align: 'right' });
-    y += 13;
+    if (y > 262) { pdf.addPage(); y = 20; }
+    fill(vBg); pdf.rect(M, y, CW, 8, 'F');
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(8); color(vColor);
+    txt('Sous-total ' + (section.villeLabel||''), M + 3, y + 5.5);
+    pdf.setFontSize(9);
+    txt(section.subtotal || '', W - M - 2, y + 5.5, { align:'right' });
+    y += 12;
   });
 
-  // ── Total TTC ─────────────────────────────────────────────────────────────
-  if (y > 255) { doc.addPage(); y = 20; }
-  y += 3;
-  setFill('#1A3A5C');
-  doc.roundedRect(M, y, CW, 16, 2, 2, 'F');
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(9); setTxt('#CCCCCC');
-  setTxt('#FFFFFF');
-  doc.text('TOTAL TTC', M + 5, y + 7);
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(16); setTxt('#C9A84C');
-  doc.text(data.total, W - M - 3, y + 10, { align: 'right' });
-  y += 22;
+  // ── Total TTC ──────────────────────────────────────────────────────────────
+  if (y > 256) { pdf.addPage(); y = 20; }
+  y += 2;
+  fill('#1A3A5C'); pdf.rect(M, y, CW, 14, 'F');
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(8); color('#CCCCCC');
+  txt('TOTAL TTC', M + 4, y + 6);
+  pdf.setFont('helvetica','bold'); pdf.setFontSize(15); color('#C9A84C');
+  txt(data.total || '', W - M - 2, y + 10, { align:'right' });
+  y += 18;
 
-  // ── Validité / tampon facture ─────────────────────────────────────────────
-  if (!data.isFacture) {
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); setTxt('#888888');
-    doc.text(data.validTxt, M, y);
-    y += 8;
+  // ── Tampon / validité ──────────────────────────────────────────────────────
+  if (data.isFacture) {
+    if (y > 266) { pdf.addPage(); y = 20; }
+    fill('#FFF3D0'); draw('#C9A84C'); pdf.setLineWidth(1);
+    pdf.roundedRect(M, y, CW, 10, 1.5, 1.5, 'FD');
+    pdf.setFont('helvetica','bold'); pdf.setFontSize(10); color('#7A5800');
+    txt('FACTURE REGLEE', W / 2, y + 7, { align:'center' });
+    y += 15;
     if (data.facMode) {
-      doc.text('Mode de paiement : ' + data.facMode, M, y);
+      pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#888888');
+      txt('Mode de paiement : ' + data.facMode, M, y);
       y += 7;
     }
   } else {
-    if (y > 265) { doc.addPage(); y = 20; }
-    setFill('#FFF3D0'); setDraw('#C9A84C'); doc.setLineWidth(1.2);
-    doc.roundedRect(M, y, CW, 12, 2, 2, 'FD');
-    doc.setFont('helvetica', 'bold'); doc.setFontSize(11); setTxt('#7A5800');
-    doc.text('FACTURE REGLEE', W / 2, y + 8, { align: 'center' });
-    y += 18;
+    pdf.setFont('helvetica','normal'); pdf.setFontSize(7.5); color('#888888');
+    txt(data.validTxt || '', M, y);
+    y += 8;
     if (data.facMode) {
-      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); setTxt('#888888');
-      doc.text('Mode de paiement : ' + data.facMode, M, y);
+      txt('Mode de paiement : ' + data.facMode, M, y);
       y += 7;
     }
   }
 
-  // ── Mention légale ────────────────────────────────────────────────────────
-  if (y > 268) { doc.addPage(); y = 20; }
+  // ── Mention légale ─────────────────────────────────────────────────────────
+  if (y > 268) { pdf.addPage(); y = 20; }
   y += 4;
-  setDraw('#DDDDDD'); doc.setLineWidth(0.3); doc.line(M, y, W - M, y);
+  draw('#DDDDDD'); pdf.setLineWidth(0.2); pdf.line(M, y, W - M, y);
   y += 5;
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5); setTxt('#AAAAAA');
-  const mention = "Les tarifs sont garantis à l'émission et sujets aux fluctuations du marché. Réservation confirmée dès réception du paiement. Toute modification ou annulation est soumise aux conditions de nos prestataires.";
-  doc.text(doc.splitTextToSize(mention, CW), M, y);
+  pdf.setFont('helvetica','normal'); pdf.setFontSize(6); color('#AAAAAA');
+  const mention = "Les tarifs sont garantis a l'emission et sujets aux fluctuations du marche. Reservation confirmee des reception du paiement. Toute modification ou annulation est soumise aux conditions de nos prestataires.";
+  pdf.text(pdf.splitTextToSize(mention, CW), M, y);
 
-  return doc;
+  return pdf;
 }
 
 async function telechargerPDFSauvegarde(id) {
