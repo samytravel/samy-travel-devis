@@ -252,6 +252,10 @@ input:focus, select:focus { border-color: var(--gold); }
     <div class="section-header">
       <div class="section-icon"><i class="fas fa-user"></i></div>
       <div class="section-title">Client</div>
+      <button type="button" onclick="nouveauDevis()" title="Repartir de zéro"
+        style="margin-left:auto;height:30px;padding:0 12px;background:#F0F0EC;border:1.5px solid var(--border-strong);border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;color:#555;display:flex;align-items:center;gap:5px;white-space:nowrap">
+        <i class="fas fa-plus"></i> Nouveau
+      </button>
     </div>
     <div class="row2">
       <div>
@@ -492,6 +496,7 @@ let currentFilterType = 'tous';
 let convertingId = null;
 let devisDevise = 'SAR';
 let devisTaux   = 0.25;
+let currentDocId = null;   // id du document actuellement chargé dans l'éditeur
 
 const CHAMBRE_CONFIG = {
   single:    { label: 'Single',       pax: 1, icon: '🛏️' },
@@ -572,6 +577,22 @@ function showToast(msg, type='success') {
 
 let panier = [];
 let nextId = 1;
+
+function nouveauDevis() {
+  currentDocId = null;
+  panier = [];
+  nextId = 1;
+  document.getElementById('client-prenom').value = '';
+  document.getElementById('client-nom').value = '';
+  document.getElementById('validite').value = 1;
+  document.querySelectorAll('input[name=formule]').forEach(r => { r.checked = r.value === 'RO'; });
+  document.getElementById('devis-output').style.display = 'none';
+  const btnSave = document.querySelector('.btn-save');
+  if (btnSave) btnSave.innerHTML = '<i class="fas fa-save"></i> Sauvegarder le devis';
+  renderPanier();
+  updateDevis();
+  devisCounter = Math.floor(Math.random()*90)+10;
+}
 
 function ajouterChambre() {
   const type  = document.getElementById('new-ch-type').value;
@@ -970,7 +991,27 @@ function sauvegarderDevis() {
   const validite = parseInt(document.getElementById('validite').value) || 1;
   const formule  = getFormule();
 
-  const doc = {
+  const docs = getDocuments();
+
+  // Si un document est chargé dans l'éditeur, on le met à jour en préservant son type
+  if (currentDocId) {
+    const idx = docs.findIndex(d => d.id === currentDocId);
+    if (idx >= 0) {
+      const existing = docs[idx];
+      docs[idx] = {
+        ...existing,           // préserve type, facNum, facDate, facMode, dateCreation
+        ref, total, client, validite, formule,
+        panier: JSON.parse(JSON.stringify(panier)),
+      };
+      saveDocuments(docs);
+      const label = existing.type === 'facture' ? '🧾 Facture mise à jour !' : '✅ Devis mis à jour !';
+      showToast(label);
+      return;
+    }
+  }
+
+  // Nouveau document
+  const newDoc = {
     id: Date.now(),
     type: 'devis',
     ref, total, client,
@@ -980,9 +1021,9 @@ function sauvegarderDevis() {
     facNum: '', facDate: '', facMode: ''
   };
 
-  const docs = getDocuments();
-  const idx = docs.findIndex(d => d.ref === ref && d.type === 'devis');
-  if (idx >= 0) { docs[idx] = doc; } else { docs.unshift(doc); }
+  const idxRef = docs.findIndex(d => d.ref === ref && d.type === 'devis');
+  if (idxRef >= 0) { docs[idxRef] = newDoc; } else { docs.unshift(newDoc); }
+  currentDocId = newDoc.id;
   saveDocuments(docs);
   showToast('✅ Devis sauvegardé avec succès !');
 }
@@ -1039,17 +1080,36 @@ function chargerDocument(id) {
   const docs = getDocuments();
   const doc  = docs.find(d => d.id === id);
   if (!doc) return;
+
+  // 1. Basculer sur l'onglet "nouveau" EN PREMIER pour que le DOM existe
+  switchTab('nouveau');
+
+  // 2. Remplir les données après que l'onglet est visible
+  currentDocId = doc.id;
   panier = doc.panier.map(l => ({ ...l }));
   nextId = panier.length > 0 ? Math.max(...panier.map(l => l.id)) + 1 : 1;
-  const parts = doc.client.split(' ');
+
+  const parts = (doc.client || '').split(' ');
   document.getElementById('client-prenom').value = parts[0] || '';
   document.getElementById('client-nom').value = parts.slice(1).join(' ') || '';
-  document.querySelectorAll('input[name=formule]').forEach(r => { r.checked = r.value === doc.formule; });
+  document.querySelectorAll('input[name=formule]').forEach(r => { r.checked = r.value === (doc.formule || 'RO'); });
   document.getElementById('validite').value = doc.validite || 1;
-  switchTab('nouveau');
+
+  // 3. Render dans le même tick (DOM déjà visible)
   renderPanier();
   updateDevis(true);
-  showToast('📋 Document chargé dans l\'éditeur');
+
+  // 4. Adapter le bouton "Sauvegarder" selon le type de document
+  const btnSave = document.querySelector('.btn-save');
+  if (btnSave) {
+    if (doc.type === 'facture') {
+      btnSave.innerHTML = '<i class="fas fa-save"></i> Mettre à jour la facture';
+    } else {
+      btnSave.innerHTML = '<i class="fas fa-save"></i> Sauvegarder le devis';
+    }
+  }
+
+  showToast('📋 ' + (doc.type === 'facture' ? 'Facture' : 'Devis') + ' chargé dans l\'éditeur');
 }
 
 // ===== CONVERSION EN FACTURE =====
@@ -1085,6 +1145,11 @@ function confirmerConversion() {
 }
 
 function voirFacture(id) { chargerDocument(id); }
+
+function resetNouveauSiNeeded() {
+  // Appelé quand on clique sur l'onglet "Nouveau" sans passer par un document
+  // Ne fait rien si un doc est déjà en édition — on garde l'état
+}
 
 function supprimerDocument(id) {
   if (!confirm('Supprimer ce document ?')) return;
