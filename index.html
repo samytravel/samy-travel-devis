@@ -1371,8 +1371,6 @@ function genererPDF(data) {
   pdf.setFontSize(15); color('#C9A84C');
   txt(data.ref || '', W - M, 21, { align:'right' });
 
-  draw('#2E4E70'); pdf.setLineWidth(0.25); pdf.line(M, 30, W - M, 30);
-
   pdf.setFont('helvetica','bold'); pdf.setFontSize(7.5); color('#999999');
   txt('CLIENT', M + 28, 37);
   pdf.setFontSize(10); color('#FFFFFF');
