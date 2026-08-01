@@ -1167,51 +1167,58 @@ function viderListe() {
 }
 
 // ===== PDF =====
-// Construit les données pour le PDF — même structure que l'écran
-function getDevisData(doc) {
-  syncAllFromDOM();
-  const today    = new Date();
-  const validite = parseInt(document.getElementById('validite').value) || 1;
-  const expiry   = new Date(today.getTime() + validite * 86400000);
-  const fmtD = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
-  const isFacture = doc && doc.type === 'facture';
-  const panierSource = doc ? doc.panier : panier;
+// Construit les données pour le PDF.
+// Si `savedDoc` est fourni : 100% autonome, aucune lecture du DOM.
+// Si `savedDoc` est null : utilise le formulaire courant (devis en cours d'édition).
+function getDevisData(savedDoc) {
+  const today = new Date();
+  const fmtD  = d => d.toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' });
 
-  // Récupération de la formule depuis le doc sauvegardé ou le formulaire
-  const formuleDoc = doc ? doc.formule : getFormule();
+  // ── Sources selon mode ────────────────────────────────────────────────────
+  const isFromSaved = !!savedDoc;
+  const isFacture   = isFromSaved && savedDoc.type === 'facture';
+  const panierSource = isFromSaved ? savedDoc.panier : (syncAllFromDOM(), panier);
+  const formuleDoc   = isFromSaved ? (savedDoc.formule || 'RO') : getFormule();
+  const validite     = isFromSaved
+    ? (savedDoc.validite || 1)
+    : (parseInt(document.getElementById('validite').value) || 1);
+  const ref = isFacture && savedDoc.facNum
+    ? savedDoc.facNum
+    : (isFromSaved ? savedDoc.ref : document.getElementById('d-ref').textContent.trim());
+  const client = isFromSaved
+    ? (savedDoc.client || '')
+    : (document.getElementById('d-client-name').textContent.trim() || '');
+  const expiry = new Date(today.getTime() + validite * 86400000);
 
-  // Helper : calcul d'une ligne avec la formule du document
+  // ── Calcul d'une ligne (autonome, pas de DOM) ─────────────────────────────
   function calcLigneDoc(l) {
-    const cfg = CHAMBRE_CONFIG[l.type];
-    const pax = cfg.pax * l.qty;
+    const cfg  = CHAMBRE_CONFIG[l.type];
+    const pax  = cfg.pax * l.qty;
     const nuits = compterNuits(l.arrivee, l.depart);
     const margeCoeff = l.marge ? (1 + l.marge) : 1;
-    const coutWd = l.prixWd * nuits.weekday * l.qty;
-    const coutWe = l.prixWe * nuits.weekend * l.qty;
-    const coutHeb = coutWd + coutWe;
+    const coutHeb = (l.prixWd * nuits.weekday + l.prixWe * nuits.weekend) * l.qty;
     const pdjInclu = formuleDoc === 'BB' || (formuleDoc === 'RO' && l.pdjActif);
-    const coutPdj = pdjInclu ? l.prixPdj * pax * nuits.total : 0;
-    let coutFrais = 0;
+    const coutPdj  = pdjInclu ? l.prixPdj * pax * nuits.total : 0;
+    let coutFrais  = 0;
     const fraisItems = [];
     const f = l.frais;
-    if (f.transfertOn) { const v=f.transfertVal*pax; coutFrais+=v; fraisItems.push({ label:l.ville==='medine'?'Transfert aéroport':'Transfert retour' }); }
-    if (l.ville==='medine' && f.transportOn) { const v=f.transportVal*pax; coutFrais+=v; fraisItems.push({ label:'Transport Médine → Mekkah' }); }
-    if (f.taxeOn) { const v=f.taxeVal*nuits.total; coutFrais+=v; fraisItems.push({ label:'Taxe de séjour' }); }
-    if (l.ville==='medine' && f.visaOn) { const v=f.visaVal*pax; coutFrais+=v; fraisItems.push({ label:'Visa / Prestation' }); }
-    if (l.ville==='mekkah' && f.guideOn) { const v=f.guideVal*pax; coutFrais+=v; fraisItems.push({ label:'Guide / Accompagnateur' }); }
-    if (l.ville==='mekkah' && f.diversOn) { const v=f.diversVal*pax; coutFrais+=v; fraisItems.push({ label:'Frais divers' }); }
-    const totalAvecMarge = Math.round((coutHeb + coutPdj) * margeCoeff);
-    const total = totalAvecMarge + coutFrais;
+    if (f.transfertOn)                      { coutFrais += f.transfertVal * pax;   fraisItems.push(l.ville==='medine' ? 'Transfert aéroport' : 'Transfert retour'); }
+    if (l.ville==='medine' && f.transportOn){ coutFrais += f.transportVal * pax;   fraisItems.push('Transport Médine → Mekkah'); }
+    if (f.taxeOn)                           { coutFrais += f.taxeVal * nuits.total; fraisItems.push('Taxe de séjour'); }
+    if (l.ville==='medine' && f.visaOn)     { coutFrais += f.visaVal * pax;        fraisItems.push('Visa / Prestation'); }
+    if (l.ville==='mekkah' && f.guideOn)    { coutFrais += f.guideVal * pax;       fraisItems.push('Guide / Accompagnateur'); }
+    if (l.ville==='mekkah' && f.diversOn)   { coutFrais += f.diversVal * pax;      fraisItems.push('Frais divers'); }
+    const total = Math.round((coutHeb + coutPdj) * margeCoeff) + coutFrais;
     return { pax, nuits, pdjInclu, fraisItems, total };
   }
 
+  // ── Construction des sections ─────────────────────────────────────────────
   const sections = [];
   let grandTotal = 0;
 
   ['medine', 'mekkah'].forEach(ville => {
     const lignes = panierSource.filter(l => l.ville === ville);
-    if (lignes.length === 0) return;
-
+    if (!lignes.length) return;
     const villeLabel = ville === 'medine' ? 'Médine' : 'Mekkah';
     const rows = [];
     let sousTotalNum = 0;
@@ -1220,58 +1227,43 @@ function getDevisData(doc) {
       const cfg  = CHAMBRE_CONFIG[l.type];
       const calc = calcLigneDoc(l);
       if (calc.nuits.total === 0) return;
-
       const hotelNom = l.hotel || l.custom_hotel || 'Hôtel non précisé';
 
-      // Lignes de détail — identiques à l'écran
       const detailLines = [];
       const qtyLabel = l.qty > 1 ? `${l.qty} chambres ${cfg.label}` : `1 chambre ${cfg.label}`;
-      const paxLabel = `${cfg.pax * l.qty} personne${cfg.pax * l.qty > 1 ? 's' : ''}`;
-      detailLines.push(`${qtyLabel} — ${paxLabel}`);
-      if (l.arrivee && l.depart) {
+      detailLines.push(`${qtyLabel} — ${cfg.pax * l.qty} personne${cfg.pax * l.qty > 1 ? 's' : ''}`);
+      if (l.arrivee && l.depart)
         detailLines.push(`Du ${fmtDate2(l.arrivee)} au ${fmtDate2(l.depart)} — ${calc.nuits.total} nuit${calc.nuits.total > 1 ? 's' : ''}`);
-      }
       detailLines.push(calc.pdjInclu ? 'Avec petit-déjeuner' : 'Sans petit-déjeuner (Room Only)');
-      calc.fraisItems.forEach(fi => detailLines.push(fi.label));
+      calc.fraisItems.forEach(label => detailLines.push(label));
 
-      rows.push({
-        hotel:       hotelNom,
-        detailLines: detailLines,
-        price:       fmtPDF(calc.total),
-        priceNum:    calc.total,
-      });
+      rows.push({ hotel: hotelNom, detailLines, price: fmtPDF(calc.total) });
       sousTotalNum += calc.total;
     });
 
-    if (sousTotalNum === 0) return;
+    if (!sousTotalNum) return;
     grandTotal += sousTotalNum;
-
     sections.push({
-      title:         villeLabel.toUpperCase(),
-      villeLabel:    villeLabel,
-      isMediane:     ville === 'medine',
+      title:      villeLabel.toUpperCase(),
+      villeLabel,
+      isMediane:  ville === 'medine',
       rows,
-      subtotal:      fmtPDF(sousTotalNum),
-      subtotalNum:   sousTotalNum,
+      subtotal:   fmtPDF(sousTotalNum),
     });
   });
-
-  const ref = isFacture && doc.facNum ? doc.facNum : document.getElementById('d-ref').textContent.trim();
-  const client = document.getElementById('d-client-name').textContent.trim()
-    || (doc ? doc.client : '');
 
   return {
     ref,
     client,
     dateEmis: 'Émis le ' + fmtD(today),
     dateVal:  isFacture
-      ? (doc.facDate ? 'Réglé le ' + new Date(doc.facDate + 'T00:00:00').toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' }) : '')
+      ? (savedDoc.facDate ? 'Réglé le ' + new Date(savedDoc.facDate + 'T00:00:00').toLocaleDateString('fr-FR', { day:'2-digit', month:'long', year:'numeric' }) : '')
       : "Valable jusqu'au " + fmtD(expiry),
     total:    fmtPDF(grandTotal),
     validTxt: 'Offre valable ' + validite + ' jour' + (validite > 1 ? 's' : '') + ' — expire le ' + fmtD(expiry),
     sections,
     isFacture,
-    facMode:  doc ? doc.facMode : '',
+    facMode: savedDoc ? (savedDoc.facMode || '') : '',
   };
 }
 
@@ -1441,17 +1433,19 @@ function genererPDF(data) {
 }
 
 async function telechargerPDFSauvegarde(id) {
-  const docs = getDocuments();
-  const savedDoc = docs.find(d => d.id === id);
-  if (!savedDoc) return;
-  const tmpPanier = panier;
-  panier = savedDoc.panier.map(l => ({ ...l }));
-  const data = getDevisData(savedDoc);
-  const pdf  = genererPDF(data);
-  const filename = (savedDoc.type === 'facture' ? savedDoc.facNum || 'FAC' : savedDoc.ref) + '_SamyTravel.pdf';
-  pdf.save(filename);
-  panier = tmpPanier;
-  showToast('📄 PDF téléchargé');
+  try {
+    const docs = getDocuments();
+    const savedDoc = docs.find(d => d.id === id);
+    if (!savedDoc) { showToast('Document introuvable', 'error'); return; }
+    const data = getDevisData(savedDoc);   // autonome — ne touche pas au DOM ni au panier courant
+    const pdf  = genererPDF(data);
+    const filename = (savedDoc.type === 'facture' ? savedDoc.facNum || 'FAC' : savedDoc.ref) + '_SamyTravel.pdf';
+    pdf.save(filename);
+    showToast('📄 PDF téléchargé');
+  } catch(e) {
+    console.error('PDF error:', e);
+    showToast('❌ Erreur PDF : ' + e.message, 'error');
+  }
 }
 
 async function envoyerWhatsappPDF() {
